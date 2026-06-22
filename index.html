@@ -438,8 +438,6 @@ header.page-hero{padding:64px 0 26px;position:relative}
 
 /* --- tier ladder vertical spine --- */
 .rungs{position:relative}
-.rungs::before{content:"";position:absolute;left:-1px;top:14px;bottom:14px;width:2px;
-  background:linear-gradient(180deg,var(--accent),var(--blue));opacity:.4;border-radius:2px}
 
 /* --- divider rule with mono label --- */
 .rule{display:flex;align-items:center;gap:16px;margin:8px 0 30px;color:var(--faint)}
@@ -574,6 +572,26 @@ header.page-hero{padding:64px 0 26px;position:relative}
   </div>
 </section>
 
+<!-- TIERS -->
+<section id="tiers">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow"><span class="br">[</span> The ladder <span class="br">]</span></span>
+      <h2>Climb the board. <span class="out">Same door pays more.</span></h2>
+      <p class="lead">Everyone starts at Rookie. Hit your reps, learn the doors, and unlock the rung above — your rate moves with you.</p>
+    </div>
+    <div class="ladder reveal">
+      <div class="rungs" id="rungs">
+        <div class="rung glass active" data-i="0"><div><div class="rn">01</div><div class="name">Rookie</div></div><div class="pay">50% · wk 1–4</div></div>
+        <div class="rung glass" data-i="1"><div><div class="rn">02</div><div class="name">Pro</div></div><div class="pay">70% · wk 5+</div></div>
+        <div class="rung glass" data-i="2"><div><div class="rn">03</div><div class="name">Closer</div></div><div class="pay">85% · volume</div></div>
+        <div class="rung glass" data-i="3"><div><div class="rn">04</div><div class="name">Crew lead</div></div><div class="pay">100% + override</div></div>
+      </div>
+      <div class="rung-detail glass" id="detail"></div>
+    </div>
+  </div>
+</section>
+
 <!-- EARN / STATS + CALC -->
 <section id="earn">
   <div class="wrap">
@@ -618,26 +636,6 @@ header.page-hero{padding:64px 0 26px;position:relative}
         <div class="breakdown"><span>Tier</span><b id="bTier">JV</b></div>
         <a class="btn primary" href="#tiers" style="margin-top:20px;justify-content:center">Lock in your rank →</a>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- TIERS -->
-<section id="tiers">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="eyebrow"><span class="br">[</span> The ladder <span class="br">]</span></span>
-      <h2>Climb the board. <span class="out">Same door pays more.</span></h2>
-      <p class="lead">Everyone starts at Rookie. Hit your reps, learn the doors, and unlock the rung above — your rate moves with you.</p>
-    </div>
-    <div class="ladder reveal">
-      <div class="rungs" id="rungs">
-        <div class="rung glass active" data-i="0"><div><div class="rn">01</div><div class="name">Rookie</div></div><div class="pay">50% · wk 1–4</div></div>
-        <div class="rung glass" data-i="1"><div><div class="rn">02</div><div class="name">Pro</div></div><div class="pay">70% · wk 5+</div></div>
-        <div class="rung glass" data-i="2"><div><div class="rn">03</div><div class="name">Closer</div></div><div class="pay">85% · volume</div></div>
-        <div class="rung glass" data-i="3"><div><div class="rn">04</div><div class="name">Crew lead</div></div><div class="pay">100% + override</div></div>
-      </div>
-      <div class="rung-detail glass" id="detail"></div>
     </div>
   </div>
 </section>
