@@ -581,16 +581,16 @@ header.page-hero{padding:64px 0 26px;position:relative}
 <section id="tiers">
   <div class="wrap">
     <div class="sec-head reveal">
-      <span class="eyebrow"><span class="br">[</span> The ladder <span class="br">]</span></span>
-      <h2>Climb the board. <span class="out">Same door pays more.</span></h2>
-      <p class="lead">Everyone starts at Rookie. Hit your reps, learn the doors, and unlock the rung above — your rate moves with you.</p>
+      <span class="eyebrow"><span class="br">[</span> Advancement <span class="br">]</span></span>
+      <h2>Advance <span class="out">Through the Ranks</span></h2>
+      <p class="lead">Everyone starts on JV. What happens after that is up to you. Your commission grows as you grow.</p>
     </div>
     <div class="ladder reveal">
       <div class="tabbar" id="tierTabs">
-        <button type="button" class="tier-tab glass active" data-i="0"><span class="tn">01</span><span class="tname">Rookie</span><span class="tsub">50% · wk 1–4</span></button>
-        <button type="button" class="tier-tab glass" data-i="1"><span class="tn">02</span><span class="tname">Pro</span><span class="tsub">70% · wk 5+</span></button>
-        <button type="button" class="tier-tab glass" data-i="2"><span class="tn">03</span><span class="tname">Closer</span><span class="tsub">85% · volume</span></button>
-        <button type="button" class="tier-tab glass" data-i="3"><span class="tn">04</span><span class="tname">Crew lead</span><span class="tsub">100% + override</span></button>
+        <button type="button" class="tier-tab glass active" data-i="0"><span class="tn">01</span><span class="tname">JV</span><span class="tsub">$150 • 1-49 deals</span></button>
+        <button type="button" class="tier-tab glass" data-i="1"><span class="tn">02</span><span class="tname">Varsity</span><span class="tsub">$200 • 50-99 deals</span></button>
+        <button type="button" class="tier-tab glass" data-i="2"><span class="tn">03</span><span class="tname">Allstar</span><span class="tsub">$250 • 100-149 deals</span></button>
+        <button type="button" class="tier-tab glass" data-i="3"><span class="tn">04</span><span class="tname">MVP</span><span class="tsub">$300 • 150+ deals + overrides</span></button>
       </div>
       <div class="tier-panel glass ticked" id="detail"></div>
     </div>
@@ -776,13 +776,13 @@ tierBtns.forEach(b=>b.addEventListener('click',()=>{
 
 // ---------- Tier ladder ----------
 const tierData=[
-  {name:'Rookie',big:'50%',week:'Week 1 → first 4 doors',
+  {name:'JV',big:'$150',week:'First 49 deals',
    pts:['Full onboarding on product, pitch, and territory','Ride your first installs with a closer beside you','Live coaching on pitch and objection handling','Move to Pro on consistent volume']},
-  {name:'Pro',big:'70%',week:'Week 5+ → running your own doors',
+  {name:'Varsity',big:'$200',week:"You're a consistent producer",
    pts:['Your own doors, your own pace','Higher per-install cut on every close','Priority on the better territory blocks','Bonus pool access on monthly volume']},
-  {name:'Closer',big:'85%',week:'Proven volume → top board rate',
+  {name:'Allstar',big:'$250',week:"You're on the leaderboards",
    pts:['Top personal payout on every install','Best territory and lead routing','First pick on partner-carrier campaigns','On track to lead your own crew']},
-  {name:'Crew lead',big:'100%',week:'Your crew, your board',
+  {name:'MVP',big:'$300',week:'Your team, your leaderboard',
    pts:['Full personal rate plus override on every crew install','Back office, payroll, and tracking handled for you','Build and run reps on your own territory','Dedicated support line and campaign access']}
 ];
 const detail=document.getElementById('detail');
@@ -790,7 +790,7 @@ function renderDetail(i){
   const d=tierData[i], pos=i+1;
   const segs=[0,1,2,3].map(s=>`<div class="climb-seg${s<pos?' fill':''}"></div>`).join('');
   detail.innerHTML=`<div class="dh"><div><h3>${d.name}</h3><div class="week">${d.week}</div></div><span class="rate">${d.big}</span></div>
-    <div class="climb"><div class="climb-bars">${segs}</div><div class="climb-cap">Rank ${pos} of 4 — climbing the board</div></div>
+    <div class="climb"><div class="climb-bars">${segs}</div><div class="climb-cap">Rank ${pos} of 4 — Advancing the Ranks</div></div>
     <ul class="checks">${d.pts.map(p=>`<li>${p}</li>`).join('')}</ul>`;
 }
 renderDetail(0);
