@@ -1,0 +1,14 @@
+# macOS
+.DS_Store
+
+# Editor / OS noise
+*.swp
+*~
+.vscode/
+.idea/
+
+# Vercel local
+.vercel
+
+# Logs
+*.log
