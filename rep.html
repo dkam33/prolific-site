@@ -326,6 +326,29 @@ header.page-hero{padding:64px 0 26px;position:relative}
 .pay-rules li .k{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--accent);
   flex:none;min-width:58px;padding-top:2px;letter-spacing:.06em}
 .pay-rules .fillme{color:var(--faint);font-style:italic}
+/* --- redesigned pay section: standard Friday schedule --- */
+@media(max-width:820px){.pay-wrap{grid-template-columns:1fr}}
+.cal-day.installwk{background:var(--blue-soft);border-color:var(--blue-line);color:var(--text)}
+.cal-day.installwk.muted{opacity:1;color:var(--faint)}
+.cal-day.installwk.payday{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+.cal-day.target{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:700;
+  box-shadow:0 0 0 3px var(--accent-line)}
+.cal-day.target::after{content:"$";position:absolute;top:2px;right:4px;font-size:.5rem;color:var(--accent-ink)}
+.cal-legend .dot.wk{background:var(--blue-soft);border:1px solid var(--blue-line)}
+.cal-legend .dot.tgt{background:var(--accent);border:1px solid var(--accent)}
+.pay-side{display:grid;gap:16px;align-content:start}
+.pay-card{padding:26px 24px}
+.pay-card h3{font-size:1.5rem;text-transform:uppercase;margin-bottom:6px}
+.pay-card .rsub{font-family:'JetBrains Mono',monospace;font-size:.64rem;letter-spacing:.14em;
+  color:var(--muted);text-transform:uppercase;margin-bottom:16px}
+.pay-card p{font-size:.9rem;color:var(--text);line-height:1.6}
+.pay-bigrule{font-family:'Teko',sans-serif;font-weight:700;font-size:2.1rem;line-height:1;
+  text-transform:uppercase;letter-spacing:.01em;color:var(--accent);margin:2px 0 12px}
+.pay-card ul{list-style:none;display:grid;gap:13px;margin-top:16px}
+.pay-card li{display:flex;gap:12px;font-size:.9rem;color:var(--text);align-items:flex-start}
+.pay-card li .k{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--accent);
+  flex:none;min-width:58px;padding-top:2px;letter-spacing:.06em}
+.pay-emph{display:block;color:var(--accent);font-weight:600;font-size:1rem;margin:14px 0}
 
 /* --- generic content blocks for dealer / isp shells --- */
 .split{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
@@ -606,24 +629,32 @@ header.page-hero{padding:64px 0 26px;position:relative}
     </div>
     <div class="pay-wrap reveal">
       <div class="cal glass ticked">
-        <div class="cal-head"><div class="mo">Sample Month</div><div class="yr">BI-WEEKLY CYCLE</div></div>
-        <div class="cal-grid"><div class="cal-dow">S</div><div class="cal-dow">M</div><div class="cal-dow">T</div><div class="cal-dow">W</div><div class="cal-dow">T</div><div class="cal-dow">F</div><div class="cal-dow">S</div><div class="cal-day muted"></div><div class="cal-day muted"></div><div class="cal-day muted"></div><div class="cal-day">1</div><div class="cal-day">2</div><div class="cal-day">3</div><div class="cal-day">4</div><div class="cal-day">5</div><div class="cal-day cutoff">6</div><div class="cal-day">7</div><div class="cal-day">8</div><div class="cal-day">9</div><div class="cal-day">10</div><div class="cal-day">11</div><div class="cal-day payday">12</div><div class="cal-day">13</div><div class="cal-day">14</div><div class="cal-day">15</div><div class="cal-day">16</div><div class="cal-day">17</div><div class="cal-day">18</div><div class="cal-day">19</div><div class="cal-day cutoff">20</div><div class="cal-day">21</div><div class="cal-day">22</div><div class="cal-day">23</div><div class="cal-day">24</div><div class="cal-day">25</div><div class="cal-day payday">26</div><div class="cal-day">27</div><div class="cal-day">28</div><div class="cal-day">29</div><div class="cal-day">30</div><div class="cal-day muted"></div><div class="cal-day muted"></div></div>
+        <div class="cal-head"><div class="mo">Every Friday is payday</div><div class="yr">STANDARD SCHEDULE</div></div>
+        <div class="cal-grid"><div class="cal-dow">S</div><div class="cal-dow">M</div><div class="cal-dow">T</div><div class="cal-dow">W</div><div class="cal-dow">T</div><div class="cal-dow">F</div><div class="cal-dow">S</div><div class="cal-day installwk">1</div><div class="cal-day installwk">2</div><div class="cal-day installwk">3</div><div class="cal-day installwk">4</div><div class="cal-day installwk">5</div><div class="cal-day installwk payday">6</div><div class="cal-day">7</div><div class="cal-day">8</div><div class="cal-day">9</div><div class="cal-day">10</div><div class="cal-day">11</div><div class="cal-day">12</div><div class="cal-day payday">13</div><div class="cal-day">14</div><div class="cal-day">15</div><div class="cal-day">16</div><div class="cal-day">17</div><div class="cal-day">18</div><div class="cal-day">19</div><div class="cal-day target">20</div><div class="cal-day">21</div><div class="cal-day">22</div><div class="cal-day">23</div><div class="cal-day">24</div><div class="cal-day">25</div><div class="cal-day">26</div><div class="cal-day payday">27</div><div class="cal-day">28</div><div class="cal-day">29</div><div class="cal-day">30</div><div class="cal-day">31</div><div class="cal-day muted">1</div><div class="cal-day muted">2</div><div class="cal-day muted payday">3</div><div class="cal-day muted">4</div></div>
         <div class="cal-legend">
-          <span><span class="dot pay"></span> Payday</span>
-          <span><span class="dot cut"></span> Cutoff / pay period close</span>
+          <span><span class="dot wk"></span> Week your install completes</span>
+          <span><span class="dot tgt"></span> That install's payday</span>
+          <span><span class="dot pay"></span> Every Friday = a payday</span>
         </div>
       </div>
-      <div class="pay-rules glass ticked">
-        <h3>The rules</h3>
-        <div class="rsub">How the cycle works</div>
-        <ul>
-          <li><span class="k">CYCLE</span><span>Paid every two weeks, like clockwork.</span></li>
-          <li><span class="k">CUTOFF</span><span>Pay period closes the 6th &amp; 20th.</span></li>
-          <li><span class="k">PAYDAY</span><span>Funds hit the 12th &amp; 26th.</span></li>
-          <li><span class="k">INSTALL</span><span>Install must be confirmed before cutoff to land on that check.</span></li>
-          <li><span class="k">HOLDBACK</span><span>90-day chargeback window protects clean deals.</span></li>
-        </ul>
-        <div class="fillin" style="margin-top:18px">Placeholder cycle &amp; dates — send me your real pay rules and I'll mark the exact paydays/cutoffs and rewrite these lines.</div>
+      <div class="pay-side">
+        <div class="pay-card glass ticked">
+          <h3>The rhythm</h3>
+          <div class="rsub">Simple and on time</div>
+          <div class="pay-bigrule">Paid every Friday</div>
+          <p>Payroll runs weekly — there's a check waiting at the end of every week you've got installs landing.</p>
+          <ul>
+            <li><span class="k">TIMING</span><span>Your install pays out 2 Fridays after the week it completes.</span></li>
+            <li><span class="k">WEEKLY</span><span>Keep installs flowing and you've got money hitting every Friday.</span></li>
+          </ul>
+        </div>
+        <div class="pay-card glass ticked">
+          <h3>The 90-day window</h3>
+          <div class="rsub">Sell it clean</div>
+          <p>If a customer cancels within 90 days of install, that account charges back — the commission comes back out of a future check.</p>
+          <span class="pay-emph">So sell customers who are actually sold.</span>
+          <p>Free-trial pitches, promises the ISP doesn't back, or pushing someone who isn't committed all drive cancels — and a deal that cancels in 60 days was never a sale, it's a liability. Protect your board: close people who stay.</p>
+        </div>
       </div>
     </div>
   </div>
