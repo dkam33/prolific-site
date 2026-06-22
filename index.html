@@ -93,8 +93,8 @@
 
   /* ===== HERO ===== */
   header.hero{padding:78px 0 30px;text-align:center;position:relative}
-  .hex-glow{position:absolute;top:90px;left:50%;transform:translateX(-50%);
-    width:520px;height:520px;max-width:90vw;z-index:0;opacity:.5;pointer-events:none}
+  .bison-bg{position:absolute;top:80px;left:50%;transform:translateX(-50%);
+    width:480px;height:auto;max-width:86vw;z-index:0;opacity:.5;pointer-events:none}
   .hero .wrap{position:relative;z-index:2}
   .hero h1{font-size:clamp(3.2rem,11vw,7rem);text-transform:uppercase;margin:18px 0 6px}
   .hero h1 .out{color:#DCDCDC}
@@ -501,10 +501,28 @@ header.page-hero{padding:64px 0 26px;position:relative}
   <path class="contour" d="M-50,490 C160,450 330,530 500,475 C640,430 760,500 860,465"/>
   <path class="contour b" d="M-50,560 C160,520 330,600 500,545 C640,500 760,570 860,535"/>
 </svg></div>
-  <svg class="hex-glow" viewBox="0 0 200 200" fill="none">
-    <polygon points="100,8 170,48 170,128 100,168 30,128 30,48" stroke="rgba(196,175,154,.32)" stroke-width="1"/>
-    <polygon points="100,28 152,58 152,118 100,148 48,118 48,58" stroke="rgba(196,175,154,.16)" stroke-width="1"/>
-    <circle cx="100" cy="88" r="78" stroke="rgba(255,255,255,.06)" stroke-width="1"/>
+  <svg class="bison-bg" viewBox="0 0 200 200" fill="none" aria-hidden="true">
+    <g stroke="rgba(196,175,154,.38)" stroke-width=".7" stroke-linejoin="round" stroke-linecap="round">
+      <polyline points="100,32 66,42 50,64 60,92 72,116 84,128 82,150 100,162"/>
+      <polyline points="100,32 134,42 150,64 140,92 128,116 116,128 118,150 100,162"/>
+      <polyline points="100,32 100,52 100,100 100,130 100,162"/>
+      <polyline points="50,64 34,50 22,40"/>
+      <polyline points="150,64 166,50 178,40"/>
+      <polyline points="82,150 78,158 100,190 122,158 118,150"/>
+    </g>
+    <g stroke="rgba(196,175,154,.24)" stroke-width=".5" stroke-linejoin="round" stroke-linecap="round">
+      <polyline points="66,42 100,52 50,64"/>
+      <polyline points="134,42 100,52 150,64"/>
+      <polyline points="100,52 60,92 100,100"/>
+      <polyline points="100,52 140,92 100,100"/>
+      <polyline points="60,92 72,116 100,100"/>
+      <polyline points="140,92 128,116 100,100"/>
+      <polyline points="100,100 84,128 82,150"/>
+      <polyline points="100,100 116,128 118,150"/>
+      <polyline points="84,128 116,128"/>
+      <polygon points="68,84 76,81 80,86 72,89"/>
+      <polygon points="132,84 124,81 120,86 128,89"/>
+    </g>
   </svg>
   <div class="wrap">
     <span class="eyebrow"><span class="br">[</span> Sales bisons <span class="br">]</span></span>
