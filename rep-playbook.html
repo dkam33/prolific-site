@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Prolific Fiber — Rep Playbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#141414;--bg-deep:#0d0d0d;
+  --panel:rgba(236,236,236,0.045);--panel-2:rgba(236,236,236,0.075);
+  --stroke:rgba(236,236,236,0.10);--stroke-strong:rgba(236,236,236,0.18);
+  --text:#ECECEC;--muted:#a39d92;--faint:#726c62;
+  --accent:#c4af9a;--accent-soft:rgba(196,175,154,0.14);--accent-line:rgba(196,175,154,0.42);
+  --accent-ink:#272727;--blue:#2a7f9e;--blue-soft:rgba(42,127,158,0.16);--blue-line:rgba(42,127,158,0.45);
+  --r:14px;
+  --nav-h:64px;
+  --side-w:300px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.6;
+  -webkit-font-smoothing:antialiased;font-size:15px}
+a{color:inherit;text-decoration:none}
+
+/* ===== atmosphere ===== */
+.atmosphere{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(110% 70% at 80% -5%,rgba(196,175,154,.06),transparent 55%)}
+
+/* ===== stripped nav ===== */
+nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:50;
+  display:flex;align-items:center;padding:0 24px;
+  background:rgba(20,20,20,.82);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--stroke)}
+.brand-logo img{height:22px;width:auto;display:block;filter:drop-shadow(0 0 12px var(--accent-soft))}
+.nav-tag{margin-left:16px;padding-left:16px;border-left:1px solid var(--stroke);
+  font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
+.nav-spacer{flex:1}
+.sidebar-toggle{display:none;background:var(--panel);border:1px solid var(--stroke-strong);color:var(--text);
+  border-radius:9px;padding:8px 12px;font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.1em;
+  text-transform:uppercase;cursor:pointer;align-items:center;gap:8px}
+
+/* ===== layout shell ===== */
+.shell{display:grid;grid-template-columns:var(--side-w) minmax(0,1fr);max-width:1320px;margin:0 auto;
+  padding-top:var(--nav-h);position:relative;z-index:2}
+
+/* ===== sidebar ===== */
+.sidebar{position:sticky;top:var(--nav-h);align-self:start;height:calc(100vh - var(--nav-h));
+  overflow-y:auto;padding:30px 14px 60px 24px;border-right:1px solid var(--stroke)}
+.sidebar::-webkit-scrollbar{width:8px}
+.sidebar::-webkit-scrollbar-thumb{background:var(--stroke-strong);border-radius:4px}
+.side-head{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--faint);padding:0 10px 14px;margin-bottom:6px;border-bottom:1px solid var(--stroke)}
+.toc{list-style:none;margin-top:14px}
+.toc-sec{margin-bottom:2px}
+.toc-sec > a{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:9px;
+  font-family:'Teko',sans-serif;font-weight:500;font-size:1.08rem;letter-spacing:.02em;text-transform:uppercase;
+  color:var(--muted);transition:.16s;line-height:1.15}
+.toc-sec > a .ix{font-family:'JetBrains Mono',monospace;font-size:.56rem;font-weight:600;color:var(--faint);
+  letter-spacing:.05em;min-width:20px}
+.toc-sec > a:hover{background:var(--panel);color:var(--text)}
+.toc-sec > a.active{background:var(--accent-soft);color:var(--accent)}
+.toc-sec > a.active .ix{color:var(--accent)}
+/* sub items */
+.toc-sub{list-style:none;margin:2px 0 8px 0;padding-left:30px;
+  border-left:1px solid var(--stroke);margin-left:18px;
+  max-height:0;overflow:hidden;transition:max-height .3s ease}
+.toc-sec.open .toc-sub{max-height:520px}
+.toc-sub li a{display:block;padding:5px 10px;border-radius:7px;font-size:.8rem;color:var(--faint);transition:.15s;line-height:1.3}
+.toc-sub li a:hover{color:var(--text)}
+.toc-sub li a.active{color:var(--accent)}
+
+/* ===== content column ===== */
+.content{padding:40px 56px 120px;min-width:0}
+.doc-hero{padding-bottom:30px;margin-bottom:20px;border-bottom:1px solid var(--stroke)}
+.doc-hero .eyebrow{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--muted)}
+.doc-hero .eyebrow .br{color:var(--accent)}
+.doc-hero h1{font-family:'Teko',sans-serif;font-weight:600;font-size:clamp(2.6rem,6vw,4rem);line-height:.92;
+  text-transform:uppercase;margin:12px 0 10px}
+.doc-hero h1 .hot{color:var(--accent)}
+.doc-hero p{color:var(--muted);max-width:600px;font-size:1rem}
+
+/* section blocks */
+.sec{padding-top:34px;scroll-margin-top:calc(var(--nav-h) + 18px)}
+.sec-num{font-family:'JetBrains Mono',monospace;font-size:.64rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:8px}
+.sec h2{font-family:'Teko',sans-serif;font-weight:600;font-size:clamp(1.9rem,4vw,2.7rem);line-height:.95;
+  text-transform:uppercase;color:var(--text);margin-bottom:6px}
+.sec > p{color:var(--muted);margin:14px 0}
+.subsec{scroll-margin-top:calc(var(--nav-h) + 18px);padding-top:26px}
+.subsec h3{font-family:'Teko',sans-serif;font-weight:500;font-size:1.5rem;letter-spacing:.02em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:8px}
+.subsec h4{font-family:'Inter',sans-serif;font-weight:600;font-size:1rem;color:var(--text);margin:18px 0 6px}
+.sec p, .subsec p{color:var(--muted);margin:12px 0}
+.sec p b, .subsec p b, .sec li b, .subsec li b{color:var(--text);font-weight:600}
+.lead-in{color:var(--text)!important;font-size:1.02rem}
+
+/* lists */
+.doc ul, .doc ol{margin:12px 0 12px 0;padding-left:0;list-style:none}
+.doc ul li, .doc ol li{position:relative;padding-left:26px;margin:9px 0;color:var(--muted)}
+.doc ul li::before{content:"";position:absolute;left:6px;top:10px;width:6px;height:6px;border-radius:2px;
+  background:var(--accent);opacity:.7}
+.doc ol{counter-reset:li}
+.doc ol li{counter-increment:li}
+.doc ol li::before{content:counter(li);position:absolute;left:0;top:1px;
+  font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--accent);font-weight:600}
+
+/* glass card + callouts */
+.card{background:var(--panel);border:1px solid var(--stroke);border-radius:var(--r);padding:22px 24px;margin:18px 0;position:relative}
+.card.tick::after{content:"";position:absolute;top:9px;right:9px;width:12px;height:12px;
+  border-top:1px solid var(--accent-line);border-right:1px solid var(--accent-line);opacity:.6}
+.callout{border-left:2px solid var(--accent);background:var(--accent-soft);border-radius:0 12px 12px 0;
+  padding:16px 20px;margin:18px 0}
+.callout .clabel{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:6px}
+.callout p{margin:6px 0;color:var(--text)}
+
+/* data / contact rows */
+.datarow{display:flex;flex-wrap:wrap;gap:8px 28px;font-family:'JetBrains Mono',monospace;font-size:.8rem;
+  padding:10px 0;border-bottom:1px solid var(--stroke);color:var(--muted)}
+.datarow .k{color:var(--faint);text-transform:uppercase;font-size:.66rem;letter-spacing:.1em;min-width:90px}
+.datarow .v{color:var(--text)}
+.datarow .v.accent{color:var(--accent)}
+
+/* org list */
+.orglist{display:grid;gap:0;margin:14px 0}
+.orgitem{display:flex;justify-content:space-between;align-items:baseline;gap:16px;
+  padding:11px 0;border-bottom:1px solid var(--stroke)}
+.orgitem .name{font-family:'Teko',sans-serif;font-weight:500;font-size:1.25rem;text-transform:uppercase;color:var(--text);letter-spacing:.02em}
+.orgitem .role{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);text-align:right}
+
+/* chain of command */
+.chain{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:16px 0;
+  font-family:'Teko',sans-serif;text-transform:uppercase}
+.chain .node{padding:8px 16px;border:1px solid var(--stroke-strong);border-radius:10px;background:var(--panel);
+  font-size:1.1rem;letter-spacing:.02em;color:var(--text)}
+.chain .arrow{color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:.9rem}
+
+/* pay scale table */
+.payscale{margin:16px 0;border:1px solid var(--stroke);border-radius:var(--r);overflow:hidden}
+.payscale .pstier{display:grid;grid-template-columns:1fr;border-bottom:1px solid var(--stroke)}
+.payscale .pstier:last-child{border-bottom:0}
+.psname{font-family:'Teko',sans-serif;font-weight:600;font-size:1.4rem;text-transform:uppercase;color:var(--accent);
+  padding:12px 18px 6px;letter-spacing:.02em}
+.psrows{padding:0 18px 14px}
+.psrow{display:flex;flex-wrap:wrap;gap:6px 18px;font-family:'JetBrains Mono',monospace;font-size:.74rem;
+  color:var(--muted);padding:5px 0}
+.psrow .pt{color:var(--faint);text-transform:uppercase;font-size:.62rem;letter-spacing:.1em;min-width:54px}
+.psrow b{color:var(--text);font-weight:600}
+
+/* rank milestone cards */
+.rankcard{background:var(--panel);border:1px solid var(--stroke);border-radius:var(--r);padding:20px 22px;margin:14px 0;position:relative;overflow:hidden}
+.rankcard .rhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:4px}
+.rankcard .rname{font-family:'Teko',sans-serif;font-weight:600;font-size:1.8rem;text-transform:uppercase;color:var(--accent);line-height:1}
+.rankcard .rrange{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.rankcard .rscale{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--text);margin:8px 0}
+.rankcard .rscale b{color:var(--accent)}
+
+/* law block */
+.law{margin:22px 0;padding-top:8px}
+.law .lawnum{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+.law h3{font-family:'Teko',sans-serif;font-weight:600;font-size:1.7rem;text-transform:uppercase;color:var(--text);margin:4px 0 8px}
+.law .quote{border-left:2px solid var(--accent-line);padding:6px 0 6px 16px;margin:12px 0;
+  font-style:italic;color:var(--accent);font-size:1.02rem}
+
+/* pitch step */
+.step{margin:18px 0;padding:18px 20px;background:var(--panel);border:1px solid var(--stroke);border-radius:var(--r);position:relative}
+.step .snum{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.step h4{font-family:'Teko',sans-serif;font-weight:500;font-size:1.3rem;text-transform:uppercase;color:var(--text);margin:3px 0 8px;letter-spacing:.02em}
+
+/* script / dialogue block */
+.script{background:var(--bg-deep);border:1px solid var(--stroke);border-radius:var(--r);padding:8px 0;margin:18px 0;
+  font-family:'JetBrains Mono',monospace;font-size:.82rem;line-height:1.7}
+.script .line{padding:7px 22px;display:flex;gap:14px;align-items:baseline}
+.script .line + .line{border-top:1px solid rgba(236,236,236,.04)}
+.script .who{flex:none;width:78px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-size:.64rem;padding-top:2px}
+.script .rep .who{color:var(--accent)}
+.script .cust .who{color:var(--blue)}
+.script .txt{color:var(--muted)}
+.script .rep .txt{color:var(--text)}
+.script .beat{padding:8px 22px;color:var(--faint);font-style:italic;font-family:'Inter',sans-serif;font-size:.78rem;
+  border-top:1px solid rgba(236,236,236,.04);border-bottom:1px solid rgba(236,236,236,.04)}
+
+
+/* conversational pitch block (matches smoke-screen Responses style) */
+.pitchscript{background:var(--panel);border:1px solid var(--stroke);border-radius:var(--r);padding:8px 26px 18px;margin:18px 0;position:relative}
+.pitchscript::after{content:"";position:absolute;top:9px;right:9px;width:12px;height:12px;border-top:1px solid var(--accent-line);border-right:1px solid var(--accent-line);opacity:.6}
+.pitchscript .pl{margin:14px 0;color:var(--muted);font-size:.95rem;line-height:1.6}
+.pitchscript .pl b{font-weight:600}
+.pitchscript .pl.rep b{color:var(--accent)}
+.pitchscript .pl.cust b{color:var(--blue)}
+.pitchscript .pl.rep{color:var(--text)}
+.pitchscript .pbeat{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:20px 0 10px;padding-top:8px;border-top:1px solid var(--stroke)}
+
+/* footer */
+.doc-footer{margin-top:60px;padding-top:24px;border-top:1px solid var(--stroke);
+  font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+
+/* back-to-top */
+.totop{position:fixed;bottom:24px;right:24px;z-index:40;width:42px;height:42px;border-radius:11px;
+  background:var(--accent);color:var(--accent-ink);border:none;cursor:pointer;font-size:1rem;
+  display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:.25s;
+  box-shadow:0 8px 24px rgba(0,0,0,.4)}
+.totop.show{opacity:1;pointer-events:auto}
+
+/* ===== mobile ===== */
+.scrim{display:none}
+@media(max-width:920px){
+  .shell{grid-template-columns:1fr}
+  .sidebar{position:fixed;top:var(--nav-h);left:0;bottom:0;width:300px;max-width:84vw;z-index:45;
+    background:var(--bg-deep);border-right:1px solid var(--stroke-strong);
+    transform:translateX(-105%);transition:transform .28s ease;height:calc(100vh - var(--nav-h))}
+  .sidebar.open{transform:none}
+  .sidebar-toggle{display:inline-flex}
+  .content{padding:28px 22px 100px}
+  .scrim.show{display:block;position:fixed;inset:var(--nav-h) 0 0 0;background:rgba(0,0,0,.5);z-index:44}
+}
+</style>
+</head>
+<body>
+<div class="atmosphere"></div>
+<nav>
+  <a class="brand-logo" href="/"><img src="data:image/png;base64,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" alt="Prolific Fiber"></a>
+  <span class="nav-tag">Rep Playbook</span>
+  <div class="nav-spacer"></div>
+  <button class="sidebar-toggle" id="sideToggle">☰ Contents</button>
+</nav>
+<div class="shell">
+<aside class="sidebar" id="sidebar">
+<div class="side-head">Rep Playbook · Contents</div>
+<ul class="toc">
+<li class="toc-sec" data-sec="welcome">
+<a href="#welcome"><span class="ix">01</span><span>Welcome to Prolific</span></a>
+<ul class="toc-sub">
+<li><a href="#why-bison">Why the Bison?</a></li>
+<li><a href="#core-values">Core Values</a></li>
+</ul>
+</li>
+<li class="toc-sec" data-sec="org">
+<a href="#org"><span class="ix">02</span><span>Org Chart & Support</span></a>
+<ul class="toc-sub">
+<li><a href="#chain">Chain of Command</a></li>
+<li><a href="#league-org">The League</a></li>
+<li><a href="#prolific-org">Prolific</a></li>
+<li><a href="#league-line">League One Stop Line</a></li>
+<li><a href="#prolific-line">Prolific Support Line</a></li>
+</ul>
+</li>
+<li class="toc-sec" data-sec="tools">
+<a href="#tools"><span class="ix">03</span><span>Tools & Resources</span></a>
+<ul class="toc-sub">
+<li><a href="#league-app">League Fiber App</a></li>
+<li><a href="#repcard">Repcard</a></li>
+<li><a href="#sales-bison">Sales Bison</a></li>
+<li><a href="#league-db">League Database</a></li>
+<li><a href="#discord">Discord</a></li>
+</ul>
+</li>
+<li class="toc-sec" data-sec="progression">
+<a href="#progression"><span class="ix">04</span><span>Path of Progression</span></a>
+<ul class="toc-sub">
+<li><a href="#how-pay">How Pay Works</a></li>
+<li><a href="#pay-scale">Commission Pay Scale</a></li>
+<li><a href="#rank-tiers">Rank Tiers & Milestones</a></li>
+<li><a href="#manager">Manager</a></li>
+<li><a href="#regional">Regional Manager</a></li>
+<li><a href="#overrides">Override Structure</a></li>
+</ul>
+</li>
+<li class="toc-sec" data-sec="pay">
+<a href="#pay"><span class="ix">05</span><span>How You Get Paid</span></a>
+<ul class="toc-sub">
+<li><a href="#payroll">How Payroll Works</a></li>
+<li><a href="#m1m2">The M1/M2 Split</a></li>
+<li><a href="#chargeback">90-Day Chargeback Window</a></li>
+<li><a href="#isp-pay">Pay Schedules by ISP</a></li>
+<li><a href="#disputes">Payroll Issues & Disputes</a></li>
+</ul>
+</li>
+<li class="toc-sec" data-sec="laws">
+<a href="#laws"><span class="ix">06</span><span>The 7 Laws of D2D</span></a>
+<ul class="toc-sub">
+<li><a href="#law1">Law 1 — Clarity</a></li>
+<li><a href="#law2">Law 2 — Averages</a></li>
+<li><a href="#law3">Law 3 — Intentionality</a></li>
+<li><a href="#law4">Law 4 — Consistency</a></li>
+<li><a href="#law5">Law 5 — Adaptability</a></li>
+<li><a href="#law6">Law 6 — Ownership</a></li>
+<li><a href="#law7">Law 7 — The Lid</a></li>
+</ul>
+</li>
+<li class="toc-sec" data-sec="fiber">
+<a href="#fiber"><span class="ix">07</span><span>Introduction to Fiber</span></a>
+</li>
+<li class="toc-sec" data-sec="pitch">
+<a href="#pitch"><span class="ix">08</span><span>The Pitch & Script</span></a>
+<ul class="toc-sub">
+<li><a href="#skeleton">The Skeleton</a></li>
+<li><a href="#example-pitch">Example Pitch</a></li>
+<li><a href="#tailoring">Tailoring Your Pitch</a></li>
+</ul>
+</li>
+<li class="toc-sec" data-sec="area">
+<a href="#area"><span class="ix">09</span><span>Area Management & Schedule</span></a>
+<ul class="toc-sub">
+<li><a href="#area-mgmt">Area Management</a></li>
+<li><a href="#schedule">Daily Schedule</a></li>
+</ul>
+</li>
+<li class="toc-sec" data-sec="compliance">
+<a href="#compliance"><span class="ix">10</span><span>Compliance & Communication</span></a>
+</li>
+<li class="toc-sec" data-sec="nonverbal">
+<a href="#nonverbal"><span class="ix">11</span><span>Non-Verbal Skills</span></a>
+</li>
+<li class="toc-sec" data-sec="paraverbal">
+<a href="#paraverbal"><span class="ix">12</span><span>Para-Verbal Skills</span></a>
+</li>
+<li class="toc-sec" data-sec="smoke">
+<a href="#smoke"><span class="ix">13</span><span>Smoke Screens</span></a>
+</li>
+<li class="toc-sec" data-sec="objections">
+<a href="#objections"><span class="ix">14</span><span>Objections & The Sales Wheel</span></a>
+<ul class="toc-sub">
+<li><a href="#obj">Objections</a></li>
+<li><a href="#rac">R.A.C.</a></li>
+<li><a href="#wheel">The Sales Wheel</a></li>
+</ul>
+</li>
+</ul></aside>
+<main class="content doc">
+
+<div class="doc-hero">
+  <span class="eyebrow"><span class="br">[</span> Prolific Fiber · Internal <span class="br">]</span></span>
+  <h1>Rep <span class="hot">Playbook</span></h1>
+  <p>Everything you need to know to operate, get paid, and win in the field. Read it top to bottom, or jump to any section.</p>
+</div>
+
+<!-- ============ WELCOME ============ -->
+<section class="sec" id="welcome">
+  <div class="sec-num">01 — Welcome</div>
+  <h2>Welcome to Prolific</h2>
+
+  <div class="subsec" id="why-bison">
+    <h3>Why the Bison?</h3>
+    <p>The symbol of Prolific is the bison for a reason. The bison, upon sensing an approaching storm, charges directly into it rather than running away. By running straight through the storm, the bison minimizes the amount of time it spends exposed to harsh conditions, ultimately getting through the storm more quickly and with less suffering than if it had tried to outrun it or drift along with it.</p>
+    <p>At Prolific, we build championship DNA. <b>We are the bison.</b> We run towards discomfort and choose to do hard things. We do what most won't, and as a result, we achieve what most can't.</p>
+  </div>
+
+  <div class="subsec" id="core-values">
+    <h3>Core Values</h3>
+    <ol>
+      <li><b>Extreme Ownership:</b> Victim culture will not be tolerated. At Prolific we take full ownership over our actions and results because that is the path to growth and freedom.</li>
+      <li><b>FITFO:</b> FITFO means "figure it the f*** out." Prolific is a culture of problem solvers and solution seekers. When in doubt, figure it out.</li>
+      <li><b>Discipline:</b> Motivation is temporary. At Prolific we do what is required and will help us reach our goals regardless of how we feel. A culture of discipline is the only way we can all achieve our goals.</li>
+      <li><b>Gratitude:</b> We always have a reason to be grateful. Even when we're in the eye of the storm, life is good.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ ORG ============ -->
+<section class="sec" id="org">
+  <div class="sec-num">02 — Support</div>
+  <h2>Org Chart &amp; Support</h2>
+  <p class="lead-in">Understanding who to contact and when is critical to operating efficiently at Prolific. There are two separate support structures you need to be aware of — The League and Prolific.</p>
+
+  <div class="subsec" id="chain">
+    <h3>Chain of Command</h3>
+    <p>Your chain of command at Prolific is straightforward. Always start with the person directly above you before escalating further.</p>
+    <div class="chain">
+      <span class="node">Rep</span><span class="arrow">→</span>
+      <span class="node">Manager</span><span class="arrow">→</span>
+      <span class="node">Regional Manager</span><span class="arrow">→</span>
+      <span class="node">Prolific Ownership</span>
+    </div>
+    <p>Your first point of contact for anything field-related, sales questions, or day-to-day issues is always your direct manager. <b>Do not skip the chain.</b> If your manager cannot resolve the issue, they will escalate it appropriately.</p>
+  </div>
+
+  <div class="subsec" id="league-org">
+    <h3>The League — Organizational Structure</h3>
+    <p>The League is the parent sales company that is partnered directly with every ISP we work with. Understanding The League's structure helps you know who owns what at the top level and where escalated issues ultimately land.</p>
+    <div class="orglist">
+      <div class="orgitem"><span class="name">Alex Hall</span><span class="role">CEO</span></div>
+      <div class="orgitem"><span class="name">Brandon Mills</span><span class="role">President of Sales</span></div>
+      <div class="orgitem"><span class="name">Hayden Weichers</span><span class="role">Blitz Coordinator</span></div>
+      <div class="orgitem"><span class="name">Sadie Salisbury</span><span class="role">Onboarding</span></div>
+      <div class="orgitem"><span class="name">Kanon Olivier</span><span class="role">Commissions</span></div>
+    </div>
+  </div>
+
+  <div class="subsec" id="prolific-org">
+    <h3>Prolific — Organizational Structure</h3>
+    <div class="orglist">
+      <div class="orgitem"><span class="name">Kota Ivers</span><span class="role">CEO</span></div>
+      <div class="orgitem"><span class="name">Jordan Jastro</span><span class="role">COO</span></div>
+      <div class="orgitem"><span class="name">Tyler Tashiro</span><span class="role">CBDO</span></div>
+      <div class="orgitem"><span class="name">Dylan Kamleiter</span><span class="role">Regional Manager</span></div>
+      <div class="orgitem"><span class="name">Nicholas Newton</span><span class="role">Regional Manager</span></div>
+    </div>
+  </div>
+
+  <div class="subsec" id="league-line">
+    <h3>The League Support — "One Stop" Line</h3>
+    <p>The League's One Stop support line handles onboarding and payroll related questions. This is not a Prolific line — it is managed by The League directly and exists to resolve issues that fall under their umbrella.</p>
+    <div class="card tick">
+      <div class="datarow"><span class="k">Number</span><span class="v accent">866-605-5076</span></div>
+      <div class="datarow"><span class="k">Contact</span><span class="v">Text only</span></div>
+      <div class="datarow" style="border-bottom:0"><span class="k">Hours</span><span class="v">Mon–Fri · 9am–5pm MT</span></div>
+    </div>
+    <div class="callout">
+      <div class="clabel">Important</div>
+      <p>All payroll-related texts must begin with the word <b>"PAYROLL"</b> at the start of your message or your request may not be properly routed. Use this line for onboarding questions, payroll discrepancies, missing or delayed commissions, and account setup issues.</p>
+    </div>
+  </div>
+
+  <div class="subsec" id="prolific-line">
+    <h3>Prolific Support Line</h3>
+    <p>The Prolific Support Line is your escalation point for onboarding or other general issues that fall outside of what your direct manager can resolve. This line is managed internally by Prolific leadership.</p>
+    <div class="card tick">
+      <div class="datarow"><span class="k">Number</span><span class="v accent">949-827-9851</span></div>
+      <div class="datarow"><span class="k">Contact</span><span class="v">Text only</span></div>
+      <div class="datarow" style="border-bottom:0"><span class="k">Hours</span><span class="v">Mon–Sat · 9am–8pm MT</span></div>
+    </div>
+    <p>Always exhaust your chain of command before reaching out to either support line. Your manager is your first resource — they are there to help you. Support lines exist for issues that genuinely require outside resolution, or when your direct manager tells you to message them. Respecting the chain keeps things moving efficiently for everyone.</p>
+  </div>
+</section>
+
+<!-- ============ TOOLS ============ -->
+<section class="sec" id="tools">
+  <div class="sec-num">03 — Tools</div>
+  <h2>Tools &amp; Resources</h2>
+  <p class="lead-in">At Prolific, we operate with a specific set of tools that every rep is expected to know, use, and stay active on. These aren't optional — they are the infrastructure that keeps you informed, paid, and progressing. Get familiar with each one from day one.</p>
+
+  <div class="subsec" id="league-app">
+    <h3>League Fiber App</h3>
+    <p>Your primary hub for everything related to your personal sales activity. This is where you log your sales, track the progress of each deal from submission through install, and monitor your personal stats in real time. The app also houses leaderboards so you always know where you stand relative to your teammates, and it tracks your rank advancement through the Path of Progression. Any active competitions and incentives will also be visible here — check it daily so you never miss an opportunity to compete or cash in on a bonus.</p>
+    <p><a href="https://apps.apple.com/us/app/the-league-fiber/id6755014705" style="color:var(--accent)" target="_blank" rel="noopener">Download the League Fiber App →</a></p>
+  </div>
+
+  <div class="subsec" id="repcard">
+    <h3>Repcard</h3>
+    <p>Repcard serves multiple purposes and is one of the most versatile tools in your arsenal. It functions as your digital business card — a professional, shareable profile that makes it easy for customers to save your contact info and pass it along. Beyond that, Repcard is where you'll find League Fiber training materials and ISP-specific resources to reference in the field. It also powers your ability to generate personal reviews and referrals, which directly impact your reputation and earning potential over time. For reps selling AT&amp;T, Quantum, or Astound, Repcard also functions as your canvassing app for those ISPs — you'll use it to manage doors and track activity in those specific markets.</p>
+    <p><a href="https://apps.apple.com/us/app/repcard-field-sales-platform/id1372990002" style="color:var(--accent)" target="_blank" rel="noopener">Download Repcard →</a></p>
+  </div>
+
+  <div class="subsec" id="sales-bison">
+    <h3>Sales Bison</h3>
+    <p>Sales Bison is Prolific's internal knowledge base and training platform. This is where all Prolific training videos live, giving new and experienced reps alike a resource to sharpen their skills on their own time. Beyond training, Sales Bison houses the full knowledge base for Prolific resources — think of it as the central library for everything you need to operate at a high level. It also includes a commissions and overrides calculator so you always know exactly what you're earning and what you're on track to make. Market scorecards are available here as well, giving you competitive intelligence on the territories you're working before you ever knock a door.</p>
+    <p><a href="https://www.salesbisons.com/" style="color:var(--accent)" target="_blank" rel="noopener">Visit salesbisons.com →</a></p>
+  </div>
+
+  <div class="subsec" id="league-db">
+    <h3>League Database</h3>
+    <p>The web-based counterpart to the League Fiber App, built specifically for managers. Through the Database, managers can view the area map, request new areas, and plan upcoming blitzes with a bird's-eye view of the territory. It also provides full access to team sales data and detailed reporting, making it the go-to tool for tracking team performance, identifying trends, and making strategic decisions about where and how to deploy the team.</p>
+    <p><a href="https://leaderboard.fastfiber.ai/login" style="color:var(--accent)" target="_blank" rel="noopener">Open the League Database →</a></p>
+  </div>
+
+  <div class="subsec" id="discord">
+    <h3>Discord</h3>
+    <p>Discord is the official communication platform for all things Prolific. Every announcement, team update, market alert, competition drop, and organizational communication runs through Discord. <b>If you're not active on Discord, you are out of the loop — it's that simple.</b> Download the app, turn on notifications, and stay engaged. Missing an announcement is never an acceptable excuse when everything is posted here.</p>
+    <p><a href="https://discord.gg/sGqhcbT4yV" style="color:var(--accent)" target="_blank" rel="noopener">Join the Discord →</a></p>
+  </div>
+</section>
+
+<!-- ============ PROGRESSION ============ -->
+<section class="sec" id="progression">
+  <div class="sec-num">04 — Advancement</div>
+  <h2>Path of Progression</h2>
+  <p class="lead-in">At Prolific, your rank is not given — it's earned. Every tier you advance through unlocks higher pay, bigger bonuses, and more opportunity. Your progression is driven entirely by one thing: installs. The more you produce, the more you earn, and the more doors open for you within the organization.</p>
+
+  <div class="subsec" id="how-pay">
+    <h3>How Pay Works</h3>
+    <p>Your commission per install is determined by two factors: your <b>rank tier</b>, which sets your pay scale, and the <b>speed package</b> the customer purchases. Every ISP operates across three provider tiers — Tier I, Tier II, and Tier III — and within each tier, pay varies based on the speed sold. Faster packages pay more. Higher ranks pay more. Both compound together. The four speed categories across all tiers are: greater than 1G, 1G, 500 MB, and less than 500 MB.</p>
+    <p>Your base pay scale is anchored to your <b>Tier I, 1G commission rate.</b> Everything else on the pay table adjusts up or down from that anchor based on the tier of the ISP you're selling and the speed package the customer selects. Always know what tier your current ISP falls under and always pitch the highest speed package the customer qualifies for — every upsell matters.</p>
+  </div>
+
+  <div class="subsec" id="pay-scale">
+    <h3>Commission Pay Scale by Rank</h3>
+    <div class="payscale">
+      <div class="pstier"><div class="psname">JV — $150 scale</div><div class="psrows">
+        <div class="psrow"><span class="pt">Tier I</span><span>&gt;1G <b>$175</b></span><span>1G <b>$150</b></span><span>500MB <b>$100</b></span><span>&lt;500MB <b>$25</b></span></div>
+        <div class="psrow"><span class="pt">Tier II</span><span>&gt;1G <b>$125</b></span><span>1G <b>$100</b></span><span>500MB <b>$50</b></span><span>&lt;500MB <b>$25</b></span></div>
+      </div></div>
+      <div class="pstier"><div class="psname">Varsity — $200 scale</div><div class="psrows">
+        <div class="psrow"><span class="pt">Tier I</span><span>&gt;1G <b>$225</b></span><span>1G <b>$200</b></span><span>500MB <b>$150</b></span><span>&lt;500MB <b>$25</b></span></div>
+        <div class="psrow"><span class="pt">Tier II</span><span>&gt;1G <b>$175</b></span><span>1G <b>$150</b></span><span>500MB <b>$100</b></span><span>&lt;500MB <b>$25</b></span></div>
+      </div></div>
+      <div class="pstier"><div class="psname">All Star — $250 scale</div><div class="psrows">
+        <div class="psrow"><span class="pt">Tier I</span><span>&gt;1G <b>$275</b></span><span>1G <b>$250</b></span><span>500MB <b>$175</b></span><span>&lt;500MB <b>$25</b></span></div>
+        <div class="psrow"><span class="pt">Tier II</span><span>&gt;1G <b>$225</b></span><span>1G <b>$200</b></span><span>500MB <b>$125</b></span><span>&lt;500MB <b>$25</b></span></div>
+      </div></div>
+      <div class="pstier"><div class="psname">MVP — $300 scale</div><div class="psrows">
+        <div class="psrow"><span class="pt">Tier I</span><span>&gt;1G <b>$325</b></span><span>1G <b>$300</b></span><span>500MB <b>$150</b></span><span>&lt;500MB <b>$50</b></span></div>
+        <div class="psrow"><span class="pt">Tier II</span><span>&gt;1G <b>$225</b></span><span>1G <b>$200</b></span><span>500MB <b>$125</b></span><span>&lt;500MB <b>$25</b></span></div>
+      </div></div>
+    </div>
+  </div>
+
+  <div class="subsec" id="rank-tiers">
+    <h3>Rank Tiers &amp; Milestones</h3>
+
+    <div class="rankcard">
+      <div class="rhead"><span class="rname">JV</span><span class="rrange">Junior Varsity · 1–49 Installs</span></div>
+      <div class="rscale">Pay scale: <b>$150 base</b> (Tier I, 1G)</div>
+      <p>JV is where every rep starts. This is your proving ground — the phase where you build your fundamentals, find your ratio, and establish the habits that will carry you through the rest of your career at Prolific. Don't treat JV as something to rush past. The reps who take their time learning the craft at JV are the ones who don't plateau when they get to higher tiers. Use this phase to study the pitch, track your KPIs obsessively, and get your systems down.</p>
+      <ul>
+        <li><b>10 installs</b> — You earn the Prolific Ignite Kit: hat, polo, and battery pack.</li>
+        <li><b>25 installs</b> — $1,000 cash bonus. The first real milestone that separates reps who are serious from reps who are just dipping their toes in.</li>
+        <li><b>To advance:</b> Reach 50 installs to unlock Varsity rank and the $200 pay scale.</li>
+      </ul>
+    </div>
+
+    <div class="rankcard">
+      <div class="rhead"><span class="rname">Varsity</span><span class="rrange">50–99 Installs</span></div>
+      <div class="rscale">Pay scale: <b>$200 base</b> (Tier I, 1G)</div>
+      <p>You've proven you can produce. Varsity reps have built enough volume to know their ratio, have gotten past the early awkwardness of the pitch, and are starting to operate with real confidence on the doors. At Varsity you should be thinking less about survival and more about optimization — tightening your pitch, improving your close rate, and building momentum toward All Star.</p>
+      <ul>
+        <li><b>75 installs</b> — $1,000 cash bonus.</li>
+        <li><b>To advance:</b> Reach 100 installs to unlock All Star rank and the $250 pay scale.</li>
+      </ul>
+    </div>
+
+    <div class="rankcard">
+      <div class="rhead"><span class="rname">All Star</span><span class="rrange">100–199 Installs</span></div>
+      <div class="rscale">Pay scale: <b>$250 base</b> (Tier I, 1G)</div>
+      <p>All Star is where the real money starts. You've crossed 100 installs — a milestone that puts you in a small percentage of reps in the entire organization. At this level, you are a proven producer and your pay scale reflects it. All Star reps have figured out their system. They know their neighborhoods, they know their pitch, and they know how to manage a full day on the doors efficiently. The jump from Varsity to All Star isn't just a pay raise — it's a shift in identity. You are no longer learning the job. You are executing at a high level.</p>
+      <ul><li><b>To advance:</b> Reach 200 installs to unlock MVP rank.</li></ul>
+    </div>
+
+    <div class="rankcard">
+      <div class="rhead"><span class="rname">MVP</span><span class="rrange">200+ Installs</span></div>
+      <div class="rscale">Pay scale: <b>$300 base</b> (Tier I, 1G)</div>
+      <p>MVP is the pinnacle of rep-level achievement at Prolific. You've done what very few do. The difference is in what your production signals to the organization — you are a candidate for leadership. At MVP you've demonstrated sustained, elite output. This is the level where conversations about management opportunities become real.</p>
+      <div class="callout"><div class="clabel">Important</div><p>Overrides paid on your installs to those above you are cut in half once you reach the MVP pay scale.</p></div>
+    </div>
+  </div>
+
+  <div class="subsec" id="manager">
+    <h3>Manager</h3>
+    <p>The Manager role is a leadership position, not an early retirement from the doors. Managers at Prolific are expected to lead by example, remain personally active in the field, and build teams that produce at a high level consistently. If you think becoming a manager means you stop selling, think again. The best managers at Prolific are the ones their teams can look at and say "my manager does exactly what they're asking me to do." <b>You cannot lead from the sideline.</b></p>
+    <div class="card">
+      <div class="datarow"><span class="k">Requires</span><span class="v">100+ monthly team sales · 50+ monthly personal sales</span></div>
+      <div class="datarow" style="border-bottom:0"><span class="k">Override</span><span class="v accent">$50 per install on team production</span></div>
+    </div>
+  </div>
+
+  <div class="subsec" id="regional">
+    <h3>Regional Manager</h3>
+    <p>Regional Managers oversee multiple managers and their teams. This is an organizational leadership role responsible for blitz planning, market performance, and the development of managers underneath them. Regional Managers are Prolific's most senior field leaders and are directly accountable for the output of entire regions.</p>
+    <div class="card">
+      <div class="datarow"><span class="k">Requires</span><span class="v">300+ monthly team sales · 50+ quarterly personal sales</span></div>
+      <div class="datarow" style="border-bottom:0"><span class="k">Override</span><span class="v accent">$30 per install on team production</span></div>
+    </div>
+  </div>
+
+  <div class="subsec" id="overrides">
+    <h3>Override Structure</h3>
+    <p>Overrides are earned on every install produced by reps in your downline. They are paid in addition to any personal sales commissions you earn.</p>
+    <div class="card tick">
+      <div class="datarow"><span class="k">Recruiter</span><span class="v accent">$20 per install</span></div>
+      <div class="datarow"><span class="k">Manager</span><span class="v accent">$50 per install</span></div>
+      <div class="datarow" style="border-bottom:0"><span class="k">Regional</span><span class="v accent">$30 per install</span></div>
+    </div>
+    <div class="callout"><div class="clabel">Important</div><p>When a rep advances to MVP rank, override rates paid to those above them are cut in half. This applies to all three overrides.</p></div>
+    <h4>A Note on Progression</h4>
+    <p>Your rank at Prolific is a direct reflection of your output. Nobody is handed a title here. Every tier you unlock means you put in the work, knocked the doors, and produced the results. The pay scale rewards that — the more you produce and the faster speeds you sell, the more every single install is worth. Study the pay table. Know what you're leaving on the table when you pitch a lower speed package over a higher one. Every upsell matters. Every door matters. Every install moves you closer to the next tier.</p>
+  </div>
+</section>
+
+<!-- ============ PAY SCHEDULE ============ -->
+<section class="sec" id="pay">
+  <div class="sec-num">05 — Getting Paid</div>
+  <h2>Pay Schedule &amp; How You Get Paid</h2>
+  <p class="lead-in">Understanding your pay schedule is not optional — it directly affects how you manage your money, plan your finances, and catch errors before they cost you. Read this section carefully and refer back to it whenever you have questions about a payment.</p>
+
+  <div class="subsec" id="payroll">
+    <h3>How Payroll Works</h3>
+    <p>All commissions at Prolific are processed through <b>Everee</b> via direct deposit. After you complete onboarding with The League, you will receive an email with your Everee account creation link. You must complete this setup before you can receive payment — do not wait on it. <b>Getting your Everee account set up on day one is non-negotiable.</b> Reps who delay this step delay their first paycheck.</p>
+    <p>Payroll always lands on <b>Friday</b>. Every Wednesday you will receive a pay report showing exactly what is hitting your account that Friday. Review this report every single week. If something looks wrong, Wednesday is your window to catch it and get it resolved before pay day. Do not wait until Friday and then wonder why your check is short — by then there is nothing anyone can do until the following week.</p>
+  </div>
+
+  <div class="subsec" id="m1m2">
+    <h3>The M1/M2 Split</h3>
+    <p>Your commission on every install is paid in two parts. <b>M1 is 85%</b> of your commission and is paid upfront on your normal pay schedule after the install completes. <b>M2 is the remaining 15%</b> and is paid 100 days after the date your M1 payment was received.</p>
+    <p>This structure exists because of the 90-day chargeback window. The M2 payment is your commission being held until the customer's account is confirmed stable. Once 100 days have passed from your M1 payment, that remaining 15% releases to you automatically. This is not money that disappears — it is money that is yours as long as the customer stays active. Think of it as a built-in savings mechanism tied to your performance.</p>
+  </div>
+
+  <div class="subsec" id="chargeback">
+    <h3>The 90-Day Chargeback Window</h3>
+    <p>If a customer cancels their service within 90 days of install completion, you will receive a chargeback on that account. This means the M1 commission you were paid for that install will be deducted from a future paycheck. The M2 portion is simply withheld and never paid out.</p>
+    <div class="callout">
+      <div class="clabel">Why compliance matters</div>
+      <p>Pitching free trials, making promises outside of what the ISP offers, or rushing customers who aren't fully committed all increase your cancel rate and your chargeback exposure. Every cancellation is a double hit — you lose the original commission and you get the M1 clawed back. Protect your earnings by selling customers who are genuinely sold. A sale that cancels in 60 days isn't a sale. It's a liability.</p>
+    </div>
+  </div>
+
+  <div class="subsec" id="isp-pay">
+    <h3>Pay Schedules by ISP</h3>
+    <p>The timing of when your install converts to a paycheck varies by ISP. Here is the complete breakdown for every provider Prolific works with.</p>
+    <div class="card tick">
+      <div class="clabel" style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:10px">Standard — paid 2 Fridays after install week</div>
+      <p style="margin-top:0">If your install completes during a given week, you are paid two Fridays later. These ISPs all follow the same cadence:</p>
+      <p style="font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--text);line-height:2">Astound · Frontier · AT&amp;T · Bluepeak · Omni · Optimum · Tru Vista · Verizon · Wire 3 · Xfinity</p>
+    </div>
+    <h4>Brightspeed — Exception</h4>
+    <p>Brightspeed pays 1 Friday after funding. Funding typically occurs 1–2 weeks after install completion, which means your total wait time from install to pay is roughly 2–3 weeks depending on when funding processes. You are paid on the Friday following the funding confirmation.</p>
+    <h4>Kinetic — Exception</h4>
+    <p>Kinetic follows a biweekly pay cycle rather than weekly. The same 2+ week post-install timeline applies, but instead of every Friday, Kinetic payments process every other Friday. If you are running a Kinetic blitz, plan your finances accordingly — you will not see a Kinetic paycheck every week.</p>
+    <h4>Ting — Exception</h4>
+    <p>Ting pays 3 weeks after sale confirmation rather than 2 weeks after install completion. The starting point is also different — it is based on confirmation of the sale, not the install date. Factor this in when projecting your income on Ting markets.</p>
+  </div>
+
+  <div class="subsec" id="disputes">
+    <h3>Payroll Issues &amp; Disputes</h3>
+    <p>If your Wednesday pay report shows something missing or incorrect, do not wait until Friday hoping it works itself out. Text the League One Stop support line at <b>866-605-5076</b> and start your message with the word <b>"PAYROLL."</b> Support hours are Monday–Friday, 9am–5pm Mountain Time.</p>
+    <p>For anything that requires escalation beyond the One Stop line, contact the Prolific Support Line at <b>949-827-9851</b>, available Monday–Saturday, 9am–8pm Mountain Time. Do not let a pay issue sit. Address it immediately, use the right channel, and follow up if you don't hear back within 24 hours.</p>
+  </div>
+</section>
+<section class="sec" id="laws">
+  <div class="sec-num">06 — Foundation</div>
+  <h2>The 7 Laws of D2D</h2>
+  <p class="lead-in">These are the foundational principles that separate reps who grind it out and go home with nothing to show for it from the ones who build real careers and real income. Study these. Internalize them. Come back to them when things get hard. The 7 Laws aren't motivational content — they are operating principles.</p>
+<div class="subsec law" id="law1">
+  <div class="lawnum">Law 1</div>
+  <h3>Law of Clarity</h3>
+  <div class="quote">“All achievement begins with knowing exactly what you want and focusing your energy on that single, unwavering objective.”</div>
+  <p>Most reps show up to the doors with a vague idea of what they want. They say things like "I want to make good money this summer" or "I want to do well." That's not a goal — that's a wish. The Law of Clarity demands more than that.</p><h4>Clear Goal</h4><p>Write your goals out as clearly and specifically as possible. Have one chief aim — the single most important outcome you are working toward. Make it visible. Put it on a goal board, set it as your phone screensaver, write it on paper and read it every morning. A goal that lives only in your head is easy to forget when things get hard. Making it visible makes it real. The reps who hit their goals aren't smarter or more talented than the ones who don't — they simply had a clearer picture of what they were working toward and looked at it every day.</p><h4>Clear Path</h4><p>Knowing what you want is only half of it. You also need to understand exactly what it will take to get there. Break it down through reverse engineering. If you want to install 100 accounts this quarter, work backwards — how many sales does that require per week? Per day? How many doors do you need to knock to generate that many sales based on your current ratio? Blind goals are empty dreams. The rep who has a clear goal and a clear path to it walks out the door every morning with a completely different energy than the rep who is just "going out to knock."</p>
+</div>
+<div class="subsec law" id="law2">
+  <div class="lawnum">Law 2</div>
+  <h3>Law of Averages</h3>
+  <div class="quote">“If you do something enough, a ratio will begin to appear.”</div>
+  <p>D2D is a numbers game. The rep who understands this never has a truly bad day — they only have days that are building toward their ratio. The rep who doesn't understand it gets emotionally destroyed by rejection and quits before the numbers ever get a chance to work in their favor. Rejection in D2D is not personal — it is statistical. Every door that doesn't sell is part of the equation that makes the door that does sell possible.</p><h4>Find the Ratio</h4><p>Over your first 30 days, track every KPI — doors knocked, conversations had, speed tests run, sales made, installs completed. Use a tally app to track doors, conversations, and speed tests in real time. Use the League Fiber App to track sales and installs. After 30 days, your ratio will start to reveal itself. You'll know exactly how many doors it takes to get a conversation, how many conversations it takes to close a sale, and how many sales convert to installs. That ratio is your baseline.</p><h4>Use the Ratio</h4><p>Once you have your ratio, it becomes your roadmap. Match your daily door goals to your install targets. If you know it takes 80 doors to close 2 sales and you want 3 sales today, you know you need to knock at least 120 doors. It's math, not luck. Keep tracking your KPIs as you train and develop your skills, and watch the ratio improve over time. Your ratio should be improving every single month. If it isn't, your training isn't working.</p>
+</div>
+<div class="subsec law" id="law3">
+  <div class="lawnum">Law 3</div>
+  <h3>Law of Intentionality</h3>
+  <div class="quote">“Personal growth and success do not happen by accident.”</div>
+  <p>The gap between where most people are and where they want to be is not a lack of talent or opportunity. It's a lack of intention. Most people are drifting — going through the motions, existing, reacting to whatever the day brings them. Drifters guarantee failure. By default, we are either growing or dying. If you are not actively getting better, you are getting worse. There is no neutral.</p><h4>Drifting</h4><p>Drifting looks like showing up to the doors without a plan, skipping training because you're tired, letting distractions eat your prime hours, and telling yourself you'll be more focused tomorrow. Drifters find reasons. High performers find ways. The dangerous thing about drifting is that it feels comfortable. You're still showing up. You're still knocking on doors. You just aren't being intentional about any of it — and the results reflect that every time.</p><h4>Structure</h4><p>Intentionality requires structure. Weekly planning sessions, daily training, and a locked-in schedule for the doors are not optional for serious reps — they are the baseline. Build habits that support your growth and development. Eliminate distractions during your working hours. Intention without structure is just motivation — and motivation fades. Structure is what makes intention durable.</p>
+</div>
+<div class="subsec law" id="law4">
+  <div class="lawnum">Law 4</div>
+  <h3>Law of Consistency</h3>
+  <div class="quote">“You must first become consistent before you can become exceptional.” — Hormozi</div>
+  <p>Intensity gets attention. Consistency builds careers. You will have big days — days where everything clicks and you close deal after deal. And you will have slow days where nothing seems to work. The Law of Consistency says that neither of those days matters as much as what you do every single day in between.</p><h4>Compound Effect</h4><p>Your actions compound over time. The first phase of anything is always the slowest and the least rewarding — this is where most people quit. Think about a penny doubled every day for 30 days. On day 10 you have $5.12. On day 20 you have $5,242. On day 30 you have over $5 million. The explosive growth only happens because of everything that came before it. Do not quit before the compounding kicks in.</p><h4>Inertia</h4><p>An object in motion stays in motion. Consistency breeds more consistency. Once you build a rhythm — a daily routine, a knocking habit, a training practice — keeping it going is far easier than starting it fresh after a break. This is why we live by the rule of no more than one day off. Taking two days off doesn't just cost you two days of sales. It costs you momentum, and momentum is one of the most valuable assets in D2D.</p>
+</div>
+<div class="subsec law" id="law5">
+  <div class="lawnum">Law 5</div>
+  <h3>Law of Adaptability</h3>
+  <div class="quote">“All failure is the failure to adapt; all success is successful adaptation.” — Max McKeown</div>
+  <p>D2D is unpredictable. Markets change. ISP promotions change. Neighborhoods are different. Customers are different. Weather happens. Plans fall apart. The rep who needs everything to be perfect in order to perform will never reach their potential. The rep who can adapt to anything is unstoppable.</p><h4>Expect Challenges</h4><p>Things will go wrong. That is not a possibility — it is a certainty. The rep who plans for adversity doesn't get thrown off balance when it arrives. Prepare for the bad days, the rough neighborhoods, the slammed doors, the ISP system outages, and the canceled installs. When you expect things to be easy and they aren't, you break. When you expect things to be hard and they are, you adapt.</p><h4>Do or Do Not</h4><p>There is no "try" at Prolific. Saying you tried gives you an out — a way to feel okay about not getting the job done. We either get it done or we don't. Be the rep who figures it out regardless of what the day throws at them. The question is never "why isn't this working?" The question is always "what do I need to change to make this work?"</p>
+</div>
+<div class="subsec law" id="law6">
+  <div class="lawnum">Law 6</div>
+  <h3>Law of Ownership</h3>
+  <div class="quote">“When a team takes ownership of its problems, the problem gets solved.” — Jocko Willink</div>
+  <p>The single most common trait of underperforming reps is blame. The neighborhood was bad. The leads were bad. The weather was bad. My manager didn't help me enough. The Law of Ownership eliminates blame entirely — not because those things aren't sometimes true, but because blame never closes a deal. Blame is a defense mechanism that protects your ego at the cost of your growth.</p><h4>Take Responsibility</h4><p>Ownership means taking responsibility for finding solutions rather than assigning blame. When something goes wrong, the first question is not "whose fault is this?" The question is "what could I have done differently to produce a better outcome?" That question is where growth lives. The moment you stop asking what you could have done differently is the moment you stop improving.</p><h4>Accountability</h4><p>Ownership is contagious. The level of accountability you bring to your work becomes the standard for the people around you. High-ownership reps build high-ownership teams. Low-ownership reps drag everyone down with them. Every morning you walk out the door, you are setting the standard for the people watching you. Choose the standard you want to set.</p>
+</div>
+<div class="subsec law" id="law7">
+  <div class="lawnum">Law 7</div>
+  <h3>Law of the Lid</h3>
+  <div class="quote">“Success is not limited by opportunity as much as it is by leadership.”</div>
+  <p>This law applies to every rep, not just managers. Your leadership ability — the way you lead yourself, manage your mindset, and influence the people around you — sets a ceiling on how far you and your team can go. You can have the best market, the best ISP, the best promotion, and the best manager in the organization — and still underperform, if your leadership of yourself is weak.</p><h4>What's Your Lid</h4><p>Your leadership ability determines how effective you and everything connected to you can become. A rep who leads themselves well — who shows up on time, trains daily, manages their emotions under pressure, and holds themselves to a high standard — raises the ceiling for their own results. Your lid is not fixed. But it does limit you until you raise it.</p><h4>Raise Your Lid</h4><p>The good news is that leadership is a skill, not a trait. It can be developed. When leaders improve their ability to communicate clearly, build trust, delegate effectively, develop the people around them, and make confident decisions, the performance of the entire team rises with them. Invest in your leadership. Read. Train. Study the reps and managers who are outperforming you and figure out why. Raise your lid and watch your ceiling disappear.</p>
+</div>
+</section>
+<!-- ============ FIBER ============ -->
+<section class="sec" id="fiber">
+  <div class="sec-num">07 — Product</div>
+  <h2>Introduction to Fiber</h2>
+  <p>Fiber internet is a high-speed internet connection that uses fiber-optic cables — thin strands of glass or plastic — to transmit data as pulses of light. This allows information to travel much faster and more reliably than through traditional copper cables used in DSL or cable internet. They have been running these fiber lines throughout neighborhoods for years. Our job is to go to those neighborhoods and get those homes connected to the line that goes down the street. Each home we sell will get their own dedicated fiber line to the master line.</p>
+  <p><b>"Drops"</b> are the verbiage for when the home is connected to the main fiber line that will run down their street. This usually follows the same type of connection as the home's power lines. If the home's power lines are underground or overhead, the fiber lines will match that.</p>
+  <p><b>Why Fiber?</b> Currently through Coax (Copper) lines, our nation's infrastructure doesn't have unlimited bandwidth and the lines have to be relaid every time we want to upgrade. With Fiber, we never have to relay the lines and every home will get symmetrical speeds for download and upload.</p>
+  <h4>Faster Speeds</h4>
+  <p>Fiber is capable of delivering gigabit or multi-gigabit speeds for both downloads and uploads. This is not a marginal improvement over what most customers currently have — it is a generational leap in capability.</p>
+  <h4>Greater Reliability</h4>
+  <p>Fiber is far less affected by weather or distance than copper-based internet, offering a more stable and consistent connection. The outages and slowdowns customers experience during peak hours or bad weather are largely a result of the limitations of the infrastructure they are currently on.</p>
+  <h4>Low Latency</h4>
+  <p>Fiber is ideal for video calls, gaming, and streaming where real-time response matters. The lag customers experience on Zoom calls and FaceTime is a direct result of upload speed limitations that fiber solves completely.</p>
+  <h4>Future-Ready</h4>
+  <p>Fiber can handle growing data demands as technology continues to evolve. Unlike copper infrastructure, fiber does not need to be replaced as speeds increase — the same lines can carry exponentially more data as technology improves. The customer who gets on fiber today is not just solving their current problem. They are future-proofing their home.</p>
+</section>
+
+<!-- ============ PITCH ============ -->
+<section class="sec" id="pitch">
+  <div class="sec-num">08 — The Pitch</div>
+  <h2>The Pitch &amp; Script</h2>
+
+  <div class="subsec" id="skeleton">
+    <h3>The Skeleton of the Pitch</h3>
+    <p>Every ISP, every market, and every promotion will be different. But the structure of a great pitch never changes. Master these six steps and you will have a repeatable system that works regardless of what door you're standing at.</p>
+
+    <div class="step"><div class="snum">Step 1</div><h4>Intro</h4>
+      <p>The goal of the intro is to get their attention, establish who you are, and clearly explain why you're working in their neighborhood. You have about 5–10 seconds before the customer decides whether to engage or shut you down. Lead with confidence, a genuine smile, and a clear reason for being there. The customer needs to understand two things immediately: who you are and why you're there. Keep it simple. Your only job in the intro is to earn the next 30 seconds of their attention.</p></div>
+
+    <div class="step"><div class="snum">Step 2</div><h4>Discovery</h4>
+      <p>Before you pitch anything, you need to gather information. This is not small talk — it is intelligence gathering that will make every subsequent step of your pitch more effective and more personal. Find out three things:</p>
+      <ul>
+        <li><b>Who do they currently use</b> for their internet? This tells you who you're competing against and what the customer's baseline experience has been.</li>
+        <li><b>What other services are they bundling</b> with that provider? Understanding what they're bundled into tells you how sticky their current situation is and whether there's a consolidation angle.</li>
+        <li><b>How much are they currently paying?</b> Get a number. When you ask them to pull up a recent bill, the number is almost always higher than they thought. That moment of surprise is your ally.</li>
+      </ul>
+      <p>Listen more than you talk during this step. The answers the customer gives you here are the foundation for everything that comes next.</p></div>
+
+    <div class="step"><div class="snum">Step 3</div><h4>Build Pain</h4>
+      <p>The goal of this step is not to talk negatively about their current provider. It's to surface the frustrations they've likely already experienced but haven't had a reason to act on. Reference what you've been hearing in the neighborhood — slow or inconsistent speeds, prices that have crept up year over year, long hold times, frequent outages. Then ask if any of that sounds familiar. Most of the time it will.</p>
+      <p>After that, have them run a speed test. Ask them to grab their phone and type "wifi speed test" into Google. The blue box will run the test instantly. What they see on that screen — especially their upload speed — almost always does the work for you. Let the data build the pain.</p></div>
+
+    <div class="step"><div class="snum">Step 4</div><h4>The Hook</h4>
+      <p>Now that the customer feels the gap between what they're paying and what they're getting, this is where you fill it. The hook is your promotion — delivered clearly, with confidence, and tailored directly to what matters most to this specific customer. Build value around the benefits — symmetrical speeds, dedicated fiber line, reliability — then present the price and any incentives. The key to a great hook is hitting their <b>hot button</b> — the specific pain point that resonated most in step three.</p></div>
+
+    <div class="step"><div class="snum">Step 5</div><h4>Show Plans</h4>
+      <p>This is where you step into the friend zone. Move shoulder to shoulder with the customer and present the plan on your tablet or phone as if you're two people looking at something together. Present the plan that makes the most sense for them specifically — don't dump every available option on them and create decision fatigue. Use your discovery to guide your recommendation. Keep this step simple and conversational.</p></div>
+
+    <div class="step"><div class="snum">Step 6</div><h4>Assume the Sale</h4>
+      <p>Do not ask the customer if they want to sign up. Assume they do. The close is not a question — it is a continuation of the conversation that began the moment they opened the door. <b>"What day works better for you — Thursday or Friday?"</b> is how you close. "So would you like to move forward?" is a hesitation. A customer who is still standing there at step six is almost always a customer who just needs you to take the wheel.</p></div>
+  </div>
+
+  <div class="subsec" id="example-pitch">
+    <h3>Example Pitch</h3>
+    <div class="pitchscript">
+<p class="pl rep"><b>Rep:</b> Hey, how's it going? I'm _____ with _____, the fiber company. I'm sure you've noticed our trucks out here — we've been running fiber lines through the neighborhood over the last several months and now we're coming around connecting homes to the line that runs down your street.</p>
+<p class="pl rep"><b>Rep:</b> Quick question before I show you what we're doing out here — who are you guys with for internet right now?</p>
+<p class="pl cust"><b>Customer:</b> Xfinity.</p>
+<p class="pl rep"><b>Rep:</b> Got it. And are you bundling anything with them — TV, a phone line, anything like that?</p>
+<p class="pl cust"><b>Customer:</b> No, just internet.</p>
+<p class="pl rep"><b>Rep:</b> And do you know roughly what you're paying a month for that?</p>
+<p class="pl cust"><b>Customer:</b> I think around $90 or so. Maybe more, I'm not totally sure.</p>
+<p class="pl rep"><b>Rep:</b> Okay, perfect.</p>
+<div class="pbeat">— Build Pain —</div>
+<p class="pl rep"><b>Rep:</b> So the reason we're upgrading the lines in your neighborhood is that a lot of people have been dealing with the same things — speeds that are inconsistent, especially in the evenings, and then Xfinity keeps bumping the bill up every year without giving you anything extra for it. Have you guys dealt with any of that?</p>
+<p class="pl cust"><b>Customer:</b> Yeah honestly the speeds have been pretty bad lately, especially at night.</p>
+<p class="pl rep"><b>Rep:</b> That's exactly what everyone's been saying. It's the old copper infrastructure — it's a shared line, so the more people using the internet in your area at once, the slower it gets for everyone. Here, grab your phone real quick and type “wifi speed test” into Google for me — the blue box will run it right there.</p>
+<p class="pl cust"><b>Customer:</b> Okay hold on… it says 147 download and 8 upload.</p>
+<p class="pl rep"><b>Rep:</b> See that upload speed — 8 megabits. That's why if you've ever been on a FaceTime or a Zoom call and it's pixelated or keeps cutting out, it's your upload speed. You're paying around $90 a month for that. Let me show you what we're doing for your neighbors.</p>
+<div class="pbeat">— The Hook —</div>
+<p class="pl rep"><b>Rep:</b> So while we're out here, we're getting people set up on a full gigabit of fiber — that's a thousand download and a thousand upload, for $__ a month locked in for a full year. And since we're already out here connecting the lines, the install and all the equipment is completely free. No technician fee, no equipment rental, nothing. Cheaper price & faster speeds.</p>
+<div class="pbeat">— Show Plans — step shoulder to shoulder, pull up the plan —</div>
+<p class="pl rep"><b>Rep:</b> So this is what I've been setting everyone up with out here. One full gig — a thousand up and a thousand down — locked in at $_____ a month for the first year. No contracts, free install, all new equipment included. Based on what you're paying now and what you're getting, it's a no-brainer upgrade. I just set your neighbor up with this same plan two doors down.</p>
+<div class="pbeat">— Assume the Sale —</div>
+<p class="pl rep"><b>Rep:</b> We've got installs going in this area Thursday and Friday. What's your last name so I can pull up our install schedule?</p>
+<p class="pl cust"><b>Customer:</b> It's Johnson.</p>
+<p class="pl rep"><b>Rep:</b> And the best number to reach you at for the install confirmation?</p>
+<p class="pl cust"><b>Customer:</b> 555-whatever.</p>
+<p class="pl rep"><b>Rep:</b> Morning or afternoon work better for you on Thursday?</p>
+<p class="pl cust"><b>Customer:</b> Morning is better.</p>
+<p class="pl rep"><b>Rep:</b> Morning it is. Let me grab your address to complete the order and we'll get you all set.</p>
+</div>
+  </div>
+  </div>
+
+  <div class="subsec" id="tailoring">
+    <h3>Tailoring Your Pitch</h3>
+    <p>The most successful reps at Prolific use local knowledge mixed with the promotion to tailor their pitch to the homeowner's specific needs. If you're knocking in a small city that has bad reception, customers' concerns may be around having a consistent signal or frequent outages rather than the highest possible speeds. If you're in an area with a lot of remote workers, the focus should be on upload speed and video call reliability. If you're in a neighborhood with a lot of families, streaming and gaming speed for multiple devices at once is the angle.</p>
+    <p>For example, in an area with known outage issues: <i>"We're out here helping more people get set up with fiber to avoid the outages your neighborhood has been experiencing. Do you guys have outages more during bad weather or does it happen more frequently?"</i></p>
+    <p>Tailoring your pitch gives you validity — you know the situation there — and gives you genuine confidence that what you're selling actually benefits this specific homeowner. What's important is that you become the <b>"Fiber Guy"</b> in your neighborhood. Whether you make the sale or not, don't be afraid to ask homeowners questions to get to know the area. The more you know about the neighborhood, the more authentic and effective your pitch becomes.</p>
+  </div>
+</section>
+
+<!-- ============ AREA MANAGEMENT ============ -->
+<section class="sec" id="area">
+  <div class="sec-num">09 — In the Field</div>
+  <h2>Area Management &amp; Schedule</h2>
+
+  <div class="subsec" id="area-mgmt">
+    <h3>Area Management</h3>
+    <p>Area management is vitally important in your success, your relationship with the ISP, and the overall success of your blitz. When you're given an area it will be on the door knocking app provided by the ISP. Your area will show pins on homes that are serviceable and won't show pins on homes that are already customers or aren't serviceable.</p>
+    <p>You should always have a plan at the beginning of the day on where you'll be and what you'll be doing the entire time. As you work your neighborhood in the morning, only hit homes with signs of life — cars in the driveway, window shades open, and other hints that people are possibly home. If someone isn't home, take notes of what cars are there. This will give you more signs of life when you walk past in the evening and see another car has appeared.</p>
+    <p>The worst mistake rookies make is not taking good notes. You'll find yourself walking around the neighborhood confused about where you've been or who you've spoken to. As you take good notes, the days following in that same area will have more purpose. You'll be able to plan out the exact homes to follow up with and name drop the sales you got in previous days, which gives you validity and makes you the "fiber guy" in that area. Homeowners talk to each other. When they hear their neighbor already signed up, your job gets easier.</p>
+    <p><b>ISPs check our activity.</b> The better the notes, the more sales per neighborhood. Making a plan is key to making the most out of an area. Plan before you go, plan the first 10 doors you'll knock, and take good notes throughout the entire day.</p>
+  </div>
+
+  <div class="subsec" id="schedule">
+    <h3>Daily Schedule</h3>
+    <p style="font-style:italic;color:var(--accent)">"Proper planning prevents poor performance."</p>
+    <p>The following is an example of a productive daily schedule. Your specific hours may vary by market and manager, but the principles of how to structure your time within those hours apply universally.</p>
+    <div class="step"><div class="snum">11am – 3pm</div><h4>Signs of Life &amp; Early Deals</h4>
+      <p>During this window you'll find a lot of older folks home as well as people who work from home who need good internet. Set a goal for sales before 3pm. Selling 1, 2, or 3 deals before 3pm lets you take a deep breath going into the later part of the day. An extra sale every day before 3pm adds 20–30% more to your total income for the year. If a non-decision maker needs to talk to their partner, schedule a callback for the end of the day — it gives you more chances for late-night deals that many reps miss.</p></div>
+    <div class="step"><div class="snum">4pm – 8pm</div><h4>Prime Time</h4>
+      <p>The most important selling window of the day. People are getting home from work and decision makers are finally home. <b>This is where 70% of your sales will happen.</b> You should be pushing through fresh areas you haven't hit yet — saving your best untouched territory for prime time is a legitimate strategy. Do not use this window for callbacks. Every minute between 3pm and 8pm should be spent finding people you haven't spoken to yet.</p></div>
+    <div class="step"><div class="snum">8pm – 9pm</div><h4>Callbacks &amp; Finishing Strong</h4>
+      <p>You're tired. You've been working all day. None of it is a reason to go home. Another 20–30% of your daily business comes from working after dark. The people you're visiting during this window are the ones least spoken to by other reps, and the non-decision makers from earlier whose decision maker is now home. Don't be the rep who goes home at 7pm and wonders why their numbers are always just short of their goals.</p></div>
+  </div>
+</section>
+
+<!-- ============ COMPLIANCE ============ -->
+<section class="sec" id="compliance">
+  <div class="sec-num">10 — Standards</div>
+  <h2>Compliance &amp; Communication</h2>
+  <p>While you're selling fiber you are representing the ISP you're selling for and Prolific. Everything you do in the field reflects on both organizations. Do not do anything that would hurt either's reputation.</p>
+  <div class="callout"><div class="clabel">Take this seriously</div><p>If you break compliance standards with any ISP it is possible that they will ban you from selling with them permanently. A single compliance violation can end your ability to work with a provider entirely — and in some cases, that information follows you to other ISPs as well. Compliance is the foundation of trust between Prolific, The League, and our ISP partners. Without that trust, there are no blitzes, no markets, and no opportunities.</p></div>
+  <p>Every ISP has their own specific compliance standards. The following are the key rules that are standard across all providers:</p>
+  <ul>
+    <li><b>Wear your ISP gear and badge at all times</b> in the field. If you don't have what you need, speak with your manager before going out. Showing up at a door without proper identification creates immediate distrust.</li>
+    <li><b>Do not ever pitch a free trial</b> at the door. For you to receive your full commission and avoid a chargeback, the customer needs to stay active for 90 days. Pitching a free trial attracts customers who have no intention of keeping the service.</li>
+    <li><b>Act professionally with all customers</b> at all times. This includes walking away from arguments, never acting out of emotion, and never insulting or belittling a customer. No sale is worth a compliance report. Walk away, reset, and move to the next door.</li>
+    <li><b>Never use your personal information</b> while signing up a customer — including your personal email if the customer doesn't have one. Always use the appropriate fields and protocols provided by the ISP's ordering system.</li>
+    <li><b>Refrain from promising anything outside of what the ISP officially offers.</b> Back-door promises — discounts, add-ons, install guarantees that aren't part of the official offer — hurt the ISP's reputation and create expectations that will never be met. When a customer calls to complain, that complaint comes back to us.</li>
+  </ul>
+</section>
+
+<!-- ============ NON-VERBAL ============ -->
+<section class="sec" id="nonverbal">
+  <div class="sec-num">11 — Delivery</div>
+  <h2>Non-Verbal Skills</h2>
+  <p class="lead-in">What you don't say matters as much as what you do say. Non-verbal communication is happening from the moment the door opens — before you say a single word, the customer is already forming an opinion about whether you are trustworthy, confident, and worth listening to.</p>
+  <h4>Smile</h4><p>Look sincere. Smile with your eyes, not just your mouth. A smile is your greatest asset — it releases endorphins in both you and the customer and creates an immediate sense of warmth and openness. A forced smile reads as fake. Practice smiling genuinely until it becomes natural.</p>
+  <h4>Head Nod</h4><p>Use full head movement, focusing on moving your chin up and down. Wait for a confirmation — a small "yes" from the customer — before moving on. Every nod the customer returns is a micro-commitment that makes the eventual close easier.</p>
+  <h4>Posture</h4><p>Stand up straight with your shoulders back. This is one of the single biggest indicators of confidence. Slouching signals insecurity. Good posture signals that you belong there.</p>
+  <h4>Eye Contact</h4><p>Maintain solid eye contact throughout your pitch. Looking away too much signals dishonesty or nervousness. Too much right at the start can feel confrontational. Plan your natural look-aways and return to solid eye contact consistently.</p>
+  <h4>Body Position</h4><p>Stand on the hinge side of the door, almost completely sideways, so they can see the walkway and feel that you're not blocking their exit. Put your weight on your front foot to signal that you are present and attentive. Never square your shoulders directly to the customer — that reads as confrontational.</p>
+  <h4>Slow Movements</h4><p>Look up slowly when the customer opens the door. When you point at the logo on your shirt or at anything in the environment, move extremely slowly. Fast movements look nervous. Slow movements communicate confidence and intentionality.</p>
+  <h4>Statue Stance</h4><p>Stand completely still. No shuffling feet, no shifting weight, no fidgeting. Unplanned, unconscious movements make you look nervous. The stillness itself communicates that you are completely comfortable where you are.</p>
+</section>
+
+<!-- ============ PARA-VERBAL ============ -->
+<section class="sec" id="paraverbal">
+  <div class="sec-num">12 — Delivery</div>
+  <h2>Para-Verbal Skills</h2>
+  <p class="lead-in">Para-verbal refers to how you say what you say — your volume, speed, tone, and pausing. These elements often carry more weight than the actual words of your pitch. You can have the most perfectly crafted script in the world and blow it entirely with the wrong delivery.</p>
+  <h4>Volume</h4><p>Speak softly and calmly. Match the customer's volume naturally. If they whisper because a baby is sleeping, you whisper too. Matching volume is one of the fastest ways to build unconscious rapport.</p>
+  <h4>Speed</h4><p>Speak very slowly. This is one of the most common mistakes rookies make — talking too fast. Fast talkers make customers nervous and come across as pushy. When something is important to us, we slow down and emphasize. It also gives the customer time to absorb what you're telling them.</p>
+  <h4>Pauses</h4><p>Silence is golden — especially after head nods while waiting for a customer's confirmation. Confident people are completely comfortable with silence and use it intentionally. Amateur reps talk through their closes. Experienced reps pause after them and let the silence do the work.</p>
+  <h4>Down Tones</h4><p>Finish your sentences with your vocal tone going down. An upward inflection makes it sound like a question — like you're seeking approval. A downward inflection signals confidence, knowledge, and authority.</p>
+  <h4>Tone Matching</h4><p>Mirror the customer's energy and personality. If they're cheerful and warm, match that. If they're serious and no-nonsense, be more direct. People are naturally drawn to people who feel like them.</p>
+  <h4>Bottled Enthusiasm</h4><p>Act like a kid who has a secret they're so excited about that they can barely contain it. Not loud or over-the-top, but barely-contained excitement. Especially effective when you're about to show them their speed test results or reveal the promotion. If you're excited about what you have to offer, they become excited about hearing it.</p>
+</section>
+
+<!-- ============ SMOKE SCREENS ============ -->
+<section class="sec" id="smoke">
+  <div class="sec-num">13 — Handling</div>
+  <h2>Smoke Screens</h2>
+  <p>Smoke screens are unique in that they don't represent the real thoughts of the customer. They are things people say to get you off their doorstep so they don't have to deal with you. They typically come during the initial approach — while the customer barely knows anything about what you're selling. They are a reflexive response to being approached, not a genuine objection. The most common are <b>"No thanks," "I'm not interested,"</b> and <b>"I'm good."</b></p>
+  <p>The key to smoke screens is to treat them as almost nothing — because that's exactly what they are. The customer hasn't heard enough to have a real opinion yet. You want to say something that lets them know you heard them, but spend as little time addressing it as possible before continuing with your pitch. <b>Do not stop. Do not apologize. Do not validate the smoke screen by treating it like a serious objection.</b></p>
+  <p>Whenever you receive a smoke screen, always smile and nod as they speak. Then respond with a bigger smile and the word <b>"sure."</b> You want it to seem as if you expected them to say exactly that. Do not shift your weight. Do not break eye contact. No deer in the headlights. Never, under any circumstances, repeat their concern back to them — ("Oh, you're not interested?") — this locks the smoke screen in and turns it into a real wall.</p>
+  <div class="card tick">
+    <div class="clabel" style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:10px">Responses — use in this order</div>
+    <p style="margin:8px 0"><b>First:</b> "Sure, your internet isn't horrible, but why pay more for less?"</p>
+    <p style="margin:8px 0"><b>Second:</b> "Sure, I'll just show you what I'm doing for your neighbors, that way at least you know what's going on."</p>
+    <p style="margin:8px 0"><b>Third:</b> "Sure. You've lived here for a while… so you know how it gets during the evening or winter time with the slow internet and outages."</p>
+  </div>
+  <p>Use these phrases in order because simpler is always better. Only move to the second or third if the first doesn't hold them. <b>Never use two smoke screen responses in one go</b> — you will come across as desperate. One response, delivered with a smile and unwavering confidence, is almost always enough.</p>
+</section>
+
+<!-- ============ OBJECTIONS ============ -->
+<section class="sec" id="objections">
+  <div class="sec-num">14 — Closing</div>
+  <h2>Objections &amp; The Sales Wheel</h2>
+
+  <div class="subsec" id="obj">
+    <h3>Objections</h3>
+    <p>An objection is a real concern of the customer — something that is actually standing in the way of them buying. Unlike a smoke screen, which is reflexive, an objection is a genuine reason the customer has identified for not moving forward. Common objections include "I don't like contracts," "I need to talk to my spouse," "I want to shop around," and "I already have internet and it's fine." Customers will often have more than one.</p>
+    <p>Your initial reaction to any objection should be exactly like your reaction to a smoke screen — a big smile, head nods, and "sure." The worst thing you can do is react with visible concern, frustration, or defeat. The customer is watching your reaction as much as they're listening to your response.</p>
+    <p><b>Turn Negatives Into Positives:</b> If done effectively, this immediately defuses tension. Use phrases like <i>"That's actually the best thing about us"</i> or <i>"I'm glad you brought that up."</i> Combined with a smile and a head nod, you're reframing the objection from a problem into a strength.</p>
+  </div>
+
+  <div class="subsec" id="rac">
+    <h3>R.A.C. — Resolve, Ace, Close</h3>
+    <div class="step"><div class="snum">R</div><h4>Resolve</h4>
+      <p>In order to ease the mind of the customer, they must have a logical reason why their concern is not going to be an issue. The resolve is different for every objection. Over time, learn at least three resolutions for each common objection so you never sound like a broken record. The resolve is not about winning an argument — it is about giving the customer the logical permission they need to move forward.</p></div>
+    <div class="step"><div class="snum">A</div><h4>Ace</h4>
+      <p>An ace is something that reminds the customer why they are buying and sweetens the deal — usually a free add-on or a price reduction. When you drop an ace, make it feel like it costs you something. Take a big deep breath, pause as if you're deciding, then commit: <i>"Tell you what. I know you're going to love the service. Give me a shot while I'm already here with your neighbors, and I'll even throw in a $100 gift card — that way it's a no-brainer."</i> The theatrics matter. If you casually toss in an incentive, it feels like a trick. If you make it feel like a genuine concession, it lands as a gift.</p></div>
+    <div class="step"><div class="snum">C</div><h4>Close</h4>
+      <p>After the ace, move immediately to a soft close. Read the customer and commit. Don't ask if they want to move forward — assume they do and start scheduling. <b>"What day works better for you — Thursday or Friday?"</b> is always more effective than "So do you want to sign up?"</p></div>
+  </div>
+
+  <div class="subsec" id="wheel">
+    <h3>The Sales Wheel</h3>
+    <p>The Sales Wheel is a cycle, not a one-time play. A wheel revolves over and over again — and that's the point. You'll go through the wheel more than once in a single door interaction. Even genuinely interested customers raise objections before they commit, and the Sales Wheel gives you a structure for navigating that without losing your place or your confidence.</p>
+    <div class="chain" style="margin:18px 0">
+      <span class="node">Build Value</span><span class="arrow">→</span>
+      <span class="node">Resolve</span><span class="arrow">→</span>
+      <span class="node">Acknowledge</span><span class="arrow">→</span>
+      <span class="node">Close</span><span class="arrow">↻</span>
+    </div>
+    <p>These four stages repeat until the customer either buys or gives you a hard no that has been tested and confirmed. Your primary goal on every pass through the wheel is to <b>build value.</b> Maximize the positives of the service before you reach for a price drop or an ace. A customer who understands and believes in the value of fiber is a customer who stays installed and doesn't cancel. A customer who signed up only because you kept lowering the price is a chargeback waiting to happen.</p>
+    <p><b>Never drop the price on your first pass through the wheel.</b> Wait until the second or third time through before you resort to price cuts. Dropping the price too soon looks suspicious — it signals that the original price was inflated. Start your pitch above the price floor so you always have somewhere to go. Do not over-explain. The depth of your resolve should match the seriousness of the objection. And always remember: the goal of the Sales Wheel is not to wear the customer down. It is to systematically remove the barriers between them and a decision they will be genuinely happy with.</p>
+  </div>
+</section>
+
+<div class="doc-footer">
+  <span>© 2026 Prolific Fiber · Rep Playbook · Internal use only</span>
+  <span>Earned, not given.</span>
+</div>
+
+</main>
+</div>
+
+<script>
+// sidebar mobile toggle
+const sb=document.getElementById('sidebar');
+const tog=document.getElementById('sideToggle');
+const scrim=document.createElement('div');scrim.className='scrim';document.body.appendChild(scrim);
+function openSide(){sb.classList.add('open');scrim.classList.add('show');}
+function closeSide(){sb.classList.remove('open');scrim.classList.remove('show');}
+tog&&tog.addEventListener('click',()=>sb.classList.contains('open')?closeSide():openSide());
+scrim.addEventListener('click',closeSide);
+
+// collapse/expand sections + close drawer on click (mobile)
+document.querySelectorAll('.toc-sec > a').forEach(a=>{
+  a.addEventListener('click',()=>{ if(window.innerWidth<=920) closeSide(); });
+});
+document.querySelectorAll('.toc-sub a').forEach(a=>{
+  a.addEventListener('click',()=>{ if(window.innerWidth<=920) closeSide(); });
+});
+
+// scroll-spy: highlight active section + open its sub-list
+const secEls=[...document.querySelectorAll('section.sec')];
+const subEls=[...document.querySelectorAll('.subsec')];
+const tocSecs=[...document.querySelectorAll('.toc-sec')];
+const allTargets=[...secEls,...subEls];
+
+function setActive(){
+  const y=window.scrollY+ (window.innerHeight*0.28);
+  // find current section
+  let curSec=secEls[0];
+  for(const s of secEls){ if(s.offsetTop<=y) curSec=s; }
+  // find current sub
+  let curSub=null;
+  for(const s of subEls){ if(s.offsetTop<=y) curSub=s; }
+  // sidebar section state
+  tocSecs.forEach(li=>{
+    const link=li.querySelector('a');
+    const isCur=('#'+curSec.id)===link.getAttribute('href');
+    li.classList.toggle('open',isCur);
+    link.classList.toggle('active',isCur);
+  });
+  // sub link active
+  document.querySelectorAll('.toc-sub a').forEach(a=>a.classList.remove('active'));
+  if(curSub){
+    const sa=document.querySelector('.toc-sub a[href="#'+curSub.id+'"]');
+    if(sa) sa.classList.add('active');
+  }
+}
+let ticking=false;
+window.addEventListener('scroll',()=>{ if(!ticking){requestAnimationFrame(()=>{setActive();ticking=false;});ticking=true;} });
+window.addEventListener('load',setActive);
+setActive();
+
+// back to top
+const top=document.createElement('button');top.className='totop';top.innerHTML='↑';top.setAttribute('aria-label','Back to top');
+document.body.appendChild(top);
+top.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+window.addEventListener('scroll',()=>{ top.classList.toggle('show',window.scrollY>600); });
+</script>
+
+</body>
+</html>
