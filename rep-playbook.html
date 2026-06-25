@@ -224,11 +224,11 @@ nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:50;
 .sidebar{position:fixed;top:var(--nav-h);left:0;bottom:0;width:300px;
   background:var(--bg-deep);border-right:1px solid var(--stroke);
   padding:30px 14px 60px 24px;overflow-y:auto;z-index:30;transform:none}
-.content{margin-left:300px;max-width:900px;padding:40px 56px 120px;overflow-wrap:break-word}
+.content{margin-left:300px;max-width:900px;padding:calc(var(--nav-h) + 40px) 56px 120px;overflow-wrap:break-word}
 @media(max-width:768px){
   .sidebar{transform:translateX(-105%);transition:transform .28s ease;max-width:84vw;z-index:45}
   .sidebar.open{transform:none}
-  .content{margin-left:0;max-width:100%;padding:28px 22px 100px}
+  .content{margin-left:0;max-width:100%;padding:calc(var(--nav-h) + 28px) 22px 100px}
 }
 
 </style>
@@ -894,7 +894,7 @@ nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:50;
 
 <div class="doc-footer">
   <span>© 2026 Prolific Fiber · Rep Playbook · Internal use only</span>
-  <span>Earned, not given.</span>
+  <span>MTE</span>
 </div>
 
 </main>
