@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Prolific Fiber — Manager Playbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#141414;--bg-deep:#0d0d0d;
+  --panel:rgba(236,236,236,0.045);--panel-2:rgba(236,236,236,0.075);
+  --stroke:rgba(236,236,236,0.10);--stroke-strong:rgba(236,236,236,0.18);
+  --text:#ECECEC;--muted:#a39d92;--faint:#726c62;
+  --accent:#c4af9a;--accent-soft:rgba(196,175,154,0.14);--accent-line:rgba(196,175,154,0.42);
+  --accent-ink:#272727;--blue:#2a7f9e;--blue-soft:rgba(42,127,158,0.16);--blue-line:rgba(42,127,158,0.45);
+  --r:14px;
+  --nav-h:64px;
+  --side-w:300px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.6;
+  -webkit-font-smoothing:antialiased;font-size:15px}
+a{color:inherit;text-decoration:none}
+
+/* ===== atmosphere ===== */
+.atmosphere{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(110% 70% at 80% -5%,rgba(196,175,154,.06),transparent 55%)}
+
+/* ===== stripped nav ===== */
+nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:50;
+  display:flex;align-items:center;padding:0 24px;
+  background:rgba(20,20,20,.82);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--stroke)}
+.brand-logo img{height:22px;width:auto;display:block;filter:drop-shadow(0 0 12px var(--accent-soft))}
+.nav-tag{margin-left:16px;padding-left:16px;border-left:1px solid var(--stroke);
+  font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
+.nav-spacer{flex:1}
+.sidebar-toggle{display:none;background:var(--panel);border:1px solid var(--stroke-strong);color:var(--text);
+  border-radius:9px;padding:8px 12px;font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.1em;
+  text-transform:uppercase;cursor:pointer;align-items:center;gap:8px}
+
+/* ===== layout shell ===== */
+.shell{position:relative;z-index:2;padding-top:var(--nav-h)}
+
+/* ===== sidebar (fixed left rail, full height) ===== */
+.sidebar{position:fixed;top:var(--nav-h);left:0;bottom:0;width:var(--side-w);
+  overflow-y:auto;padding:30px 14px 60px 24px;border-right:1px solid var(--stroke);z-index:30}
+.sidebar::-webkit-scrollbar{width:8px}
+.sidebar::-webkit-scrollbar-thumb{background:var(--stroke-strong);border-radius:4px}
+.side-head{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--faint);padding:0 10px 14px;margin-bottom:6px;border-bottom:1px solid var(--stroke)}
+.toc{list-style:none;margin-top:14px}
+.toc-sec{margin-bottom:2px}
+.toc-sec > a{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:9px;
+  font-family:'Teko',sans-serif;font-weight:500;font-size:1.08rem;letter-spacing:.02em;text-transform:uppercase;
+  color:var(--muted);transition:.16s;line-height:1.15}
+.toc-sec > a .ix{font-family:'JetBrains Mono',monospace;font-size:.56rem;font-weight:600;color:var(--faint);
+  letter-spacing:.05em;min-width:20px}
+.toc-sec > a:hover{background:var(--panel);color:var(--text)}
+.toc-sec > a.active{background:var(--accent-soft);color:var(--accent)}
+.toc-sec > a.active .ix{color:var(--accent)}
+/* sub items */
+.toc-sub{list-style:none;margin:2px 0 8px 0;padding-left:30px;
+  border-left:1px solid var(--stroke);margin-left:18px;
+  max-height:0;overflow:hidden;transition:max-height .3s ease}
+.toc-sec.open .toc-sub{max-height:520px}
+.toc-sub li a{display:block;padding:5px 10px;border-radius:7px;font-size:.8rem;color:var(--faint);transition:.15s;line-height:1.3}
+.toc-sub li a:hover{color:var(--text)}
+.toc-sub li a.active{color:var(--accent)}
+
+/* ===== content column ===== */
+.content{margin-left:var(--side-w);max-width:980px;padding:40px 56px 120px;overflow-wrap:break-word}
+.doc-hero{padding-bottom:30px;margin-bottom:20px;border-bottom:1px solid var(--stroke)}
+.doc-hero .eyebrow{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--muted)}
+.doc-hero .eyebrow .br{color:var(--accent)}
+.doc-hero h1{font-family:'Teko',sans-serif;font-weight:600;font-size:clamp(2.6rem,6vw,4rem);line-height:.92;
+  text-transform:uppercase;margin:12px 0 10px}
+.doc-hero h1 .hot{color:var(--accent)}
+.doc-hero p{color:var(--muted);max-width:600px;font-size:1rem}
+
+/* section blocks */
+.sec{padding-top:34px;scroll-margin-top:calc(var(--nav-h) + 18px)}
+.sec-num{font-family:'JetBrains Mono',monospace;font-size:.64rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:8px}
+.sec h2{font-family:'Teko',sans-serif;font-weight:600;font-size:clamp(1.9rem,4vw,2.7rem);line-height:.95;
+  text-transform:uppercase;color:var(--text);margin-bottom:6px}
+.sec > p{color:var(--muted);margin:14px 0}
+.subsec{scroll-margin-top:calc(var(--nav-h) + 18px);padding-top:26px}
+.subsec h3{font-family:'Teko',sans-serif;font-weight:500;font-size:1.5rem;letter-spacing:.02em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:8px}
+.subsec h4{font-family:'Inter',sans-serif;font-weight:600;font-size:1rem;color:var(--text);margin:18px 0 6px}
+.sec p, .subsec p{color:var(--muted);margin:12px 0}
+.sec p b, .subsec p b, .sec li b, .subsec li b{color:var(--text);font-weight:600}
+.lead-in{color:var(--text)!important;font-size:1.02rem}
+
+/* lists */
+.doc ul, .doc ol{margin:12px 0 12px 0;padding-left:0;list-style:none}
+.doc ul li, .doc ol li{position:relative;padding-left:26px;margin:9px 0;color:var(--muted)}
+.doc ul li::before{content:"";position:absolute;left:6px;top:10px;width:6px;height:6px;border-radius:2px;
+  background:var(--accent);opacity:.7}
+.doc ol{counter-reset:li}
+.doc ol li{counter-increment:li}
+.doc ol li::before{content:counter(li);position:absolute;left:0;top:1px;
+  font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--accent);font-weight:600}
+
+/* glass card + callouts */
+.card{background:var(--panel);border:1px solid var(--stroke);border-radius:var(--r);padding:22px 24px;margin:18px 0;position:relative}
+.card.tick::after{content:"";position:absolute;top:9px;right:9px;width:12px;height:12px;
+  border-top:1px solid var(--accent-line);border-right:1px solid var(--accent-line);opacity:.6}
+.callout{border-left:2px solid var(--accent);background:var(--accent-soft);border-radius:0 12px 12px 0;
+  padding:16px 20px;margin:18px 0}
+.callout .clabel{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:6px}
+.callout p{margin:6px 0;color:var(--text)}
+
+/* data / contact rows */
+.datarow{display:flex;flex-wrap:wrap;gap:8px 28px;font-family:'JetBrains Mono',monospace;font-size:.8rem;
+  padding:10px 0;border-bottom:1px solid var(--stroke);color:var(--muted)}
+.datarow .k{color:var(--faint);text-transform:uppercase;font-size:.66rem;letter-spacing:.1em;min-width:90px}
+.datarow .v{color:var(--text)}
+.datarow .v.accent{color:var(--accent)}
+
+/* org list */
+.orglist{display:grid;gap:0;margin:14px 0}
+.orgitem{display:flex;justify-content:space-between;align-items:baseline;gap:16px;
+  padding:11px 0;border-bottom:1px solid var(--stroke)}
+.orgitem .name{font-family:'Teko',sans-serif;font-weight:500;font-size:1.25rem;text-transform:uppercase;color:var(--text);letter-spacing:.02em}
+.orgitem .role{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);text-align:right}
+
+/* chain of command */
+.chain{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:16px 0;
+  font-family:'Teko',sans-serif;text-transform:uppercase}
+.chain .node{padding:8px 16px;border:1px solid var(--stroke-strong);border-radius:10px;background:var(--panel);
+  font-size:1.1rem;letter-spacing:.02em;color:var(--text)}
+.chain .arrow{color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:.9rem}
+
+/* pay scale table */
+.payscale{margin:16px 0;border:1px solid var(--stroke);border-radius:var(--r);overflow:hidden}
+.payscale .pstier{display:grid;grid-template-columns:1fr;border-bottom:1px solid var(--stroke)}
+.payscale .pstier:last-child{border-bottom:0}
+.psname{font-family:'Teko',sans-serif;font-weight:600;font-size:1.4rem;text-transform:uppercase;color:var(--accent);
+  padding:12px 18px 6px;letter-spacing:.02em}
+.psrows{padding:0 18px 14px}
+.psrow{display:flex;flex-wrap:wrap;gap:6px 18px;font-family:'JetBrains Mono',monospace;font-size:.74rem;
+  color:var(--muted);padding:5px 0}
+.psrow .pt{color:var(--faint);text-transform:uppercase;font-size:.62rem;letter-spacing:.1em;min-width:54px}
+.psrow b{color:var(--text);font-weight:600}
+
+/* rank milestone cards */
+.rankcard{background:var(--panel);border:1px solid var(--stroke);border-radius:var(--r);padding:20px 22px;margin:14px 0;position:relative;overflow:hidden}
+.rankcard .rhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:4px}
+.rankcard .rname{font-family:'Teko',sans-serif;font-weight:600;font-size:1.8rem;text-transform:uppercase;color:var(--accent);line-height:1}
+.rankcard .rrange{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.rankcard .rscale{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--text);margin:8px 0}
+.rankcard .rscale b{color:var(--accent)}
+
+/* law block */
+.law{margin:22px 0;padding-top:8px}
+.law .lawnum{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+.law h3{font-family:'Teko',sans-serif;font-weight:600;font-size:1.7rem;text-transform:uppercase;color:var(--text);margin:4px 0 8px}
+.law .quote{border-left:2px solid var(--accent-line);padding:6px 0 6px 16px;margin:12px 0;
+  font-style:italic;color:var(--accent);font-size:1.02rem}
+
+/* pitch step */
+.step{margin:18px 0;padding:18px 20px;background:var(--panel);border:1px solid var(--stroke);border-radius:var(--r);position:relative}
+.step .snum{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.step h4{font-family:'Teko',sans-serif;font-weight:500;font-size:1.3rem;text-transform:uppercase;color:var(--text);margin:3px 0 8px;letter-spacing:.02em}
+
+/* script / dialogue block */
+.script{background:var(--bg-deep);border:1px solid var(--stroke);border-radius:var(--r);padding:8px 0;margin:18px 0;
+  font-family:'JetBrains Mono',monospace;font-size:.82rem;line-height:1.7}
+.script .line{padding:7px 22px;display:flex;gap:14px;align-items:baseline}
+.script .line + .line{border-top:1px solid rgba(236,236,236,.04)}
+.script .who{flex:none;width:78px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-size:.64rem;padding-top:2px}
+.script .rep .who{color:var(--accent)}
+.script .cust .who{color:var(--blue)}
+.script .txt{color:var(--muted)}
+.script .rep .txt{color:var(--text)}
+.script .beat{padding:8px 22px;color:var(--faint);font-style:italic;font-family:'Inter',sans-serif;font-size:.78rem;
+  border-top:1px solid rgba(236,236,236,.04);border-bottom:1px solid rgba(236,236,236,.04)}
+
+
+/* conversational pitch block (matches smoke-screen Responses style) */
+.pitchscript{background:var(--panel);border:1px solid var(--stroke);border-radius:var(--r);padding:8px 26px 18px;margin:18px 0;position:relative}
+.pitchscript::after{content:"";position:absolute;top:9px;right:9px;width:12px;height:12px;border-top:1px solid var(--accent-line);border-right:1px solid var(--accent-line);opacity:.6}
+.pitchscript .pl{margin:14px 0;color:var(--muted);font-size:.95rem;line-height:1.6}
+.pitchscript .pl b{font-weight:600}
+.pitchscript .pl.rep b{color:var(--accent)}
+.pitchscript .pl.cust b{color:var(--blue)}
+.pitchscript .pl.rep{color:var(--text)}
+.pitchscript .pbeat{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:20px 0 10px;padding-top:8px;border-top:1px solid var(--stroke)}
+
+/* footer */
+.doc-footer{margin-top:60px;padding-top:24px;border-top:1px solid var(--stroke);
+  font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+
+/* back-to-top */
+.totop{position:fixed;bottom:24px;right:24px;z-index:40;width:42px;height:42px;border-radius:11px;
+  background:var(--accent);color:var(--accent-ink);border:none;cursor:pointer;font-size:1rem;
+  display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:.25s;
+  box-shadow:0 8px 24px rgba(0,0,0,.4)}
+.totop.show{opacity:1;pointer-events:auto}
+
+/* ===== mobile ===== */
+.scrim{display:none}
+@media(max-width:768px){
+  .sidebar{width:300px;max-width:84vw;z-index:45;
+    background:var(--bg-deep);border-right:1px solid var(--stroke-strong);
+    transform:translateX(-105%);transition:transform .28s ease}
+  .sidebar.open{transform:none}
+  .sidebar-toggle{display:inline-flex}
+  .content{margin-left:0;max-width:100%;padding:28px 22px 100px}
+  .scrim.show{display:block;position:fixed;inset:var(--nav-h) 0 0 0;background:rgba(0,0,0,.5);z-index:44}
+}
+
+/* ===== LAYOUT OVERRIDE (proven-working minimal structure) ===== */
+.shell{display:block;position:static;padding-top:0}
+.sidebar{position:fixed;top:var(--nav-h);left:0;bottom:0;width:300px;
+  background:var(--bg-deep);border-right:1px solid var(--stroke);
+  padding:30px 14px 60px 24px;overflow-y:auto;z-index:30;transform:none}
+.content{margin-left:300px;max-width:900px;padding:calc(var(--nav-h) + 40px) 56px 120px;overflow-wrap:break-word}
+@media(max-width:768px){
+  .sidebar{transform:translateX(-105%);transition:transform .28s ease;max-width:84vw;z-index:45}
+  .sidebar.open{transform:none}
+  .content{margin-left:0;max-width:100%;padding:calc(var(--nav-h) + 28px) 22px 100px}
+}
+
+</style>
+</head>
+<body>
+<div class="atmosphere"></div>
+<nav>
+  <a class="brand-logo" href="/"><img src="data:image/png;base64,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" alt="Prolific Fiber"></a>
+  <span class="nav-tag">Manager Playbook</span>
+  <div class="nav-spacer"></div>
+  <button class="sidebar-toggle" id="sideToggle">☰ Contents</button>
+</nav>
+<div class="shell">
+<aside class="sidebar" id="sidebar">
+<div class="side-head">Manager Playbook · Contents</div>
+<ul class="toc">
+<li class="toc-sec" data-sec="org">
+<a href="#org"><span class="ix">01</span><span>POC / Leadership Org Chart</span></a>
+<ul class="toc-sub">
+<li><a href="#league-contacts">The League Contacts</a></li>
+<li><a href="#league-line">League One Stop Line</a></li>
+<li><a href="#prolific-contacts">Prolific Contacts</a></li>
+<li><a href="#prolific-line">Prolific Support Line</a></li>
+<li><a href="#isp-contacts">A Note on ISP Contacts</a></li>
+</ul>
+</li>
+<li class="toc-sec" data-sec="preblitz">
+<a href="#preblitz"><span class="ix">02</span><span>Pre-Blitz Checklist</span></a>
+<ul class="toc-sub">
+<li><a href="#two-week-rule">The 2-Week Rule</a></li>
+<li><a href="#week-one">Week One — 7-14 Days Out</a></li>
+<li><a href="#week-two">Week Two — 3-7 Days Out</a></li>
+<li><a href="#checklist-summary">Checklist Summary</a></li>
+</ul>
+</li>
+<li class="toc-sec" data-sec="housing">
+<a href="#housing"><span class="ix">03</span><span>Housing & Logistics</span></a>
+<ul class="toc-sub">
+<li><a href="#housing-sec">Housing</a></li>
+<li><a href="#vehicles">Vehicles</a></li>
+<li><a href="#daily-logistics">Daily Logistics</a></li>
+<li><a href="#setting-standard">Setting the Standard</a></li>
+</ul>
+</li>
+<li class="toc-sec" data-sec="area">
+<a href="#area"><span class="ix">04</span><span>Area Assignment & Management</span></a>
+<ul class="toc-sub">
+<li><a href="#how-assigned">How Areas Are Assigned</a></li>
+<li><a href="#monitoring">Monitoring Activity</a></li>
+<li><a href="#good-area">Good Area Management</a></li>
+<li><a href="#bad-area">Bad Area Management</a></li>
+<li><a href="#new-area">When to Assign a New Area</a></li>
+<li><a href="#isp-expect">ISP Expectations</a></li>
+</ul>
+</li>
+<li class="toc-sec" data-sec="trainings">
+<a href="#trainings"><span class="ix">05</span><span>Running Trainings</span></a>
+<ul class="toc-sub">
+<li><a href="#training-types">Types of Trainings</a></li>
+<li><a href="#great-training">What Makes a Great Training</a></li>
+<li><a href="#what-to-train">What to Train On</a></li>
+<li><a href="#training-formats">Training Formats</a></li>
+<li><a href="#identify-training">How to Identify What to Train On</a></li>
+</ul>
+</li>
+<li class="toc-sec" data-sec="coaching">
+<a href="#coaching"><span class="ix">06</span><span>Coaching & Feedback</span></a>
+<ul class="toc-sub">
+<li><a href="#philosophy">Philosophy</a></li>
+<li><a href="#when-coaching">When Coaching Happens</a></li>
+<li><a href="#framework">The Coaching Framework</a></li>
+<li><a href="#difficult">Difficult Conversations</a></li>
+<li><a href="#tracking">Tracking Progress</a></li>
+<li><a href="#coach-out">Coaching Up vs. Out</a></li>
+<li><a href="#mgr-dev">Manager Development</a></li>
+</ul>
+</li>
+<li class="toc-sec" data-sec="discord">
+<a href="#discord"><span class="ix">07</span><span>Discord Team Communications</span></a>
+<ul class="toc-sub">
+<li><a href="#channels">Channel Structure</a></li>
+<li><a href="#mgr-resp">Manager Responsibilities</a></li>
+<li><a href="#rep-resp">Rep Responsibilities</a></li>
+<li><a href="#tone">Tone & Standards</a></li>
+<li><a href="#comp-announce">Competitions & Announcements</a></li>
+</ul>
+</li>
+<li class="toc-sec" data-sec="recognition">
+<a href="#recognition"><span class="ix">08</span><span>Recognition</span></a>
+<ul class="toc-sub">
+<li><a href="#what-recognized">What Gets Recognized</a></li>
+<li><a href="#how-delivered">How It's Delivered</a></li>
+<li><a href="#frequency">Frequency</a></li>
+<li><a href="#wide-recognition">Prolific-Wide Recognition</a></li>
+<li><a href="#bad-recognition">Bad Recognition</a></li>
+</ul>
+</li>
+<li class="toc-sec" data-sec="incentives">
+<a href="#incentives"><span class="ix">09</span><span>Incentives & Competitions</span></a>
+<ul class="toc-sub">
+<li><a href="#who-runs">Who Runs Competitions</a></li>
+<li><a href="#formats">Formats & Structure</a></li>
+<li><a href="#prizes">Prizes</a></li>
+<li><a href="#comm-tracking">Communication & Tracking</a></li>
+<li><a href="#comp-works">What Makes a Competition Work</a></li>
+<li><a href="#comp-calendar">Prolific-Wide Calendar</a></li>
+</ul>
+</li>
+</ul></aside>
+<main class="content doc">
+
+<div class="doc-hero">
+  <span class="eyebrow"><span class="br">[</span> Prolific Fiber · Internal <span class="br">]</span></span>
+  <h1>Manager <span class="hot">Playbook</span></h1>
+  <p>The operating manual for running blitzes, leading teams, and building managers. Read it top to bottom, or jump to any section.</p>
+</div>
+
+<!-- ============ ORG CHART ============ -->
+<section class="sec" id="org">
+  <div class="sec-num">01 — Leadership</div>
+  <h2>POC / Leadership Org Chart</h2>
+  <p class="lead-in">A problem that sits unresolved because you didn't know who to call is a problem that costs your team money and momentum. Study this section. Save every number. Know what each contact is used for before you need them.</p>
+
+  <div class="subsec" id="league-contacts">
+    <h3>The League — Leadership Contacts</h3>
+    <div class="card tick">
+      <div class="datarow"><span class="k">Alex Hall</span><span class="v accent">CEO</span></div>
+    </div>
+    <div class="card tick">
+      <div class="datarow"><span class="k">Brandon Mills</span><span class="v accent">President of Sales</span></div>
+      <div class="datarow"><span class="k">Contact</span><span class="v">(801) 259-6071</span></div>
+      <div class="datarow" style="border-bottom:0"><span class="k">Used for</span><span class="v">Area coordination &amp; unique sales-related support that couldn't be solved through other contacts.</span></div>
+    </div>
+    <div class="card tick">
+      <div class="datarow"><span class="k">Hayden Weichers</span><span class="v accent">Blitz Coordinator</span></div>
+      <div class="datarow"><span class="k">Contact</span><span class="v">(480) 469-7729</span></div>
+      <div class="datarow" style="border-bottom:0"><span class="k">Used for</span><span class="v">Pre-blitz training, blitz scheduling, territory questions, and all other blitz-related support needs.</span></div>
+    </div>
+    <div class="card tick">
+      <div class="datarow"><span class="k">Sadie Salisbury</span><span class="v accent">Onboarding</span></div>
+    </div>
+    <div class="card tick">
+      <div class="datarow"><span class="k">Kanon Olivier</span><span class="v accent">Commissions</span></div>
+    </div>
+  </div>
+
+  <div class="subsec" id="league-line">
+    <h3>The League Support — "One Stop" Line</h3>
+    <div class="card tick">
+      <div class="datarow"><span class="k">Number</span><span class="v accent">(866) 605-5076</span></div>
+      <div class="datarow"><span class="k">Contact</span><span class="v">Text only</span></div>
+      <div class="datarow" style="border-bottom:0"><span class="k">Hours</span><span class="v">Mon–Fri · 9am–5pm MT</span></div>
+    </div>
+    <p>Used for rep onboarding questions and payroll issues. All payroll-related texts must begin with the word <b>"PAYROLL."</b> As a manager, you can also use this line to escalate rep-level issues that require League involvement. If you are texting on behalf of a rep, identify yourself and your role at the start of the message.</p>
+  </div>
+
+  <div class="subsec" id="prolific-contacts">
+    <h3>Prolific — Leadership Contacts</h3>
+    <div class="card tick">
+      <div class="datarow"><span class="k">Kota Ivers</span><span class="v accent">CEO</span></div>
+      <div class="datarow"><span class="k">Contact</span><span class="v">kota@foundryfam.com</span></div>
+      <div class="datarow" style="border-bottom:0"><span class="k">Used for</span><span class="v">Sales strategy, field operations, market decisions, rep performance concerns, blitz approvals, housing approvals, and any escalation that requires Prolific ownership involvement on the sales side.</span></div>
+    </div>
+    <div class="card tick">
+      <div class="datarow"><span class="k">Jordan Jastro</span><span class="v accent">COO</span></div>
+      <div class="datarow"><span class="k">Contact</span><span class="v">jordan@foundryfam.com</span></div>
+      <div class="datarow" style="border-bottom:0"><span class="k">Used for</span><span class="v">Tools, platforms, operational systems, backend issues, and anything related to the infrastructure that supports how Prolific runs day to day.</span></div>
+    </div>
+    <div class="card tick">
+      <div class="datarow"><span class="k">Tyler Tashiro</span><span class="v accent">CBDO</span></div>
+      <div class="datarow" style="border-bottom:0"><span class="k">Contact</span><span class="v">tyler@foundryfam.com</span></div>
+    </div>
+    <div class="card tick">
+      <div class="datarow"><span class="k">Dylan Kamleiter</span><span class="v accent">Regional Manager</span></div>
+      <div class="datarow"><span class="k">Contact</span><span class="v">(952) 797-6636</span></div>
+      <div class="datarow" style="border-bottom:0"><span class="k">Used for</span><span class="v">Day-to-day field leadership, blitz preparation, team performance, area management, and all operational matters within Dylan's region. If you report to Dylan, this is your primary point of contact for everything.</span></div>
+    </div>
+    <div class="card tick">
+      <div class="datarow"><span class="k">Nicholas Newton</span><span class="v accent">Regional Manager</span></div>
+      <div class="datarow"><span class="k">Contact</span><span class="v">(630) 201-6863</span></div>
+      <div class="datarow" style="border-bottom:0"><span class="k">Used for</span><span class="v">Day-to-day field leadership, blitz planning, team performance, area management, and all operational matters within Nicholas's region. If you report to Nicholas, this is your primary point of contact for everything.</span></div>
+    </div>
+  </div>
+
+  <div class="subsec" id="prolific-line">
+    <h3>Prolific Support Line</h3>
+    <div class="card tick">
+      <div class="datarow"><span class="k">Number</span><span class="v accent">(949) 827-9851</span></div>
+      <div class="datarow"><span class="k">Contact</span><span class="v">Text only</span></div>
+      <div class="datarow" style="border-bottom:0"><span class="k">Hours</span><span class="v">Mon–Sat · 9am–8pm MT</span></div>
+    </div>
+    <p>Used for escalated onboarding or general support needs, general operational questions, and anything that requires Prolific leadership involvement beyond your regional manager.</p>
+  </div>
+
+  <div class="subsec" id="isp-contacts">
+    <h3>A Note on ISP Contacts</h3>
+    <p>Refer to the knowledge base for ISP contacts &amp; customer support lines.</p>
+    <p>Your ISP contacts are one of the most valuable assets you have as a manager. Treat those relationships with professionalism at all times. When you reach out to an ISP contact, you are representing Prolific. Be prepared, be specific about the issue you need help with, and follow up in writing when something important is resolved so there is a record of it. A strong relationship with your ISP contact makes area requests easier, resolves compliance issues faster, and gives your team an edge in markets where other organizations don't have the same access.</p>
+  </div>
+</section>
+
+<!-- ============ PRE-BLITZ ============ -->
+<section class="sec" id="preblitz">
+  <div class="sec-num">02 — Preparation</div>
+  <h2>Pre-Blitz Checklist</h2>
+  <p class="lead-in">A blitz lives or dies based on how well it was prepared for. Reps who show up to a market without proper onboarding, without logins, without badges, and without a clear understanding of the promo they're selling waste the first two days of a blitz figuring out things that should have been handled before anyone got on a plane. That is on the manager.</p>
+  <div class="callout"><div class="clabel">Required</div><p>A link to the official Prolific Pre-Blitz Checklist template is located in the Sales Bison knowledge base. Complete it for every blitz. No exceptions.</p></div>
+
+  <div class="subsec" id="two-week-rule">
+    <h3>The 2-Week Rule</h3>
+    <p>Blitz preparation should begin a minimum of two weeks before the start date. Two weeks is not a suggestion — it is the minimum amount of time needed to complete onboarding, sort housing, book flights, coordinate logistics, and run a pre-blitz training call without anything being rushed or missed. If you are starting prep less than two weeks out, you are already behind and you need to move fast on every item below simultaneously.</p>
+  </div>
+
+  <div class="subsec" id="week-one">
+    <h3>Week One Priorities — 7 to 14 Days Out</h3>
+    <h4>Request the Blitz Area</h4>
+    <p>Begin by submitting your blitz area request through the League Database. Your request must include the specific area you are requesting, the names of all reps attending the blitz, and the exact knocking days of the blitz. Once submitted, text Kota directly to confirm the details and get approval. Do not assume the request is approved until you have confirmation. The area request is the first domino — nothing else can be fully confirmed until this is done.</p>
+    <h4>Coordinate Onboarding with Sadie</h4>
+    <p>Once a blitz request is approved, Sadie Salisbury will contact you to confirm she has received it and will begin any onboarding requirements for the ISP specific to that blitz. At that point it is your responsibility to communicate to Sadie any badges or gear that reps will need, along with the name and shipping address for those items. Do not wait for Sadie to ask — have this information ready the moment the request is approved.</p>
+    <p>Before planning any blitz, reference the onboarding checklist to confirm that your timeline allows all reps to be fully onboarded at least three days before the blitz start date. If a rep cannot be fully onboarded in time, address that immediately — either by moving faster on the onboarding tasks or by reconsidering that rep's inclusion on the blitz.</p>
+    <h4>Source Housing</h4>
+    <p>Begin searching for Airbnbs in the blitz market immediately after the area request is submitted. Identify your top options and send them to Kota for booking. Do not book housing on your own — send options and get approval first. Reference the Housing &amp; Logistics section to ensure you are selecting properties that meet Prolific's standards and fall within budget. Good housing makes a real difference in how your team performs. It affects sleep, morale, and the team's ability to show up ready every morning.</p>
+    <p>Identify the most efficient airport for your team to fly in and out of. Factor in driving distance to the blitz market and the cost of flights from your team's various departure cities. Once the airport is confirmed, communicate it to all reps immediately so they can begin searching for flights.</p>
+    <h4>Communicate With Your Team</h4>
+    <p>The moment the blitz is confirmed, your team needs to know. Send your reps the housing information as soon as it is booked, confirm the airport they are flying into, and set a hard deadline for when flights need to be booked. Flights should be booked and confirmed with you no later than seven days prior to the blitz start date. Follow up individually with any rep who has not confirmed their flight by day seven. It is your job to get reps to and from the airport on each blitz — coordinate arrival and departure times with your team in advance so you are not scrambling on travel days.</p>
+  </div>
+
+  <div class="subsec" id="week-two">
+    <h3>Week Two Priorities — 3 to 7 Days Out</h3>
+    <h4>Confirm All Reps Are on Track</h4>
+    <p>By seven days out you should have confirmed flights from every rep attending the blitz. If any rep has not booked their flight, that needs to be resolved immediately. A rep without a confirmed flight at seven days out is a risk to the blitz.</p>
+    <h4>Run the Pre-Blitz Training Call</h4>
+    <p>Schedule and execute a pre-blitz training call with all attending reps before anyone gets on a plane. This call is not optional and reps should not arrive to a blitz without having attended it. The call must cover:</p>
+    <ul>
+      <li><b>Deal submission process</b> for the specific ISP you are selling. Walk through it step by step. Rep errors in deal submission are one of the most common causes of missing commissions and compliance issues.</li>
+      <li><b>Training resources</b> available for this market, including where to find them on Sales Bison and Repcard.</li>
+      <li><b>Market scorecard walkthrough</b> covering the competitive landscape, what reps should expect from homeowners, who the primary competitors are, what they offer, and how our promotion compares.</li>
+      <li><b>Canvassing app walkthrough</b> specific to this ISP — how to navigate it, take notes, mark dispositions correctly, and what the ISP expects in terms of activity and note quality.</li>
+      <li><b>Any additional required trainings</b> specific to this ISP or market.</li>
+    </ul>
+    <p>The pre-blitz call is also your opportunity to set the tone for the blitz. Expectations, mindset, schedule, and team standards should all be addressed here so there is no ambiguity when day one arrives.</p>
+    <h4>Confirm All Logins and System Access</h4>
+    <p>All reps must have every login and system access they need no later than three days prior to the blitz start date. This includes their canvassing app login, any ISP-specific portal access, and access to any tools required for deal submission. If a rep is missing a login at three days out, escalate it immediately — to Sadie for onboarding-related access or to your ISP contact for ISP-specific system issues. A rep who shows up to day one without a working login is a rep who cannot sell.</p>
+  </div>
+
+  <div class="subsec" id="checklist-summary">
+    <h3>Pre-Blitz Checklist Summary</h3>
+    <div class="card tick">
+      <div class="datarow"><span class="k">14+ Days Out</span><span class="v">Submit blitz area request in the League Database with rep names and knocking dates, then text Kota to confirm and get approval. Confirm timeline allows full onboarding 3+ days before start. Begin sourcing Airbnb options and send top choices to Kota. Identify the most efficient airport. Communicate blitz details to all reps immediately.</span></div>
+      <div class="datarow"><span class="k">7 Days Out</span><span class="v">All rep flights booked and confirmed with you. Coordinate airport arrival/departure times. Confirm housing is booked and all reps have the address. Confirm badges and gear shipped and on track to arrive.</span></div>
+      <div class="datarow"><span class="k">3 Days Out</span><span class="v">All reps have every login and system access required. Pre-blitz training call completed. All reps have reviewed the market scorecard. Pre-blitz checklist template fully completed.</span></div>
+      <div class="datarow" style="border-bottom:0"><span class="k">Day One</span><span class="v">Team arrives informed, onboarded, geared up, and ready to knock. If the two weeks before were handled correctly, day one is execution — not problem solving.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOUSING ============ -->
+<section class="sec" id="housing">
+  <div class="sec-num">03 — Logistics</div>
+  <h2>Housing &amp; Logistics</h2>
+  <p class="lead-in">Logistics are not a background detail — they are a direct input to your team's performance. Reps who are sleeping well, eating, not waiting 45 minutes for a shower, and showing up to the doors on time and prepared will outsell reps who aren't. Every logistical decision you make either adds energy to your team or drains it.</p>
+
+  <div class="subsec" id="housing-sec">
+    <h3>Housing</h3>
+    <h4>Budget</h4>
+    <p>The maximum housing budget is <b>$50 per rep per night.</b> Calculate your total budget before you start searching so you are not wasting time on properties that are out of range. As an example, 5 reps on a 10-day blitz means a maximum Airbnb budget of $2,500 for the stay. Stay at or under this number. Send your top options to Kota for booking — do not book housing independently unless you're covering the expenses yourself.</p>
+    <h4>What to Look For</h4>
+    <p>Start with reviews. Only consider Airbnbs with strong, consistent reviews from recent guests. A property with a handful of glowing reviews from two years ago is not the same as one with 50 recent reviews averaging 4.8 stars. Read reviews specifically for cleanliness, host responsiveness, and recurring complaints.</p>
+    <p>Verify the actual bed and room count before submitting it as an option. Many listings advertise a bed count that includes pull-out couches, air mattresses, or futons. Go through every photo and count actual beds in actual rooms.</p>
+    <p><b>Bathroom ratio matters.</b> You should have at least one bathroom for every three reps. Seven reps in a house with one bathroom means starting every morning with a bottleneck that wastes time and kills morale.</p>
+    <p>Essentials to confirm before submitting a property: washer and dryer on site, adequate parking for your vehicles with no restrictions, and a functional common area where the team can gather for morning trainings. When budget allows, look for amenities that genuinely improve the rep experience — a coffee maker, a big living room, foosball, games, or outdoor space. These aren't luxuries, they're recovery tools.</p>
+    <h4>Gender Considerations</h4>
+    <div class="callout"><div class="clabel">Non-negotiable</div><p>Female reps must always have their own room or share only with another female rep. Plan your room assignments before the blitz and communicate them in advance.</p></div>
+    <h4>When You Arrive</h4>
+    <p>The moment your team arrives, do a full walkthrough before anyone settles in. If there are any issues — damage, missing items, cleanliness problems — photograph and video everything immediately and message both the Airbnb host and Kota right away. Documentation on day one protects your team from being held responsible for things that were already wrong.</p>
+    <p>Set house rules on arrival day. The standard at Prolific is clear: <b>there is no drinking, smoking, or drug use on blitzes or in company-provided housing.</b> Under no circumstances is this tolerated. Beyond that, the house stays clean, nothing gets broken, and nothing gets left a mess.</p>
+    <h4>Checkout</h4>
+    <p>Before checkout, do a complete walkthrough. The house should be spotless and reps should follow all checkout instructions. As the manager, you are the last person out and you are responsible for the final condition of the property. Before leaving, record a full video walkthrough so that if the host files a complaint after checkout, you have documentation of exactly what the property looked like when you left.</p>
+  </div>
+
+  <div class="subsec" id="vehicles">
+    <h3>Vehicles</h3>
+    <p>Managers are responsible for securing their own rental car for every blitz. If your team has more than five reps and none of them can independently cover a second rental car, coordinate with Kota in advance to request an advance for the additional vehicle. Do not arrive to a blitz with an insufficient number of vehicles for your team size and market layout. If your leads are spread across a wide or rural area, one vehicle for six reps is a logistical disaster waiting to happen.</p>
+    <p>Gas and transportation costs are a logistics reality to plan for. Be intentional about route planning so you are not burning time and fuel on inefficient drop-offs and pickups throughout the day.</p>
+  </div>
+
+  <div class="subsec" id="daily-logistics">
+    <h3>Daily Logistics</h3>
+    <p>Structure and intensity are the two words that should define every blitz day. A blitz that lacks structure loses momentum fast. A blitz that lacks intensity wastes the opportunity. Your job is to protect both.</p>
+    <h4>Morning Training</h4>
+    <p>Run daily trainings no later than 10am Monday through Friday and no later than 9am on weekends. Trainings should be planned and purposeful — if your team is performing at a high level and you don't have a meaningful topic, it is better to skip training than to force one with no real value. Plan your trainings the night before so you are never winging it.</p>
+    <h4>Getting to the Doors</h4>
+    <p>Plan your drive time so that every rep is knocking their first door no later than 11am Monday through Friday and no later than 10am on weekends. This is a hard target. Late starts are one of the most common and most preventable causes of underperformance. Before drop-off, confirm that every rep has their battery pack charged, has eaten, has water and snacks, and has used the restroom. Once reps are in the field, your job is to manage the territory and your team's performance, not to chauffeur people back to the house.</p>
+    <h4>Grocery Run</h4>
+    <p>On arrival day or the morning of day one, take the team to a grocery store. Reps buy food and essentials they forgot to pack. As the manager, cover basic shared essentials for the house — water, eggs, coffee, and anything the team will collectively need. <i>Pro tip: use Instacart to have groceries delivered when you arrive to save time.</i></p>
+    <h4>Lunch and End of Day</h4>
+    <p>Coordinate a midday break and end-of-day pickup that is structured and consistent. Reps should know what time to expect pickup and should not be pulling you away from managing the field to handle individual transportation requests. Set the schedule, communicate it clearly, and hold to it.</p>
+  </div>
+
+  <div class="subsec" id="setting-standard">
+    <h3>Setting the Standard</h3>
+    <p>Every blitz is a reflection of your leadership. The standard of your housing, the structure of your days, the culture inside the house, and the intensity on the doors all flow from you. Reps will match whatever standard you set — high or low. Be hyper-intentional about logistics before the blitz begins so that when you arrive, your team's entire focus can be on selling.</p>
+  </div>
+</section>
+
+<!-- ============ AREA ============ -->
+<section class="sec" id="area">
+  <div class="sec-num">04 — Territory</div>
+  <h2>Area Assignment &amp; Management</h2>
+  <p class="lead-in">Area management is one of the highest-leverage responsibilities a manager has on a blitz. How you assign territory, how you monitor it, and how you hold reps accountable directly impacts your team's sales numbers, your relationship with the ISP, and the quality of leads you receive on future blitzes.</p>
+
+  <div class="subsec" id="how-assigned">
+    <h3>How Areas Are Assigned</h3>
+    <p>The ISP assigns a pool of available leads to the manager. From that pool, the manager draws and assigns individual areas to each rep through the canvassing app provided by the ISP.</p>
+    <p>Each rep should have roughly <b>150 leads</b> assigned to their area at a time. This is the right volume to keep a rep productive without spreading them so thin they can't work the area thoroughly. Reps should only have one active area at a time — assigning multiple areas simultaneously leads to cherry-picking doors, leaving areas incomplete, and producing the kind of activity data that damages your standing with the ISP.</p>
+    <p>Assign areas equally and without favoritism. Freshly activated leads, apartment complexes, and other high-potential area types get distributed based on what is fair and strategic, not personal preference. Favoritism in area assignment destroys team culture fast. Reps notice, and they remember.</p>
+  </div>
+
+  <div class="subsec" id="monitoring">
+    <h3>Monitoring Area Activity</h3>
+    <p>Daily monitoring of rep activity is a non-negotiable part of your job. When the canvassing app has reporting functionality, check it daily — doors knocked, dispositions logged, contact rates, and deal activity for each rep. You should know every morning approximately where each rep stands and whether their pace will get them to the 70% contact threshold within a reasonable timeframe.</p>
+    <p>When reporting is not available, reps must manually track their activity using the Tally app or similar — doors knocked, conversations had, and deals closed — sending that data to you at the end of every field day. Build this into your team's daily routine from day one.</p>
+    <p>Use this data to identify problems early. A rep who knocked 60 doors and had zero conversations is either in a dead area or has a door approach problem. A rep consistently under 100 doors a day is not hitting the volume required to find their ratio. Catch these things daily — not at the end of the week when the damage is already done.</p>
+  </div>
+
+  <div class="subsec" id="good-area">
+    <h3>What Good Area Management Looks Like</h3>
+    <p>Good area management means every door in the assigned area is knocked, correctly dispositioned, and noted. It means the rep is making contact with <b>70% or more</b> of the homes before a new one is assigned. It means no doors are skipped because the rep decided a house didn't look promising. And it means the rep is doing two to three loops through the area — returning to doors that were not home on the first pass.</p>
+    <p>For rep-level area management fundamentals, direct your reps to the Area Management section of the rep playbook. Your job as the manager is to <b>enforce</b> those standards, not just communicate them. Pull activity reports, ask reps to walk you through their area at the end of the day, and do occasional drive-bys to verify reps are actually working the territory assigned to them.</p>
+  </div>
+
+  <div class="subsec" id="bad-area">
+    <h3>What Bad Area Management Looks Like</h3>
+    <p><b>Cherry-picking doors</b> — skipping homes that look difficult and only knocking the easy ones — is the most common and most damaging mistake. It inflates a rep's perception of how hard the area is while leaving large portions untouched. ISPs see this in the activity data and it reflects poorly on Prolific.</p>
+    <p><b>Failing to disposition doors correctly</b> is second. Every door knocked needs a disposition logged. An undispositioned door is an invisible door — it does not count toward your contact rate and does not give you the notes you need for subsequent loops.</p>
+    <p><b>Not taking notes</b> is third. Notes are what turn a worked area into a productive area on the second and third loops. A rep who knows which house has a decision maker home at 6pm, which neighbor already signed up, and which house has a dog has a significant advantage over a rep starting from scratch every visit.</p>
+  </div>
+
+  <div class="subsec" id="new-area">
+    <h3>When to Assign a New Area</h3>
+    <p>Assign a new area when one of the following is met:</p>
+    <ul>
+      <li>The rep has reached a <b>70% or higher contact rate</b> in their current area. This is the standard threshold.</li>
+      <li>The area is unworkable due to circumstances outside the rep's control — a gated community with no access, a technical error in the canvassing app, or a lead pool that turns out to be entirely non-serviceable. Document these when they occur.</li>
+      <li>A manager-approved exception under rare circumstances. Use sparingly and always with a clear reason.</li>
+    </ul>
+    <p>Do not assign a new area simply because a rep says their area is slow or hard. Every area has productive doors in it. A rep who wants a new area after two days is almost always a rep who needs coaching on door approach, not new territory.</p>
+  </div>
+
+  <div class="subsec" id="isp-expect">
+    <h3>ISP Expectations and Your Standing</h3>
+    <p>ISPs track activity. They see which doors were knocked, how they were dispositioned, and what contact rates look like across every area assigned to your team. The standard at Prolific is the same regardless of ISP — every door in every area gets knocked at least once, every door gets dispositioned, and we aim for two to three loops before an area is complete.</p>
+    <p>The better your team's area management, the more likely the ISP is to give you additional and higher-quality leads on future blitzes. A team that burns through areas at 40% contact and moves on gets treated accordingly. A team that consistently hits 70%+ contact, keeps clean notes, and dispositions every door builds a reputation that opens doors — literally and figuratively. Think of your standing with each ISP as a long-term asset built or damaged on every blitz.</p>
+  </div>
+</section>
+
+<!-- ============ TRAININGS ============ -->
+<section class="sec" id="trainings">
+  <div class="sec-num">05 — Development</div>
+  <h2>Running Trainings</h2>
+  <p class="lead-in">Training is the single most direct investment you make in your team's output. A rep who is coached well sells more, cancels less, and stays longer. A rep left to figure things out on their own plateaus early and burns out fast. The quality of your trainings will show up in your team's numbers every single week.</p>
+
+  <div class="subsec" id="training-types">
+    <h3>Types of Trainings</h3>
+    <h4>Prolific Advantage Live Training Calls</h4>
+    <p>Managers are required to get all available reps on the weekly Prolific Advantage live training calls run by Prolific ownership. These are organization-wide trainings above the blitz or local market level. It is the manager's responsibility to communicate when these calls happen, ensure reps know they are mandatory, and follow up on any rep who misses one.</p>
+    <h4>Morning Trainings</h4>
+    <p>The most common and most important format. On blitzes, morning trainings happen daily. In full-time local markets, run them a minimum of three times per week. They set the tone for the day — mindset, focus, and the specific skills the team will execute on the doors. On blitzes they should run <b>no longer than 30 minutes.</b> Never stretch a training to fill a time slot and never cut one short because you didn't prepare. Quality of content matters far more than hitting a fixed duration.</p>
+    <h4>Evening Debriefs</h4>
+    <p>On blitzes, run a short debrief at the end of each day — a brief, honest review of how the day went. What worked, what didn't, what the team will do differently tomorrow. It's also a valuable moment for reps to surface objections they heard in the field. Five to fifteen minutes is typically sufficient.</p>
+    <h4>Field Trainings — Ride-Alongs and Door Assists</h4>
+    <p>When a rep is brand new or actively struggling, sitting in a morning training is not enough. Get on the doors with them.</p>
+    <p><b>Shadow day:</b> New reps spend their first day in the field shadowing you or a top rep — observing every door, pitch, objection handle, and close. Later that same day, flip it: you shadow and assist as the rep takes the lead. Every new rep should have a manager or top rep present for their first sale before they are cleared to knock independently. This is non-negotiable.</p>
+    <p><b>Ongoing ride-alongs:</b> When a rep is struggling — low contact rate, weak close rate, objection handling issues, confidence problems — get back on the doors with them. One hour in the field with a struggling rep is worth more than five morning trainings on the same topic.</p>
+  </div>
+
+  <div class="subsec" id="great-training">
+    <h3>What Makes a Great Training</h3>
+    <p>Preparation is the difference between a training that moves the needle and one that wastes everyone's time. Great trainings are planned in advance, built around a specific and relevant topic, and executed with energy and intention. A manager who shows up without a clear plan and tries to wing it is burning the most important 30 minutes of the day.</p>
+    <p>That said, preparation does not mean rigidity. If you planned a training on area management but your team spent yesterday getting hammered with a specific objection, you pivot. The topic that matters most to your team right now is always the right topic. The best trainings are specific, energetic, and interactive — they name real situations from the field, use real examples, and involve the reps rather than lecturing at them.</p>
+  </div>
+
+  <div class="subsec" id="what-to-train">
+    <h3>What to Train On</h3>
+    <p>Rotate across four core categories, always weighted toward what your team needs most.</p>
+    <div class="card tick"><div class="datarow"><span class="k">Mindset</span><span class="v">Motivation, mental toughness, handling rejection, reconnecting with their why, managing the emotional swings of D2D. Most important at the start of a blitz, after a slow day, or any time energy is flagging.</span></div></div>
+    <div class="card tick"><div class="datarow"><span class="k">Work Ethic</span><span class="v">Door volume, schedule discipline, what elite effort actually looks like, and the standards Prolific holds itself to. Especially important for new reps without a reference point for a high-output day.</span></div></div>
+    <div class="card tick"><div class="datarow"><span class="k">Tactical</span><span class="v">Deal submission, canvassing app navigation, market-specific objections, area management, breaking up bundles, ISP promotions, compliance updates. Should be highly specific — walk through the actual steps in the actual system.</span></div></div>
+    <div class="card tick"><div class="datarow"><span class="k">Pitch Work</span><span class="v">Pitch framework and structure, transitions between steps, body language, tonality, and assuming the sale. Should be active, not passive — reps learn pitch skills by doing.</span></div></div>
+  </div>
+
+  <div class="subsec" id="training-formats">
+    <h3>Training Formats</h3>
+    <p>Use a mix of formats rather than defaulting to the same delivery style every day. Variety keeps reps engaged and different formats develop different skills.</p>
+    <ul>
+      <li><b>Video review:</b> Watch a training video as a team and break down takeaways together. Use Sales Bison, Repcard, or sources your regional manager recommends. Facilitate a brief group discussion afterward.</li>
+      <li><b>Live role plays:</b> Pair reps up or work through a scenario directly. Simulate real situations — specific objections, smoke screens, closing scenarios. Give immediate, specific feedback after each turn. The highest-value format for pitch skill and objection handling.</li>
+      <li><b>Presentation-based:</b> Manager-led on a specific topic with clear structure — the problem, the principle, how to apply it. Works well for tactical topics.</li>
+      <li><b>Live demonstrations:</b> You or a top rep demonstrate a skill in front of the group. Works especially well for door approach, body language, tonality, and objection handling.</li>
+      <li><b>Collaborative group discussions:</b> Open the floor around a specific question. Surfaces field intelligence and gives reps ownership over solutions. Use selectively — best when the team is cohesive and engaged.</li>
+    </ul>
+  </div>
+
+  <div class="subsec" id="identify-training">
+    <h3>How to Identify What to Train On</h3>
+    <p>Pull from four sources:</p>
+    <ul>
+      <li><b>Daily activity data and field observations:</b> Low contact rates point to door approach or scheduling. Low close rates point to pitch or objection handling. High cancel rates point to compliance or overclaiming. Let the data direct your topics.</li>
+      <li><b>Rep feedback:</b> Ask your team what they're struggling with. Reps who feel heard in training are more engaged in training. Collect field feedback at evening debriefs.</li>
+      <li><b>External sources:</b> Books, podcasts, trainings you're attending, content your regional manager shares. The best managers are always learning. If you're not growing as a leader, your training quality will plateau.</li>
+      <li><b>Regional Managers and Prolific Ownership:</b> Reach out directly for fresh ideas or guidance on a specific challenge. Leadership is a resource — use it.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ COACHING ============ -->
+<section class="sec" id="coaching">
+  <div class="sec-num">06 — People</div>
+  <h2>Coaching &amp; Feedback</h2>
+  <p class="lead-in">Coaching is the most personal and most impactful thing you do as a manager. Training develops skills in a group setting — coaching develops people one on one. The best managers at Prolific are not just sales leaders. They are people developers. They leave every rep better than they found them.</p>
+
+  <div class="subsec" id="philosophy">
+    <h3>Philosophy</h3>
+    <p>Prolific's approach to coaching is top-down by structure but growth-minded by culture. Managers coach reps. Regional managers coach managers. Prolific ownership coaches regional managers. The chain is clear and everyone in it is accountable to the level above them.</p>
+    <p>At the same time, everyone can learn something from anyone. A manager who believes they have nothing to learn from their reps is a manager with a lid they will never raise. Coaching at Prolific extends beyond fiber sales and pitch mechanics — we are invested in developing the whole person. We want every rep to leave in better physical shape, with stronger daily habits, a broader perspective, and a clearer sense of their own potential. Do not limit your coaching to what happens on the doors.</p>
+  </div>
+
+  <div class="subsec" id="when-coaching">
+    <h3>When Coaching Happens</h3>
+    <p>Scheduled trainings are planned. Coaching is responsive. There are two primary triggers:</p>
+    <p><b>Performance is up:</b> A rep on a significant upward trajectory deserves a coaching conversation just as much as one who is struggling. When someone is breaking through, lean in, affirm what they're doing right, and start the conversation about what their ceiling could look like — including potential leadership opportunities. High performers who feel seen stay. High performers who feel ignored leave.</p>
+    <p><b>Performance is stagnant or down:</b> When a rep's numbers are flat or declining, or their behavior is creating friction, that is an accountability conversation. It should happen quickly — not after two weeks of hoping the problem resolves itself.</p>
+    <p>Culture issues that affect the whole team should be addressed as a team — name the standard and reset expectations collectively without singling anyone out publicly. If the issue is one rep's specific behavior, pull them aside privately. Never handle individual behavioral issues publicly.</p>
+  </div>
+
+  <div class="subsec" id="framework">
+    <h3>The Prolific Coaching Framework</h3>
+    <p>Use this framework for all formal coaching conversations. It applies to both performance and development conversations — the tone shifts with context, but the structure stays the same.</p>
+    <div class="step"><div class="snum">Step 1</div><h4>Prepare</h4><p>Review the data. Pull hard performance metrics — doors knocked, sales, installs, contact rates, cancel rates — and note specific behavioral observations. Go in with facts, not feelings. A manager who can point to specific numbers and behaviors is one whose feedback lands with credibility.</p></div>
+    <div class="step"><div class="snum">Step 2</div><h4>Lead With Empathy</h4><p>Open by acknowledging the rep as a person before you address the issue. This does not mean softening the feedback — it means establishing that this comes from genuine investment in their success, not frustration or judgment. A rep who feels their manager is on their side can receive hard feedback without becoming defensive.</p></div>
+    <div class="step"><div class="snum">Step 3</div><h4>Present the Data</h4><p>Share what you're seeing — numbers and behaviors. Be specific. "Your contact rate this week was 25% and you've been leaving the field before 7pm three days in a row" is coaching. "You haven't been working hard enough" is noise. Ask the rep what they think is driving it before offering your assessment.</p></div>
+    <div class="step"><div class="snum">Step 4</div><h4>Identify the Root Cause</h4><p>Work through why this is happening together. Is it a skill issue? A will issue? A personal situation? A mindset issue? The action plan depends entirely on correctly identifying what is actually driving the problem. Coaching the wrong root cause wastes everyone's time.</p></div>
+    <div class="step"><div class="snum">Step 5</div><h4>Build the Action Plan</h4><p>End with complete clarity on three things: what the rep will do differently (specific, behavioral, measurable), what you will do to support them, and what the standard is going forward — including the consequence and timeline if it isn't met. For serious conversations, follow up in writing.</p></div>
+    <div class="step"><div class="snum">Step 6</div><h4>Follow Up</h4><p>Set a specific date for a follow-up review before the conversation ends. This is not optional. On the follow-up date, come back with your notes and updated data. Review what changed, what didn't, and the next step. Consistent follow-through is what separates managers who develop reps from managers who just talk to them.</p></div>
+  </div>
+
+  <div class="subsec" id="difficult">
+    <h3>Difficult Conversations</h3>
+    <p><b>Underperformance:</b> Address it early, directly, and with data. Lead with empathy, set the standard clearly, give a fair opportunity and timeline. Most performance issues are correctable when caught early and coached specifically.</p>
+    <p><b>Attitude and culture issues:</b> Address privately and immediately. Don't let negative energy or culture-killing behavior sit more than a day. One conversation is a correction. Two on the same behavior is a pattern that requires escalation.</p>
+    <p><b>Reps who will not accept feedback:</b> If a rep is unwilling to receive feedback or refuses to make adjustments after a fair opportunity, let them go. A rep who cannot be coached will drag your team's culture and numbers down indefinitely.</p>
+    <div class="callout"><div class="clabel">Non-negotiable</div><p><b>Ethical violations and serious culture issues:</b> A rep who commits compliance fraud, is dishonest with a customer, behaves in a way that puts Prolific or the ISP at risk, or seriously damages team culture should be sent home immediately. Do not wait for a pattern. Contact your regional manager immediately so the decision is made with leadership's awareness and support.</p></div>
+  </div>
+
+  <div class="subsec" id="tracking">
+    <h3>Tracking Coaching Progress</h3>
+    <p>Keep notes on every formal coaching conversation — what was discussed, what the rep committed to, your commitments, and the agreed follow-up date. These notes protect you if a situation escalates and give you the data for an informed follow-up. Between the initial conversation and the follow-up, monitor the rep closely and provide real-time feedback. If you see improvement, acknowledge it immediately. If you see the same patterns, address it before the follow-up date.</p>
+  </div>
+
+  <div class="subsec" id="coach-out">
+    <h3>Coaching Up vs. Coaching Out</h3>
+    <p>Not every rep is coachable. When you have had multiple direct conversations, provided a clear action plan, set a fair timeline, and followed up consistently — and nothing has changed — the answer is not more coaching. It is a personnel decision. If you're unsure how to handle a specific situation, reach out to your regional manager. Do not try to manage a serious performance or behavioral issue in isolation.</p>
+  </div>
+
+  <div class="subsec" id="mgr-dev">
+    <h3>Manager Development</h3>
+    <p>Regional managers are responsible for coaching the managers in their region — setting clear performance benchmarks, conducting monthly goal and review calls, and providing direct coaching on leadership development. Managers should come to monthly review calls prepared with their team's data, coaching notes, and a clear picture of where their team stands against their goals.</p>
+    <p>For regional managers, coaching comes directly from Prolific ownership. The coaching chain runs in one direction — from the top down — and every level is accountable to the level above it. No one is exempt from being developed. The managers who embrace that reality build the best teams and have the longest careers at Prolific.</p>
+  </div>
+</section>
+
+<!-- ============ DISCORD ============ -->
+<section class="sec" id="discord">
+  <div class="sec-num">07 — Communication</div>
+  <h2>Discord Team Communications</h2>
+  <p class="lead-in">Discord is the heartbeat of Prolific's culture between blitzes, across markets, and throughout the organization. It is where momentum is built, sales are celebrated, standards are reinforced, and the team stays connected. As a manager, how you show up on Discord directly influences how your team shows up — on the app and on the doors. Lead from the front.</p>
+
+  <div class="subsec" id="channels">
+    <h3>Channel Structure</h3>
+    <p>There are three channels every Prolific rep and manager operates in.</p>
+    <h4>Announcements</h4>
+    <p>Prolific-wide, managed by Prolific ownership. Company-wide announcements, Prolific Advantage call schedules, competition launches, and organizational updates. As a manager, you do not post here — you consume it and relay it. Every time something goes up, ensure your team sees and understands it. Relay it in your team channel with context. Own the communication.</p>
+    <h4>The Herd</h4>
+    <p>The primary culture channel for the entire organization. This is where the energy of the organization lives. The Herd is for logging sales, posting customer selfies and on-the-door photos, sharing great habits (gym, reading, running a training), giving rep shoutouts, and posting anything that builds hype and culture. It should feel like a place where winning is visible and contagious. What does <b>not</b> belong: complaints, negative content, anything that kills momentum. The Herd's value is entirely dependent on the quality of what gets posted in it. Protect it.</p>
+    <h4>Team Channels</h4>
+    <p>Every team has their own private channel — your primary operational channel. Used for daily communication, relaying announcements with team context, area updates, training schedules, questions, and team-specific competitions. When a rep asks a question useful for the whole team, answer it in the channel rather than a private message. When a question is personal or sensitive, handle it privately.</p>
+  </div>
+
+  <div class="subsec" id="mgr-resp">
+    <h3>Manager Responsibilities</h3>
+    <p>You set the standard for how your team uses Discord. If you are inconsistent, quiet, or low-energy, your team will be too. In The Herd, be consistently posting culture-building content — shoutouts, field photos, team wins, training moments. In your team channel, post daily: a morning message to set the tone, relaying relevant announcements, celebrating wins in real time, and being responsive throughout the day. Your team channel should feel active and alive.</p>
+    <p>You are also responsible for monitoring both channels for content that doesn't belong. If a rep posts something negative or crosses an ethical line, address it immediately — remove the content if necessary and follow up directly.</p>
+  </div>
+
+  <div class="subsec" id="rep-resp">
+    <h3>Rep Responsibilities</h3>
+    <p>Reps are expected to be active participants in both The Herd and their team channel — logging sales in The Herd every time they close a deal, posting culture-building content consistently, and using their team channel for questions and updates. Passive reps drag the energy of both channels down. Set the expectation early that participation is not optional and model the behavior you expect. When reps see you posting consistently, they post consistently.</p>
+  </div>
+
+  <div class="subsec" id="tone">
+    <h3>Tone and Standards</h3>
+    <p>Discord at Prolific should feel fun, competitive, and energizing — not corporate, stiff, or overly formal. The goal is an environment where reps genuinely want to engage and the culture of the organization is visible every day. At the same time, fun does not mean unfiltered. Anything that adds energy, celebrates effort or results, or builds people up belongs. Anything that complains, tears people down, or brings something ethically questionable into the channel does not, and should be addressed immediately. As a manager you are the culture keeper of your team channel.</p>
+  </div>
+
+  <div class="subsec" id="comp-announce">
+    <h3>Competitions, Incentives, and Announcements</h3>
+    <p>Prolific ownership posts all organization-wide competition updates, incentive launches, leaderboard updates, and shoutouts in Announcements and The Herd. When these go up, relay them in your team channel immediately — with energy, context, and a clear message about what it means for your team specifically. The difference between a competition that fires your team up and one that gets ignored is almost always whether the manager got behind it.</p>
+    <p>Beyond relaying Prolific-wide competitions, run team-specific incentives and recognition in your team channel consistently. Call out individual wins, track team progress toward goals publicly, and create the feeling that your team channel is a place where effort gets seen and results get celebrated.</p>
+  </div>
+</section>
+
+<!-- ============ RECOGNITION ============ -->
+<section class="sec" id="recognition">
+  <div class="sec-num">08 — Culture</div>
+  <h2>Recognition</h2>
+  <p class="lead-in">Recognition is one of the most powerful tools a manager has — and one of the most misused. Done right, it reinforces exactly the behaviors and results you want to see more of. Done wrong, it loses its meaning entirely and stops driving behavior.</p>
+
+  <div class="subsec" id="what-recognized">
+    <h3>What Gets Recognized</h3>
+    <p>Recognition at Prolific is built around three pillars: <b>attitude and mindset, work ethic, and results.</b> All three matter and all three should be recognized consistently and with equal seriousness.</p>
+    <p><b>Attitude and mindset</b> recognition looks like calling out a rep who showed up to a hard day with the right energy, responded to rejection without breaking stride, encouraged a struggling teammate, or brought contagious positivity when the blitz was grinding. These don't show up on a leaderboard — but they're the foundation of everything else. Recognize them loudly and specifically.</p>
+    <p><b>Work ethic</b> recognition looks like calling out a rep who knocked 200 doors in a day, was first out the door every morning, stayed in the field until 9pm, or completed onboarding faster than anyone. Effort that exceeds the standard deserves to be named.</p>
+    <p><b>Results</b> recognition looks like a personal best sales day, reaching a new rank tier, closing a difficult objection, or leading the team in installs for the week. Results are the most visible — but they're only one third of the picture. A manager who only recognizes results will have reps who feel invisible on days their numbers aren't where they want them.</p>
+  </div>
+
+  <div class="subsec" id="how-delivered">
+    <h3>How Recognition Is Delivered</h3>
+    <h4>Public Recognition</h4>
+    <p>Your primary tool for building team culture and momentum. When a rep does something worth recognizing, name it publicly and clearly. Public recognition at the team level happens in The Herd. Be specific. A shoutout that says "great job today" does nothing. A shoutout that says "Dylan knocked 180 doors today, ran 12 speed tests, and closed 4 deals in prime time — that is what elite effort looks like" does everything. The specificity is what gives it weight.</p>
+    <p>Prolific ownership posts public shoutouts on Instagram for organization-wide recognition. When these go up, repost them immediately and relay them in your team channel with your own commentary. Managers should also do their own independent shoutouts on Instagram and in The Herd. Do not wait for Prolific ownership to recognize your team.</p>
+    <h4>Private Recognition</h4>
+    <p>Private recognition builds trust in a way public recognition cannot. When a rep has a breakthrough, overcomes a personal obstacle, or demonstrates growth you've been coaching them toward, acknowledge it one on one. It's also the right format when a rep is struggling and you want to acknowledge their effort without drawing attention to a difficult stretch in front of the team. Letting a rep know privately that you see them grinding can be the difference between a rep who pushes through and one who quits.</p>
+  </div>
+
+  <div class="subsec" id="frequency">
+    <h3>Frequency</h3>
+    <p>Recognize as often as the behavior warrants it — and only when it warrants it. Recognition loses its value when it becomes routine or is handed out for the bare minimum. If every rep gets a shoutout every day regardless of what they did, the shoutout means nothing. Reserve recognition for moments that are genuinely above and beyond. When your team knows that a shoutout from you means something, they will work for it. That said, when above-and-beyond moments happen, recognize them immediately — the closer the recognition is to the behavior, the more powerfully it reinforces it.</p>
+  </div>
+
+  <div class="subsec" id="wide-recognition">
+    <h3>Prolific-Wide Recognition</h3>
+    <p>At the organizational level, Prolific ownership handles recognition through Instagram shoutouts and Discord posts in The Herd and Announcements. These carry significant weight because of the visibility they create. Recognition is structured around consistent milestones every rep and manager should know and be working toward:</p>
+    <div class="card tick"><div class="datarow"><span class="k">Top Rep of the Blitz</span><span class="v">The highest-producing rep across a given blitz. Recognized at the conclusion of each blitz.</span></div></div>
+    <div class="card tick"><div class="datarow"><span class="k">Top Rep of the Month</span><span class="v">The highest-producing rep organization-wide for the calendar month.</span></div></div>
+    <div class="card tick"><div class="datarow"><span class="k">Top Team of the Month</span><span class="v">The highest-producing team organization-wide for the month — a reflection of both the reps and the manager leading them.</span></div></div>
+    <div class="card tick"><div class="datarow" style="border-bottom:0"><span class="k">Highest Installing</span><span class="v">Monthly recognition for the reps and teams with the highest install counts. Installs drive rank advancement and override payouts.</span></div></div>
+    <p>As a manager, make these milestones visible to your team throughout the month. Post where your team stands. Call out the gap between your top rep and the organization-wide leader. Turn these from something reps hear about after the fact into something they are actively chasing in real time.</p>
+  </div>
+
+  <div class="subsec" id="bad-recognition">
+    <h3>What Bad Recognition Looks Like</h3>
+    <ul>
+      <li><b>Recognizing mediocrity:</b> Shouting out a rep for doing what's expected sets the wrong standard. When average effort gets celebrated, average effort becomes the ceiling.</li>
+      <li><b>Lazy recognition:</b> "Great job today" or "killing it out there" is not recognition — it's noise. It doesn't tell the rep what they did or the team what to replicate.</li>
+      <li><b>Inconsistent recognition:</b> Recognizing the same rep repeatedly while others go unnoticed creates resentment. Be intentional about seeing your whole team.</li>
+      <li><b>Recognition without confidence:</b> If you recognize a rep in a way that feels halfhearted, it lands that way. When you recognize someone, mean it.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ INCENTIVES ============ -->
+<section class="sec" id="incentives">
+  <div class="sec-num">09 — Performance</div>
+  <h2>Incentives &amp; Competitions</h2>
+  <p class="lead-in">Competitions and incentives are one of the most powerful tools available to drive performance, build team culture, and create momentum that carries a team through the grind of a long blitz or a slow season. When done right, a well-structured competition with a prize your team actually cares about will move numbers faster than almost anything else in your toolkit.</p>
+
+  <div class="subsec" id="who-runs">
+    <h3>Who Runs Competitions</h3>
+    <p>Competitions operate at three levels: The League, Prolific, and the team. The League and Prolific run organization-wide competitions with higher budgets, longer timelines, and larger prizes — announced through Discord and Instagram. When a League or Prolific-wide competition launches, relay it to your team immediately, build hype in your team channel, and keep your team updated on where they stand.</p>
+    <p>Team-level competitions are your responsibility. These are shorter, more targeted, and built around your team's current needs. They create urgency and bonding that a Prolific-wide competition can't replicate — a rep competing directly against five teammates they see every day is far more motivated than one competing against 50 people they've never met.</p>
+  </div>
+
+  <div class="subsec" id="formats">
+    <h3>Competition Formats and Structure</h3>
+    <p>What you build a competition around should be driven by what you are trying to improve most at that point in time. Low door volume? Compete on doors knocked. Sales strong but installs lagging? Compete on completed installs. New team needing confidence? Compete on conversations or speed tests. The metric you compete on is the metric you signal matters most.</p>
+    <h4>Daily Competitions</h4>
+    <p>Simple, fast, and tied to a single achievable metric — most sales, most doors, first rep to close three deals. The short timeframe creates immediate urgency. Prizes should be small but desirable.</p>
+    <h4>Weekend or Blitz-Long Competitions</h4>
+    <p>Bigger prizes and more meaningful metrics — sales volume over a full blitz week, total team installs, or a cumulative doors-knocked goal. The longer timeframe gives every rep a real opportunity regardless of how individual days go. Be careful not to make the timeframe too long — a blitz-long competition is typically the right maximum duration for a team-level incentive.</p>
+    <h4>The Competition Sweet Spot</h4>
+    <p>Too easy and it has no meaning. Too hard and reps won't even try. The sweet spot requires genuine effort and above-average performance but is realistically reachable for any rep bringing their best. Before launching, run the numbers against your team's current averages and confirm the target is ambitious but achievable.</p>
+  </div>
+
+  <div class="subsec" id="prizes">
+    <h3>Prizes and Incentives</h3>
+    <p>The prize is what makes or breaks a competition. The general rule: a rep will work harder for something they truly want than for its cash equivalent. A trip, a piece of tech, a specific item a rep mentioned wanting, or an experience they can't easily buy will almost always outperform a cash prize of the same value — cash is abstract and gets absorbed into everyday expenses, while a specific prize stays vivid every day they compete for it.</p>
+    <p>Get feedback from your reps on what they actually want. Ask directly: What gear do you wish you had? What trip would you go on if it was free? What tech have you been putting off buying? At the team level, work within your budget and get creative. Small daily prizes don't need to be expensive — a nice dinner, a piece of Prolific gear, or a meaningful experience can create real competition for a single day.</p>
+  </div>
+
+  <div class="subsec" id="comm-tracking">
+    <h3>Communication and Tracking</h3>
+    <p>Competitions are announced on Discord and, for League or Prolific-wide, on Instagram. The announcement should include everything a rep needs from the start: rules, the metric tracked, start and end date, and the prize. Clear from day one means no confusion, no disputes, and no reps who feel it was unfair after the fact.</p>
+    <p>Tracking is done through the canvassing app for door-volume competitions and the League Dashboard for sales and install-based competitions. Pull the standings regularly and post updates throughout. Post standings daily for short competitions and every two to three days for longer ones. When a rep takes the lead, call it out. When the gap tightens, call it out. The running commentary you provide is what turns a competition from a spreadsheet into an event.</p>
+  </div>
+
+  <div class="subsec" id="comp-works">
+    <h3>What Makes a Competition Work</h3>
+    <p>The five elements of a competition that actually drives performance:</p>
+    <div class="card tick"><div class="datarow"><span class="k">Clear</span><span class="v">Every rep knows the rules, dates, metric, and prize from the moment it's announced. Confusion kills momentum before it even starts.</span></div></div>
+    <div class="card tick"><div class="datarow"><span class="k">Achievable</span><span class="v">The target is within reach for a rep performing at a high level. Set the bar high enough to require real effort, low enough that every rep has a genuine shot.</span></div></div>
+    <div class="card tick"><div class="datarow"><span class="k">Hype</span><span class="v">You're posting updates consistently and building the narrative throughout. The energy you put into hyping it is directly proportional to the energy your team puts into competing.</span></div></div>
+    <div class="card tick"><div class="datarow"><span class="k">Prizes</span><span class="v">Something your team actually wants. You asked them, you listened, you built the incentive around what matters to them specifically.</span></div></div>
+    <div class="card tick"><div class="datarow" style="border-bottom:0"><span class="k">Outcome</span><span class="v">Structured around a specific outcome you're trying to drive. The metric and prize both point toward it. A competition that's fun but doesn't move the needle is entertainment, not a performance tool.</span></div></div>
+  </div>
+
+  <div class="subsec" id="comp-calendar">
+    <h3>Prolific-Wide Competition Calendar</h3>
+    <p>Prolific runs four recurring competitions every rep and manager should know, plan around, and build team-level momentum toward.</p>
+    <div class="rankcard"><div class="rhead"><span class="rname">Pre-Season</span></div><p>Launched in the ramp-up before peak selling season to accelerate production and build momentum heading into summer. This separates the teams who show up to summer ready from the teams that spend the first month finding their footing.</p></div>
+    <div class="rankcard"><div class="rhead"><span class="rname">Big Summer</span></div><p>The flagship Prolific competition of the year. Peak selling season, the largest prizes, the longest competitive window. The one your team should be most locked in on. Build toward it early, track it obsessively, and push your team harder during this window than any other time of year.</p></div>
+    <div class="rankcard"><div class="rhead"><span class="rname">Winter</span></div><p>Designed to sustain production during the slowest selling season — it counters the natural tendency to pull back when the weather gets cold and market energy drops. Teams that stay sharp in the off-season dominate when peak season returns.</p></div>
+    <div class="rankcard"><div class="rhead"><span class="rname">Annual Company Trip</span></div><p>Reps qualify by hitting a specific install threshold over the course of the year. The longest-horizon incentive in the organization and one of the most powerful motivators for high-producing reps. Make sure every rep knows the qualifying threshold from day one and tracks their progress all year.</p></div>
+  </div>
+</section>
+
+<div class="doc-footer">
+  <span>© 2026 Prolific Fiber · Manager Playbook · Internal use only</span>
+  <span>MTE</span>
+</div>
+
+</main>
+</div>
+
+<script>
+// sidebar mobile toggle
+const sb=document.getElementById('sidebar');
+const tog=document.getElementById('sideToggle');
+const scrim=document.createElement('div');scrim.className='scrim';document.body.appendChild(scrim);
+function openSide(){sb.classList.add('open');scrim.classList.add('show');}
+function closeSide(){sb.classList.remove('open');scrim.classList.remove('show');}
+tog&&tog.addEventListener('click',()=>sb.classList.contains('open')?closeSide():openSide());
+scrim.addEventListener('click',closeSide);
+
+// collapse/expand sections + close drawer on click (mobile)
+document.querySelectorAll('.toc-sec > a').forEach(a=>{
+  a.addEventListener('click',()=>{ if(window.innerWidth<=920) closeSide(); });
+});
+document.querySelectorAll('.toc-sub a').forEach(a=>{
+  a.addEventListener('click',()=>{ if(window.innerWidth<=920) closeSide(); });
+});
+
+// scroll-spy: highlight active section + open its sub-list
+const secEls=[...document.querySelectorAll('section.sec')];
+const subEls=[...document.querySelectorAll('.subsec')];
+const tocSecs=[...document.querySelectorAll('.toc-sec')];
+const allTargets=[...secEls,...subEls];
+
+function setActive(){
+  const y=window.scrollY+ (window.innerHeight*0.28);
+  // find current section
+  let curSec=secEls[0];
+  for(const s of secEls){ if(s.offsetTop<=y) curSec=s; }
+  // find current sub
+  let curSub=null;
+  for(const s of subEls){ if(s.offsetTop<=y) curSub=s; }
+  // sidebar section state
+  tocSecs.forEach(li=>{
+    const link=li.querySelector('a');
+    const isCur=('#'+curSec.id)===link.getAttribute('href');
+    li.classList.toggle('open',isCur);
+    link.classList.toggle('active',isCur);
+  });
+  // sub link active
+  document.querySelectorAll('.toc-sub a').forEach(a=>a.classList.remove('active'));
+  if(curSub){
+    const sa=document.querySelector('.toc-sub a[href="#'+curSub.id+'"]');
+    if(sa) sa.classList.add('active');
+  }
+}
+let ticking=false;
+window.addEventListener('scroll',()=>{ if(!ticking){requestAnimationFrame(()=>{setActive();ticking=false;});ticking=true;} });
+window.addEventListener('load',setActive);
+setActive();
+
+// back to top
+const topBtn=document.createElement('button');topBtn.className='totop';topBtn.innerHTML='↑';topBtn.setAttribute('aria-label','Back to top');
+document.body.appendChild(topBtn);
+topBtn.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+window.addEventListener('scroll',()=>{ topBtn.classList.toggle('show',window.scrollY>600); });
+</script>
+
+</body>
+</html>
