@@ -81,6 +81,8 @@
   .nav-links{display:flex;gap:26px;font-size:.82rem;color:var(--muted)}
   .nav-links a{color:inherit;text-decoration:none;transition:color .2s}
   .nav-links a:hover{color:var(--text)}
+  .nav-links a.active{position:relative}
+  .nav-links a.active::after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:2px;background:var(--accent);border-radius:2px}
   .nav-cta{display:flex;gap:10px}
   .pill{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.08em;
     padding:9px 16px;border-radius:10px;border:1px solid var(--stroke-strong);
