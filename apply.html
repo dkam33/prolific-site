@@ -92,7 +92,18 @@
   .pill.solid{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:600;
     box-shadow:0 6px 20px rgba(196,175,154,.28)}
   .pill.solid:hover{filter:brightness(1.08)}
-  @media(max-width:780px){.nav-links{display:none}}
+  .nav-toggle{display:none;flex-direction:column;justify-content:center;gap:5px;width:42px;height:42px;border:1px solid var(--stroke-strong);border-radius:10px;background:var(--panel);cursor:pointer;padding:0 10px;flex:none}
+  .nav-toggle span{display:block;height:2px;width:100%;background:var(--text);border-radius:2px;transition:transform .28s ease,opacity .2s ease}
+  .nav-toggle[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .nav-toggle[aria-expanded="true"] span:nth-child(2){opacity:0}
+  .nav-toggle[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  .mobile-menu{display:none;flex-direction:column;gap:2px;padding:8px 22px 20px;background:rgba(18,18,18,0.98);backdrop-filter:blur(14px);border-bottom:1px solid var(--stroke);max-height:0;overflow:hidden;transition:max-height .32s ease}
+  .mobile-menu.open{max-height:80vh}
+  .mobile-menu a{color:var(--text);text-decoration:none;font-size:1.05rem;padding:16px 4px;border-bottom:1px solid var(--stroke);font-family:'Teko',sans-serif;text-transform:uppercase;letter-spacing:.03em}
+  .mobile-menu a:last-child{border-bottom:none}
+  .mobile-menu .mm-cta{display:flex;gap:12px;margin-top:16px}
+  .mobile-menu .mm-cta a{border-bottom:none;flex:1;text-align:center;padding:14px;font-size:.82rem;font-family:'JetBrains Mono',monospace}
+  @media(max-width:780px){.nav-links{display:none}.nav-cta{display:none}.nav-toggle{display:flex}.mobile-menu{display:flex}}
 
   /* ===== HERO ===== */
   header.hero{padding:78px 0 30px;text-align:center;position:relative}
@@ -464,7 +475,19 @@ header.page-hero{padding:64px 0 26px;position:relative}
       <a href="/rep">For reps</a><a href="/dealer">Dealers</a>
       <a href="/isp" style="display:none">For ISPs</a><a href="/apply" class="active">Apply</a></div>
     <div class="nav-cta"><a class="pill" href="/">Home</a>
-      <a class="pill solid" href="#book">Book now</a></div></div></nav>
+      <a class="pill solid" href="#book">Book now</a></div>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="/rep">For reps</a>
+    <a href="/dealer">Dealers</a>
+    <a href="/apply">Apply</a>
+    <div class="mm-cta">
+      <a class="pill" href="/">Home</a>
+      <a class="pill solid" href="#book">Book now</a>
+    </div>
+  </div>
+</nav>
 
 <header class="page-hero"><div class="topo"><svg viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice">
   <path class="contour" d="M-50,120 C150,80 320,160 480,110 C620,70 740,140 860,100"/>
@@ -521,5 +544,13 @@ header.page-hero{padding:64px 0 26px;position:relative}
 <script>
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+// ---------- Mobile menu ----------
+const navToggle=document.getElementById('navToggle');
+const mobileMenu=document.getElementById('mobileMenu');
+if(navToggle&&mobileMenu){
+  navToggle.addEventListener('click',()=>{const open=mobileMenu.classList.toggle('open');navToggle.setAttribute('aria-expanded',open?'true':'false');});
+  mobileMenu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{mobileMenu.classList.remove('open');navToggle.setAttribute('aria-expanded','false');}));
+}
 </script>
 </body></html>
