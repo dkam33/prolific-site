@@ -347,13 +347,6 @@ header.page-hero{padding:64px 0 26px;position:relative}
 /* --- apply / booking embed --- */
 .booking{padding:0;overflow:hidden;min-height:680px}
 .booking-frame{width:100%;min-height:680px;border:0;display:block}
-.embed-note{display:flex;align-items:center;justify-content:center;min-height:680px;
-  text-align:center;padding:40px;flex-direction:column;gap:16px}
-.embed-note .big-i{font-size:2.4rem;color:var(--accent)}
-.embed-note h3{font-size:1.8rem;text-transform:uppercase}
-.embed-note p{color:var(--muted);max-width:420px;font-size:.92rem}
-.embed-note code{font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--accent);
-  background:var(--accent-soft);padding:3px 8px;border-radius:6px}
 
 /* apply two-col */
 .apply-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:18px;align-items:start}
@@ -487,21 +480,8 @@ header.page-hero{padding:64px 0 26px;position:relative}
 <section id="book" style="padding-top:20px"><div class="wrap">
   <div class="apply-grid reveal">
     <div class="booking glass ticked">
-      <!--
-        ============================================================
-        BOOKING EMBED GOES HERE
-        Replace the .embed-note block below with your Calendly inline embed:
-        <div class="calendly-inline-widget" data-url="https://calendly.com/YOUR-LINK"
-             style="min-width:320px;height:680px;"></div>
-        <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
-        ============================================================
-      -->
-      <div class="embed-note" id="embedNote">
-        <div class="big-i">[ ]</div>
-        <h3>Booking calendar goes here</h3>
-        <p>Drop in your Calendly inline embed (or any booking tool) where the comment marks it in the code. Use <code>calendly.com/your-link</code> and it renders right inside this panel.</p>
-        <a class="btn primary" href="#" id="placeholderBtn">Set your booking link</a>
-      </div>
+      <div class="calendly-inline-widget" data-url="https://calendly.com/tyler-foundryfam/gameplan?hide_gdpr_banner=1&background_color=1a1a1a&text_color=ececec&primary_color=c4af9a" style="min-width:320px;height:700px;width:100%"></div>
+      <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
     </div>
     <aside class="apply-side glass ticked">
       <h3>What happens next</h3>
@@ -511,7 +491,7 @@ header.page-hero{padding:64px 0 26px;position:relative}
         <li>Onboarding, product training, and your first ride-along.</li>
         <li>Start knocking, start climbing the board, start earning.</li>
       </ul>
-      <div class="fillin" style="margin-top:22px">Tell me your booking platform + link and I'll wire the live embed right here.</div>
+      <div class="fillin" style="margin-top:22px">Prefer to talk first? Grab any open time on the calendar — no application required to book.</div>
     </aside>
   </div>
 </div></section>
@@ -535,8 +515,6 @@ header.page-hero{padding:64px 0 26px;position:relative}
     <div class="legal"><span>© 2026 Prolific Fiber — earned, not given.</span>
       <span>Placeholder copy · swap for your real details</span></div></div></footer>
 <script>
-document.getElementById('placeholderBtn').addEventListener('click',function(e){
-  if(this.getAttribute('href')==='#') e.preventDefault();});
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 </script>
