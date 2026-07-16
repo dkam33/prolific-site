@@ -7,7 +7,7 @@ const TABLES = ['Resources', 'Modules', 'Events'];
 
 // simple in-memory cache (per warm serverless instance)
 let cache = { data: null, ts: 0 };
-const CACHE_MS = 5 * 60 * 1000; // 5 minutes
+const CACHE_MS = 1 * 60 * 1000; // 1 minute
 
 async function fetchTable(table, token) {
   let records = [];
@@ -48,7 +48,7 @@ export default async function handler(req, res) {
   const now = Date.now();
   if (cache.data && (now - cache.ts) < CACHE_MS) {
     res.setHeader('X-Cache', 'HIT');
-    res.setHeader('Cache-Control', 's-maxage=300, stale-while-revalidate=600');
+    res.setHeader('Cache-Control', 's-maxage=60, stale-while-revalidate=120');
     res.status(200).json(cache.data);
     return;
   }
@@ -116,7 +116,7 @@ export default async function handler(req, res) {
     cache = { data: payload, ts: now };
 
     res.setHeader('X-Cache', 'MISS');
-    res.setHeader('Cache-Control', 's-maxage=300, stale-while-revalidate=600');
+    res.setHeader('Cache-Control', 's-maxage=60, stale-while-revalidate=120');
     res.status(200).json(payload);
   } catch (err) {
     // if we have stale cache, serve it rather than error
