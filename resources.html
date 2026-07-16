@@ -476,7 +476,7 @@ function renderTraining(){
   body.innerHTML=html;
   body.querySelectorAll('.mod-card').forEach(c=>c.onclick=()=>openPlayer(c.dataset.track,+c.dataset.i));
 }
-function thumbStyle(m){const vid=(m.vimeoId||'').toString().split(/[\/?]/)[0].replace(/\D/g,'');const t=m.thumbnail||(vid?`https://vumbnail.com/${vid}.jpg`:'');return t?`style="background-image:url('${esc(t)}')"`:'';}
+function thumbStyle(m){const t=m.thumbnail||'';return t?`style="background-image:url('${esc(t)}')"`:'';}
 function modCard(m,track){const idx=STATE.data.modules.filter(x=>x.track===track).sort((a,b)=>a.order-b.order).indexOf(m);
   return `<div class="mod-card glass ticked" data-track="${esc(track)}" data-i="${idx}"><div class="mod-thumb" ${thumbStyle(m)}><span class="mod-num">0${m.order}</span><span class="mod-dur">${esc(m.duration)}</span><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div><div class="mod-body"><h4>${esc(m.title)}</h4>${m.description?`<p>${esc(m.description)}</p>`:''}</div></div>`;
 }

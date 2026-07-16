@@ -75,10 +75,28 @@ export default async function handler(req, res) {
       .sort((a,b) => a.order - b.order);
 
     // ---- Modules ----
-    const modules = modulesRaw
+    // Helper: get the real thumbnail from Vimeo oEmbed (server-side, so no client dependency on vumbnail.com)
+    async function vimeoThumb(rawId) {
+      const id = (rawId || '').toString().split(/[/?]/)[0].replace(/\D/g, '');
+      if (!id) return '';
+      try {
+        const r = await fetch(`https://vimeo.com/api/oembed.json?url=https://vimeo.com/${id}&width=640`, {
+          headers: { 'User-Agent': 'Mozilla/5.0' }
+        });
+        if (!r.ok) return '';
+        const j = await r.json();
+        return j.thumbnail_url || '';
+      } catch { return ''; }
+    }
+
+    const modBase = modulesRaw
       .map(r => r.fields)
-      .filter(f => f.Published)
-      .map(f => ({
+      .filter(f => f.Published);
+
+    const modules = await Promise.all(modBase.map(async f => {
+      const manual = f['Thumbnail URL'] || '';
+      const thumb = manual || await vimeoThumb(f['Vimeo ID']);
+      return {
         title: f.Title || '',
         track: f.Track || '',
         trackOrder: f['Track Order'] ?? 999,
@@ -86,15 +104,16 @@ export default async function handler(req, res) {
         duration: f.Duration || '',
         description: f.Description || '',
         order: f.Order ?? 999,
-        thumbnail: f['Thumbnail URL'] || '',
+        thumbnail: thumb,
         resourceLinks: (f['Resource Links'] || '')
           .split('\n').map(s=>s.trim()).filter(Boolean)
           .map(line => {
             const [label, type, url] = line.split('|').map(x => (x||'').trim());
             return { label: label||'', type: type||'Link', url: url||'' };
           }),
-      }))
-      .sort((a,b) => a.trackOrder - b.trackOrder || a.order - b.order);
+      };
+    }));
+    modules.sort((a,b) => a.trackOrder - b.trackOrder || a.order - b.order);
 
     // ---- Events ----
     const events = eventsRaw
