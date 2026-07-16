@@ -476,17 +476,29 @@ function renderTraining(){
   body.innerHTML=html;
   body.querySelectorAll('.mod-card').forEach(c=>c.onclick=()=>openPlayer(c.dataset.track,+c.dataset.i));
 }
-function thumbStyle(m){const t=m.thumbnail||(m.vimeoId?`https://vumbnail.com/${m.vimeoId}.jpg`:'');return t?`style="background-image:url('${esc(t)}')"`:'';}
+function thumbStyle(m){const vid=(m.vimeoId||'').toString().split(/[\/?]/)[0].replace(/\D/g,'');const t=m.thumbnail||(vid?`https://vumbnail.com/${vid}.jpg`:'');return t?`style="background-image:url('${esc(t)}')"`:'';}
 function modCard(m,track){const idx=STATE.data.modules.filter(x=>x.track===track).sort((a,b)=>a.order-b.order).indexOf(m);
   return `<div class="mod-card glass ticked" data-track="${esc(track)}" data-i="${idx}"><div class="mod-thumb" ${thumbStyle(m)}><span class="mod-num">0${m.order}</span><span class="mod-dur">${esc(m.duration)}</span><div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div><div class="mod-body"><h4>${esc(m.title)}</h4>${m.description?`<p>${esc(m.description)}</p>`:''}</div></div>`;
 }
 
 /* ---------- PLAYER ---------- */
+function vimeoEmbedSrc(raw){
+  if(!raw) return '';
+  raw=raw.toString().trim();
+  // accept "123456789/abc123", "123456789", or a full vimeo URL
+  let id='',hash='';
+  const urlm=raw.match(/vimeo\.com\/(?:video\/)?(\d+)(?:\/([\w]+))?/);
+  if(urlm){id=urlm[1];hash=urlm[2]||'';}
+  else{const parts=raw.split(/[\/?]/).filter(Boolean);id=(parts[0]||'').replace(/\D/g,'');hash=parts[1]||'';}
+  let src='https://player.vimeo.com/video/'+id+'?title=0&byline=0&portrait=0';
+  if(hash) src+='&h='+hash;
+  return src;
+}
 function openPlayer(track,idx){
   const list=STATE.data.modules.filter(m=>m.track===track).sort((a,b)=>a.order-b.order);
   const m=list[idx];if(!m)return;
   $('#playerEyebrow').innerHTML=`<span class="br">[</span> ${esc(track)} · Module 0${m.order} <span class="br">]</span>`;
-  const embed=m.vimeoId?`<iframe src="https://player.vimeo.com/video/${esc(m.vimeoId)}?title=0&byline=0&portrait=0" allow="autoplay;fullscreen;picture-in-picture" allowfullscreen></iframe>`:`<div class="loader"><div class="lt">No video linked yet.</div></div>`;
+  const embed=m.vimeoId?`<iframe src="${esc(vimeoEmbedSrc(m.vimeoId))}" allow="autoplay;fullscreen;picture-in-picture" allowfullscreen></iframe>`:`<div class="loader"><div class="lt">No video linked yet.</div></div>`;
   const attach=(m.resourceLinks&&m.resourceLinks.length)?`<div class="p-resources"><h3>Attached Resources</h3><div class="res-grid" style="grid-template-columns:1fr 1fr">${m.resourceLinks.map(rl=>{const[cls,ic,ar]=typeMeta(rl.type);return `<a class="res-card glass ticked" href="${esc(rl.url)}" target="_blank" rel="noopener"><div class="res-top"><span class="res-type ${cls}">${ic} ${esc(rl.type)}</span><span class="res-arrow">${ar}</span></div><h4>${esc(rl.label)}</h4></a>`;}).join('')}</div></div>`:'';
   const playlist=`<aside><div class="playlist"><div class="pl-head">${esc(track)} — ${list.length} Module${list.length>1?'s':''}</div>${list.map((x,i)=>`<div class="pl-item${i===idx?' on':''}" data-i="${i}"><div class="pl-thumb" ${thumbStyle(x)}>${x.thumbnail||x.vimeoId?'':'0'+x.order}</div><div><div class="pl-t">${esc(x.title)}</div><div class="pl-d">${esc(x.duration)}</div></div></div>`).join('')}</div></aside>`;
   $('#playerWrap').innerHTML=`<div class="player-main"><div class="video-frame">${embed}</div><h2>${esc(m.title)}</h2><div class="p-meta"><span>${esc(track).toUpperCase()}</span><span>·</span><span>${esc(m.duration)}</span><span>·</span><span>MODULE 0${m.order} OF ${list.length}</span></div>${m.description?`<p class="p-desc">${esc(m.description)}</p>`:''}${attach}</div>${playlist}`;
