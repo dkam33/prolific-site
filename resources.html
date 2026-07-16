@@ -39,11 +39,11 @@ h1,h2,h3,h4{font-family:'Teko',sans-serif;font-weight:600;text-transform:upperca
 .hub-hero{padding:80px 0 40px;text-align:center}
 .hub-hero h1{font-size:clamp(3rem,8vw,6rem);margin:22px 0 20px}
 .hub-hero p{color:var(--muted);max-width:620px;margin:0 auto;font-size:1.05rem;line-height:1.6}
-.pathways{display:grid;grid-template-columns:1fr 1fr;gap:22px;padding:24px 0 90px}
-.path-card{padding:44px 40px;cursor:pointer;transition:.25s;position:relative;overflow:hidden;min-height:320px;display:flex;flex-direction:column;justify-content:space-between}
+.pathways{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding:24px 0 90px}
+.path-card{padding:38px 34px;cursor:pointer;transition:.25s;position:relative;overflow:hidden;min-height:300px;display:flex;flex-direction:column;justify-content:space-between}
 .path-card:hover{border-color:var(--accent-line);transform:translateY(-3px);background:var(--panel-2)}
 .path-card .pc-ix{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.16em;color:var(--accent)}
-.path-card h2{font-size:3.2rem;margin:18px 0 14px}
+.path-card h2{font-size:2.7rem;margin:18px 0 14px}
 .path-card p{color:var(--muted);line-height:1.55;font-size:1rem;max-width:440px}
 .path-card .pc-meta{display:flex;gap:20px;margin-top:26px;font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--faint);letter-spacing:.08em}
 .path-card .pc-go{position:absolute;top:40px;right:40px;font-size:2rem;color:var(--accent);opacity:.5;transition:.25s}
@@ -214,6 +214,61 @@ footer{padding:60px 0 40px}
 .legal{margin-top:34px;padding-top:22px;border-top:1px solid var(--stroke);font-family:'JetBrains Mono',monospace;font-size:.66rem;color:var(--faint);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
 @media(max-width:900px){.pathways{grid-template-columns:1fr}.res-grid,.mod-grid{grid-template-columns:1fr 1fr}.player-wrap{grid-template-columns:1fr}.feat-inner{flex-direction:column;align-items:flex-start;gap:22px}}
 @media(max-width:600px){.res-grid,.mod-grid{grid-template-columns:1fr}.cal-cell{min-height:70px}.feat h2{font-size:2.4rem}}
+
+/* ---- blitz colors ---- */
+.bz-khaki{--bc:#c4af9a;--bcs:rgba(196,175,154,.16);--bcl:rgba(196,175,154,.5)}
+.bz-blue{--bc:#5aa8c4;--bcs:rgba(42,127,158,.18);--bcl:rgba(42,127,158,.55)}
+.bz-green{--bc:#a3b57f;--bcs:rgba(138,154,107,.18);--bcl:rgba(138,154,107,.55)}
+.bz-rust{--bc:#c9857b;--bcs:rgba(184,105,95,.16);--bcl:rgba(184,105,95,.5)}
+.bz-orange{--bc:#d69a5c;--bcs:rgba(214,154,92,.16);--bcl:rgba(214,154,92,.5)}
+.bz-steel{--bc:#8c9bb0;--bcs:rgba(140,155,176,.16);--bcl:rgba(140,155,176,.5)}
+/* ---- toggle ---- */
+.cal-toolbar{display:flex;justify-content:flex-end;margin-bottom:20px}
+.cal-toggle{display:inline-flex;border:1px solid var(--stroke-strong);border-radius:11px;overflow:hidden;background:var(--panel)}
+.ct-btn{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.08em;padding:11px 22px;background:none;border:none;color:var(--muted);cursor:pointer;transition:.2s}
+.ct-btn.on{background:var(--accent-soft);color:var(--accent)}
+/* ---- spanning bars (Option B) ---- */
+.segbar{height:22px;line-height:22px;font-size:.66rem;padding:0 8px;overflow:hidden;white-space:nowrap;cursor:pointer;margin-top:4px;
+  background:var(--bcs);border:1px solid var(--bcl);color:var(--bc);font-family:'Inter',sans-serif}
+.segbar.start{border-radius:6px 0 0 6px;border-right:none}
+.segbar.mid{border-radius:0;border-left:none;border-right:none;color:transparent}
+.segbar.end{border-radius:0 6px 6px 0;border-left:none;color:transparent}
+.segbar.single{border-radius:6px}
+.segbar .st{font-size:.58rem;opacity:.8;margin-left:6px;text-transform:uppercase;letter-spacing:.04em}
+/* ---- list view ---- */
+.bl-list .bl-mo{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--faint);letter-spacing:.12em;text-transform:uppercase;margin:22px 0 12px}
+.bl-row{display:flex;gap:16px;padding:18px;border:1px solid var(--stroke);border-radius:12px;background:var(--panel);margin-bottom:12px;cursor:pointer;transition:.2s;align-items:center}
+.bl-row:hover{border-color:var(--bcl);background:var(--panel-2)}
+.bl-row .bl-bar{width:4px;align-self:stretch;border-radius:3px;background:var(--bc);flex:none}
+.bl-row .bl-date{width:60px;flex:none;text-align:center;border-right:1px solid var(--stroke);padding-right:14px}
+.bl-row .bl-date .d{font-family:'Teko';font-weight:600;font-size:1.9rem;line-height:1;color:var(--text)}
+.bl-row .bl-date .m{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--faint);letter-spacing:.1em}
+.bl-row .bl-info .n{font-size:1.05rem;font-weight:600;color:var(--text)}
+.bl-row .bl-info .r{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--bc);margin:4px 0}
+.bl-row .bl-info .meta{font-size:.82rem;color:var(--muted)}
+.bl-row .bl-stat{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;padding:5px 11px;border-radius:6px;height:fit-content;border:1px solid var(--stroke-strong);color:var(--muted)}
+.bl-row .bl-stat.open{background:var(--accent-soft);color:var(--accent);border-color:var(--accent-line)}
+/* ---- mobile calendar ---- */
+.cal-dots{position:absolute;bottom:5px;left:0;right:0;display:flex;gap:3px;justify-content:center;flex-wrap:wrap}
+.cal-dot{width:6px;height:6px;border-radius:50%;background:var(--bc)}
+.mob-daysel{margin-top:16px;padding:16px;border:1px solid var(--accent-line);border-radius:12px;background:var(--accent-soft);display:none}
+.mob-daysel.show{display:block}
+.mob-daysel .ds-dt{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--accent);letter-spacing:.1em;margin-bottom:12px}
+.mob-daysel .ds-ev{padding:12px 14px;border-radius:9px;background:rgba(20,20,20,.5);border-left:3px solid var(--bc);margin-bottom:8px;cursor:pointer}
+.mob-daysel .ds-ev .n{font-size:.95rem;font-weight:600}
+.mob-daysel .ds-ev .m{font-size:.76rem;color:var(--muted);margin-top:3px}
+@media(max-width:640px){
+  .cal-cell{min-height:56px;padding:4px}
+  .segbar{display:none} /* hide bars on mobile, use dots instead */
+  .cal-cell .cal-mobile-dots{display:flex}
+  .cal-grid{gap:3px}
+  .desktop-cal-bars{display:none}
+}
+@media(min-width:641px){
+  .cal-dots{display:none} /* dots only on mobile */
+  .mob-daysel{display:none!important}
+}
+
 </style></head>
 <body>
 <div class="atmosphere"></div><div class="grid-bg"></div>
@@ -257,8 +312,8 @@ footer{padding:60px 0 40px}
       <div class="pc-go">↗</div>
       <div><div class="path-icon"><svg viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="M4 9h16M9 5v14"/></svg></div>
         <div class="pc-ix" style="margin-top:20px">01 — LIBRARY</div><h2>Knowledge<br>Base</h2>
-        <p>Playbooks, ISP info, commission tools, onboarding docs, key contacts, and the blitz calendar — organized and searchable.</p></div>
-      <div class="pc-meta"><span>PDFs</span><span>Links</span><span>Tools</span><span>Blitzes</span></div>
+        <p>Playbooks, ISP info, commission tools, onboarding docs, key contacts, and every link you need — organized and searchable.</p></div>
+      <div class="pc-meta"><span>PDFs</span><span>Links</span><span>Tools</span><span>Contacts</span></div>
     </div>
     <div class="path-card glass ticked" onclick="show('training')">
       <div class="pc-go">↗</div>
@@ -266,6 +321,13 @@ footer{padding:60px 0 40px}
         <div class="pc-ix" style="margin-top:20px">02 — TRAINING</div><h2>Training<br>Hub</h2>
         <p>Video modules grouped into tracks — from day-one onboarding through advanced pitch and objection handling.</p></div>
       <div class="pc-meta"><span>Onboarding</span><span>Pitch</span><span>Advanced</span></div>
+    </div>
+    <div class="path-card glass ticked" onclick="show('calendar')">
+      <div class="pc-go">↗</div>
+      <div><div class="path-icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="1"/><path d="M3 9h18M8 3v4M16 3v4"/></svg></div>
+        <div class="pc-ix" style="margin-top:20px">03 — SCHEDULE</div><h2>Blitz<br>Calendar</h2>
+        <p>Every upcoming blitz — dates, locations, and which team's running it. See what's on the board, then ask your manager to get on one.</p></div>
+      <div class="pc-meta"><span>Upcoming</span><span>By Team</span><span>Live</span></div>
     </div>
   </div>
 </div></div>
@@ -280,6 +342,20 @@ footer{padding:60px 0 40px}
   <div class="chips" id="kbChips"></div>
   <div id="kbFeatured"></div>
   <div id="kbBody"><div class="loader"><div class="bison-loader"><svg viewBox="0 0 2382 2108" xmlns="http://www.w3.org/2000/svg"><path d="M 973.0,2107.5 L 922.0,2107.5 L 856.0,2103.5 L 841.0,2098.5 L 835.5,2089.0 L 837.5,2084.0 L 845.0,2077.5 L 899.0,2046.5 L 943.0,2015.5 L 980.5,1980.0 L 1008.5,1942.0 L 1022.5,1913.0 L 1032.5,1883.0 L 1039.5,1845.0 L 1042.5,1797.0 L 1038.5,1718.0 L 1029.5,1648.0 L 1018.5,1584.0 L 998.5,1505.0 L 989.5,1460.0 L 985.5,1422.0 L 985.5,1377.0 L 992.5,1327.0 L 1010.5,1273.0 L 1038.5,1225.0 L 1070.0,1191.5 L 1081.0,1183.5 L 1085.0,1183.5 L 1088.5,1191.0 L 1085.5,1273.0 L 1092.5,1339.0 L 1106.5,1385.0 L 1129.5,1426.0 L 1163.0,1463.5 L 1198.0,1491.5 L 1233.0,1514.5 L 1337.0,1575.5 L 1367.0,1596.5 L 1402.0,1626.5 L 1431.5,1656.0 L 1465.5,1696.0 L 1499.5,1744.0 L 1530.5,1798.0 L 1540.0,1807.5 L 1547.0,1810.5 L 1560.0,1810.5 L 1585.0,1800.5 L 1598.0,1791.5 L 1617.5,1768.0 L 1627.5,1747.0 L 1637.5,1712.0 L 1648.5,1646.0 L 1657.5,1607.0 L 1664.5,1587.0 L 1673.0,1578.5 L 1682.0,1580.5 L 1711.0,1607.5 L 1743.0,1630.5 L 1787.0,1651.5 L 1815.0,1659.5 L 1841.0,1663.5 L 1867.0,1663.5 L 1879.5,1654.0 L 1979.5,1311.0 L 1998.5,1231.0 L 2012.5,1152.0 L 2019.5,1073.0 L 2017.5,999.0 L 2012.5,963.0 L 2004.5,928.0 L 1987.5,880.0 L 1966.5,839.0 L 1947.5,811.0 L 1921.5,780.0 L 1901.0,759.5 L 1864.0,728.5 L 1832.0,706.5 L 1793.0,683.5 L 1755.0,664.5 L 1690.0,637.5 L 1628.0,617.5 L 1587.0,614.5 L 1524.0,614.5 L 1468.0,617.5 L 1450.0,620.5 L 1444.5,619.0 L 1469.0,598.5 L 1498.0,580.5 L 1538.0,562.5 L 1566.0,553.5 L 1613.0,543.5 L 1652.0,539.5 L 1709.0,539.5 L 1774.0,547.5 L 1779.5,545.0 L 1779.5,539.0 L 1772.5,528.0 L 1751.0,505.5 L 1690.0,454.5 L 1650.0,425.5 L 1609.0,399.5 L 1532.0,359.5 L 1398.0,305.5 L 1360.0,292.5 L 1322.0,282.5 L 1241.0,269.5 L 1158.0,267.5 L 1086.0,274.5 L 1005.0,291.5 L 938.0,312.5 L 862.0,343.5 L 777.0,386.5 L 705.0,429.5 L 641.0,472.5 L 580.0,517.5 L 473.0,602.5 L 390.0,662.5 L 311.0,712.5 L 244.0,748.5 L 173.0,779.5 L 107.0,801.5 L 24.0,819.5 L 3.0,821.5 L -0.5,820.0 L -0.5,817.0 L 16.0,803.5 L 68.0,773.5 L 119.0,739.5 L 210.0,666.5 L 314.5,569.0 L 378.5,494.0 L 444.5,421.0 L 552.0,313.5 L 616.0,256.5 L 670.0,212.5 L 728.0,169.5 L 782.0,133.5 L 849.0,94.5 L 910.0,64.5 L 967.0,41.5 L 1038.0,19.5 L 1108.0,5.5 L 1174.0,-0.5 L 1234.0,0.5 L 1286.0,6.5 L 1381.0,27.5 L 1464.0,53.5 L 1545.0,86.5 L 1603.0,115.5 L 1664.0,151.5 L 1735.0,201.5 L 1797.0,253.5 L 1857.5,313.0 L 1923.5,390.0 L 1967.5,451.0 L 1997.5,502.0 L 2027.5,570.0 L 2043.5,625.0 L 2047.5,645.0 L 2046.5,655.0 L 2039.0,664.5 L 2031.0,668.5 L 2017.0,671.5 L 1978.5,673.0 L 2011.0,696.5 L 2040.5,728.0 L 2078.5,779.0 L 2117.5,837.0 L 2135.0,858.5 L 2146.0,862.5 L 2165.0,860.5 L 2177.0,855.5 L 2197.0,842.5 L 2210.5,830.0 L 2222.5,814.0 L 2230.5,798.0 L 2236.5,775.0 L 2236.5,735.0 L 2226.5,690.0 L 2210.5,647.0 L 2178.5,574.0 L 2199.0,579.5 L 2225.0,591.5 L 2271.0,622.5 L 2300.5,651.0 L 2324.5,681.0 L 2342.5,710.0 L 2363.5,757.0 L 2374.5,795.0 L 2380.5,830.0 L 2381.5,887.0 L 2378.5,911.0 L 2370.5,945.0 L 2360.5,972.0 L 2341.5,1007.0 L 2320.5,1034.0 L 2286.0,1065.5 L 2248.0,1089.5 L 2230.0,1097.5 L 2191.0,1109.5 L 2175.0,1117.5 L 2161.5,1130.0 L 2154.5,1143.0 L 2106.5,1287.0 L 2035.5,1540.0 L 2001.5,1649.0 L 1952.5,1778.0 L 1924.5,1838.0 L 1916.5,1853.0 L 1911.0,1858.5 L 1902.0,1864.5 L 1883.0,1870.5 L 1821.0,1874.5 L 1793.0,1882.5 L 1775.0,1895.5 L 1724.0,1946.5 L 1701.0,1963.5 L 1670.0,1982.5 L 1610.0,2009.5 L 1569.0,2022.5 L 1518.0,2033.5 L 1465.0,2039.5 L 1413.0,2040.5 L 1406.0,2038.5 L 1401.5,2034.0 L 1401.5,2028.0 L 1415.5,2001.0 L 1425.5,1974.0 L 1430.5,1949.0 L 1430.5,1915.0 L 1423.5,1883.0 L 1409.5,1852.0 L 1401.0,1839.5 L 1394.0,1832.5 L 1388.0,1830.5 L 1348.5,1902.0 L 1314.5,1952.0 L 1274.0,1997.5 L 1232.0,2032.5 L 1204.0,2050.5 L 1177.0,2064.5 L 1118.0,2086.5 L 1053.0,2100.5 L 973.0,2107.5 Z M 1321.0,994.5 L 1251.0,992.5 L 1211.0,985.5 L 1180.0,977.5 L 1132.0,960.5 L 1096.0,943.5 L 1055.0,919.5 L 1030.0,901.5 L 1006.5,880.0 L 988.5,859.0 L 964.5,819.0 L 949.5,773.0 L 945.5,743.0 L 945.5,712.0 L 949.5,681.0 L 958.5,645.0 L 969.5,615.0 L 987.5,579.0 L 1011.5,542.0 L 1032.5,516.0 L 1051.0,496.5 L 1084.0,467.5 L 1131.0,436.5 L 1178.0,413.5 L 1200.0,405.5 L 1231.0,397.5 L 1285.0,388.5 L 1364.0,384.5 L 1386.0,387.5 L 1392.5,391.0 L 1347.0,423.5 L 1310.0,454.5 L 1274.5,493.0 L 1249.5,531.0 L 1234.5,562.0 L 1219.5,605.0 L 1217.5,637.0 L 1221.5,653.0 L 1229.5,667.0 L 1240.0,678.5 L 1255.0,689.5 L 1272.0,697.5 L 1317.0,705.5 L 1430.0,710.5 L 1456.0,715.5 L 1472.0,721.5 L 1488.0,732.5 L 1500.5,748.0 L 1508.5,771.0 L 1510.5,797.0 L 1505.5,837.0 L 1494.5,876.0 L 1479.5,907.0 L 1464.5,928.0 L 1439.0,952.5 L 1403.0,974.5 L 1361.0,988.5 L 1321.0,994.5 Z M 1765.0,1330.5 L 1711.0,1320.5 L 1621.0,1294.5 L 1564.0,1274.5 L 1534.0,1255.5 L 1510.5,1228.0 L 1493.5,1188.0 L 1484.5,1148.0 L 1474.5,1083.0 L 1465.5,1052.0 L 1466.5,1047.0 L 1470.0,1044.5 L 1474.0,1045.5 L 1542.0,1083.5 L 1595.0,1120.5 L 1639.0,1157.5 L 1677.5,1196.0 L 1715.5,1242.0 L 1748.5,1294.0 L 1765.5,1328.0 L 1765.0,1330.5 Z"/></svg></div><div class="lt">Loading the depot…</div></div></div>
+</div></div>
+
+<!-- BLITZ CALENDAR -->
+<div class="view" id="view-calendar"><div class="wrap">
+  <div class="sub-head"><button class="back-btn" onclick="show('hub')">← Back to Resources</button>
+    <span class="eyebrow" style="display:block;margin-top:10px"><span class="br">[</span> 03 — Schedule <span class="br">]</span></span>
+    <h1>Blitz <span class="hot">Calendar</span></h1></div>
+  <div class="cal-toolbar">
+    <div class="cal-toggle">
+      <button class="ct-btn on" data-mode="calendar">Calendar</button>
+      <button class="ct-btn" data-mode="list">List</button>
+    </div>
+  </div>
+  <div id="calBody"><div class="loader"><div class="bison-loader"><svg viewBox="0 0 2382 2108" xmlns="http://www.w3.org/2000/svg"><path d="M 973.0,2107.5 L 922.0,2107.5 L 856.0,2103.5 L 841.0,2098.5 L 835.5,2089.0 L 837.5,2084.0 L 845.0,2077.5 L 899.0,2046.5 L 943.0,2015.5 L 980.5,1980.0 L 1008.5,1942.0 L 1022.5,1913.0 L 1032.5,1883.0 L 1039.5,1845.0 L 1042.5,1797.0 L 1038.5,1718.0 L 1029.5,1648.0 L 1018.5,1584.0 L 998.5,1505.0 L 989.5,1460.0 L 985.5,1422.0 L 985.5,1377.0 L 992.5,1327.0 L 1010.5,1273.0 L 1038.5,1225.0 L 1070.0,1191.5 L 1081.0,1183.5 L 1085.0,1183.5 L 1088.5,1191.0 L 1085.5,1273.0 L 1092.5,1339.0 L 1106.5,1385.0 L 1129.5,1426.0 L 1163.0,1463.5 L 1198.0,1491.5 L 1233.0,1514.5 L 1337.0,1575.5 L 1367.0,1596.5 L 1402.0,1626.5 L 1431.5,1656.0 L 1465.5,1696.0 L 1499.5,1744.0 L 1530.5,1798.0 L 1540.0,1807.5 L 1547.0,1810.5 L 1560.0,1810.5 L 1585.0,1800.5 L 1598.0,1791.5 L 1617.5,1768.0 L 1627.5,1747.0 L 1637.5,1712.0 L 1648.5,1646.0 L 1657.5,1607.0 L 1664.5,1587.0 L 1673.0,1578.5 L 1682.0,1580.5 L 1711.0,1607.5 L 1743.0,1630.5 L 1787.0,1651.5 L 1815.0,1659.5 L 1841.0,1663.5 L 1867.0,1663.5 L 1879.5,1654.0 L 1979.5,1311.0 L 1998.5,1231.0 L 2012.5,1152.0 L 2019.5,1073.0 L 2017.5,999.0 L 2012.5,963.0 L 2004.5,928.0 L 1987.5,880.0 L 1966.5,839.0 L 1947.5,811.0 L 1921.5,780.0 L 1901.0,759.5 L 1864.0,728.5 L 1832.0,706.5 L 1793.0,683.5 L 1755.0,664.5 L 1690.0,637.5 L 1628.0,617.5 L 1587.0,614.5 L 1524.0,614.5 L 1468.0,617.5 L 1450.0,620.5 L 1444.5,619.0 L 1469.0,598.5 L 1498.0,580.5 L 1538.0,562.5 L 1566.0,553.5 L 1613.0,543.5 L 1652.0,539.5 L 1709.0,539.5 L 1774.0,547.5 L 1779.5,545.0 L 1779.5,539.0 L 1772.5,528.0 L 1751.0,505.5 L 1690.0,454.5 L 1650.0,425.5 L 1609.0,399.5 L 1532.0,359.5 L 1398.0,305.5 L 1360.0,292.5 L 1322.0,282.5 L 1241.0,269.5 L 1158.0,267.5 L 1086.0,274.5 L 1005.0,291.5 L 938.0,312.5 L 862.0,343.5 L 777.0,386.5 L 705.0,429.5 L 641.0,472.5 L 580.0,517.5 L 473.0,602.5 L 390.0,662.5 L 311.0,712.5 L 244.0,748.5 L 173.0,779.5 L 107.0,801.5 L 24.0,819.5 L 3.0,821.5 L -0.5,820.0 L -0.5,817.0 L 16.0,803.5 L 68.0,773.5 L 119.0,739.5 L 210.0,666.5 L 314.5,569.0 L 378.5,494.0 L 444.5,421.0 L 552.0,313.5 L 616.0,256.5 L 670.0,212.5 L 728.0,169.5 L 782.0,133.5 L 849.0,94.5 L 910.0,64.5 L 967.0,41.5 L 1038.0,19.5 L 1108.0,5.5 L 1174.0,-0.5 L 1234.0,0.5 L 1286.0,6.5 L 1381.0,27.5 L 1464.0,53.5 L 1545.0,86.5 L 1603.0,115.5 L 1664.0,151.5 L 1735.0,201.5 L 1797.0,253.5 L 1857.5,313.0 L 1923.5,390.0 L 1967.5,451.0 L 1997.5,502.0 L 2027.5,570.0 L 2043.5,625.0 L 2047.5,645.0 L 2046.5,655.0 L 2039.0,664.5 L 2031.0,668.5 L 2017.0,671.5 L 1978.5,673.0 L 2011.0,696.5 L 2040.5,728.0 L 2078.5,779.0 L 2117.5,837.0 L 2135.0,858.5 L 2146.0,862.5 L 2165.0,860.5 L 2177.0,855.5 L 2197.0,842.5 L 2210.5,830.0 L 2222.5,814.0 L 2230.5,798.0 L 2236.5,775.0 L 2236.5,735.0 L 2226.5,690.0 L 2210.5,647.0 L 2178.5,574.0 L 2199.0,579.5 L 2225.0,591.5 L 2271.0,622.5 L 2300.5,651.0 L 2324.5,681.0 L 2342.5,710.0 L 2363.5,757.0 L 2374.5,795.0 L 2380.5,830.0 L 2381.5,887.0 L 2378.5,911.0 L 2370.5,945.0 L 2360.5,972.0 L 2341.5,1007.0 L 2320.5,1034.0 L 2286.0,1065.5 L 2248.0,1089.5 L 2230.0,1097.5 L 2191.0,1109.5 L 2175.0,1117.5 L 2161.5,1130.0 L 2154.5,1143.0 L 2106.5,1287.0 L 2035.5,1540.0 L 2001.5,1649.0 L 1952.5,1778.0 L 1924.5,1838.0 L 1916.5,1853.0 L 1911.0,1858.5 L 1902.0,1864.5 L 1883.0,1870.5 L 1821.0,1874.5 L 1793.0,1882.5 L 1775.0,1895.5 L 1724.0,1946.5 L 1701.0,1963.5 L 1670.0,1982.5 L 1610.0,2009.5 L 1569.0,2022.5 L 1518.0,2033.5 L 1465.0,2039.5 L 1413.0,2040.5 L 1406.0,2038.5 L 1401.5,2034.0 L 1401.5,2028.0 L 1415.5,2001.0 L 1425.5,1974.0 L 1430.5,1949.0 L 1430.5,1915.0 L 1423.5,1883.0 L 1409.5,1852.0 L 1401.0,1839.5 L 1394.0,1832.5 L 1388.0,1830.5 L 1348.5,1902.0 L 1314.5,1952.0 L 1274.0,1997.5 L 1232.0,2032.5 L 1204.0,2050.5 L 1177.0,2064.5 L 1118.0,2086.5 L 1053.0,2100.5 L 973.0,2107.5 Z M 1321.0,994.5 L 1251.0,992.5 L 1211.0,985.5 L 1180.0,977.5 L 1132.0,960.5 L 1096.0,943.5 L 1055.0,919.5 L 1030.0,901.5 L 1006.5,880.0 L 988.5,859.0 L 964.5,819.0 L 949.5,773.0 L 945.5,743.0 L 945.5,712.0 L 949.5,681.0 L 958.5,645.0 L 969.5,615.0 L 987.5,579.0 L 1011.5,542.0 L 1032.5,516.0 L 1051.0,496.5 L 1084.0,467.5 L 1131.0,436.5 L 1178.0,413.5 L 1200.0,405.5 L 1231.0,397.5 L 1285.0,388.5 L 1364.0,384.5 L 1386.0,387.5 L 1392.5,391.0 L 1347.0,423.5 L 1310.0,454.5 L 1274.5,493.0 L 1249.5,531.0 L 1234.5,562.0 L 1219.5,605.0 L 1217.5,637.0 L 1221.5,653.0 L 1229.5,667.0 L 1240.0,678.5 L 1255.0,689.5 L 1272.0,697.5 L 1317.0,705.5 L 1430.0,710.5 L 1456.0,715.5 L 1472.0,721.5 L 1488.0,732.5 L 1500.5,748.0 L 1508.5,771.0 L 1510.5,797.0 L 1505.5,837.0 L 1494.5,876.0 L 1479.5,907.0 L 1464.5,928.0 L 1439.0,952.5 L 1403.0,974.5 L 1361.0,988.5 L 1321.0,994.5 Z M 1765.0,1330.5 L 1711.0,1320.5 L 1621.0,1294.5 L 1564.0,1274.5 L 1534.0,1255.5 L 1510.5,1228.0 L 1493.5,1188.0 L 1484.5,1148.0 L 1474.5,1083.0 L 1465.5,1052.0 L 1466.5,1047.0 L 1470.0,1044.5 L 1474.0,1045.5 L 1542.0,1083.5 L 1595.0,1120.5 L 1639.0,1157.5 L 1677.5,1196.0 L 1715.5,1242.0 L 1748.5,1294.0 L 1765.5,1328.0 L 1765.0,1330.5 Z"/></svg></div><div class="lt">Loading the schedule…</div></div></div>
 </div></div>
 
 <!-- TRAINING HUB -->
@@ -332,7 +408,7 @@ async function load(){
     const r=await fetch('/api/resources');
     if(!r.ok) throw new Error('fetch failed');
     STATE.data=await r.json();
-    renderKB();renderTraining();
+    renderKB();renderTraining();renderCalendarView();
   }catch(e){
     $('#kbBody').innerHTML='<div class="empty">Couldn\'t load resources. Refresh to try again.</div>';
     $('#trainingBody').innerHTML='<div class="empty">Couldn\'t load training. Refresh to try again.</div>';
@@ -340,7 +416,7 @@ async function load(){
 }
 
 /* ---------- KNOWLEDGE BASE ---------- */
-const CATS=['All','Support','ISP Information','Sales Tools','Pricing Sheets','Important Links','Blitz Calendar'];
+const CATS=['All','Support','ISP Information','Sales Tools','Pricing Sheets','Important Links'];
 function typeMeta(t){const k=(t||'').toLowerCase();
   if(k==='pdf')return['pdf','◆','↓'];if(k==='link')return['link','◆','↗'];
   if(k==='tool')return['tool','◆','→'];if(k==='contact')return['contact','◆','→'];return['link','◆','↗'];}
@@ -355,7 +431,6 @@ function renderKB(){
   } else feat.innerHTML='';
   // body
   const body=$('#kbBody');
-  if(STATE.activeCat==='Blitz Calendar'){renderCalendar(body);return;}
   const q=($('#kbSearch').value||'').toLowerCase();
   let cats=CATS.filter(c=>c!=='All'&&c!=='Blitz Calendar');
   if(STATE.activeCat!=='All') cats=[STATE.activeCat];
@@ -420,15 +495,29 @@ function openPlayer(track,idx){
 }
 
 /* ---------- BLITZ CALENDAR ---------- */
-let calMonth=new Date().getMonth(),calYear=new Date().getFullYear();
-function renderCalendar(container){
-  container.innerHTML=`<div class="cal-wrap"><div class="cal-top"><div class="cal-title" id="calTitle"></div><div class="cal-nav"><button id="calPrev">‹</button><button id="calNext">›</button></div></div><div class="cal-grid" id="calGrid"></div><div class="cal-legend"><span><i style="background:var(--accent-soft);border:1px solid var(--accent-line)"></i>Open — reps can join</span><span><i style="background:rgba(163,157,146,.12);border:1px solid var(--stroke-strong)"></i>Pending — TBD</span><span><i style="background:rgba(236,236,236,0.04);border:1px solid var(--stroke)"></i>Locked — full</span></div></div>`;
+let calMonth=new Date().getMonth(),calYear=new Date().getFullYear(),calMode='calendar';
+const COLORMAP={khaki:'bz-khaki',blue:'bz-blue',green:'bz-green',rust:'bz-rust',orange:'bz-orange',steel:'bz-steel'};
+function colorClass(c){return COLORMAP[(c||'khaki').toLowerCase()]||'bz-khaki';}
+const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
+const DOW=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+
+function renderCalendarView(){
+  const body=$('#calBody');
+  if(!STATE.data.events.length){body.innerHTML='<div class="empty">No blitzes scheduled yet.</div>';return;}
+  if(calMode==='list'){renderList(body);return;}
+  body.innerHTML=`<div class="cal-wrap"><div class="cal-top"><div class="cal-title" id="calTitle"></div><div class="cal-nav"><button id="calPrev">‹</button><button id="calNext">›</button></div></div><div class="cal-grid" id="calGrid"></div><div class="mob-daysel" id="mobDaySel"></div></div>`;
   drawCal();
   $('#calPrev').onclick=()=>{calMonth--;if(calMonth<0){calMonth=11;calYear--;}drawCal();};
   $('#calNext').onclick=()=>{calMonth++;if(calMonth>11){calMonth=0;calYear++;}drawCal();};
 }
-const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
-const DOW=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+function blitzesOnDay(dateStr){return STATE.data.events.filter(e=>{const s=e.date,en=e.endDate||e.date;return s&&dateStr>=s&&dateStr<=en;});}
+function segClass(b,dateStr){
+  const s=b.date,en=b.endDate||b.date;
+  if(s===en)return'single';
+  if(dateStr===s)return'start';
+  if(dateStr===en)return'end';
+  return'mid';
+}
 function drawCal(){
   $('#calTitle').textContent=MONTHS[calMonth]+' '+calYear;
   const grid=$('#calGrid');
@@ -440,26 +529,69 @@ function drawCal(){
   for(let d=1;d<=days;d++){
     const dateStr=`${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
     const isToday=today.getFullYear()===calYear&&today.getMonth()===calMonth&&today.getDate()===d;
-    const blitzes=STATE.data.events.filter(e=>{const s=e.date,en=e.endDate||e.date;return dateStr>=s&&dateStr<=en;});
-    const pills=blitzes.map(b=>`<div class="blitz-pill ${(b.status||'pending').toLowerCase()}" data-name="${esc(b.name)}">${esc(b.name)}</div>`).join('');
-    html+=`<div class="cal-cell${isToday?' today':''}"><div class="cal-num">${d}</div>${pills}</div>`;
+    const bl=blitzesOnDay(dateStr);
+    // desktop spanning bars
+    const bars=bl.map(b=>{
+      const sc=segClass(b,dateStr);
+      const showLabel=(sc==='start'||sc==='single');
+      const label=showLabel?`${b.name}<span class="st">${b.status||''}</span>`:'·';
+      return `<div class="segbar ${sc} ${colorClass(b.color)}" data-name="${esc(b.name)}">${showLabel?label:'&nbsp;'}</div>`;
+    }).join('');
+    // mobile dots
+    const dots=bl.length?`<div class="cal-dots">${bl.map(b=>`<span class="cal-dot ${colorClass(b.color)}" style="background:var(--bc)"></span>`).join('')}</div>`:'';
+    html+=`<div class="cal-cell${isToday?' today':''}" data-date="${dateStr}"><div class="cal-num">${d}</div><div class="desktop-cal-bars">${bars}</div>${dots}</div>`;
   }
   grid.innerHTML=html;
-  grid.querySelectorAll('.blitz-pill').forEach(p=>p.onclick=()=>openBlitz(p.dataset.name));
+  grid.querySelectorAll('.segbar').forEach(p=>p.onclick=(e)=>{e.stopPropagation();openBlitz(p.dataset.name);});
+  // mobile: tap a day cell to show its blitzes
+  grid.querySelectorAll('.cal-cell[data-date]').forEach(cell=>{
+    cell.onclick=()=>{ if(window.innerWidth>640)return; const ds=cell.dataset.date; const bl=blitzesOnDay(ds); const sel=$('#mobDaySel');
+      if(!bl.length){sel.classList.remove('show');sel.innerHTML='';return;}
+      const [y,m,dd]=ds.split('-');
+      sel.innerHTML=`<div class="ds-dt">${MONTHS[+m-1].toUpperCase()} ${+dd}</div>`+bl.map(b=>`<div class="ds-ev ${colorClass(b.color)}" data-name="${esc(b.name)}"><div class="n">${esc(b.name)}</div><div class="m">${esc(b.location||'')}${b.team?' · '+esc(b.team):''} · ${esc(b.status||'')}</div></div>`).join('');
+      sel.classList.add('show');
+      sel.querySelectorAll('.ds-ev').forEach(ev=>ev.onclick=()=>openBlitz(ev.dataset.name));
+    };
+  });
+}
+function renderList(body){
+  const evs=[...STATE.data.events].filter(e=>e.date).sort((a,b)=>a.date.localeCompare(b.date));
+  // group by month
+  const groups={};
+  evs.forEach(e=>{const [y,m]=e.date.split('-');const key=`${MONTHS[+m-1]} ${y}`;(groups[key]=groups[key]||[]).push(e);});
+  let html='<div class="bl-list">';
+  Object.keys(groups).forEach(mo=>{
+    html+=`<div class="bl-mo">${mo}</div>`;
+    groups[mo].forEach(b=>{
+      const [y,m,d]=b.date.split('-');
+      const range=b.endDate&&b.endDate!==b.date?`${fmtD(b.date)} – ${fmtD(b.endDate)}`:fmtD(b.date);
+      const stCls=(b.status||'').toLowerCase()==='open'?'open':'';
+      html+=`<div class="bl-row ${colorClass(b.color)}" data-name="${esc(b.name)}"><div class="bl-bar"></div><div class="bl-date"><div class="d">${+d}</div><div class="m">${MONTHS[+m-1].slice(0,3).toUpperCase()}</div></div><div class="bl-info"><div class="n">${esc(b.name)}</div><div class="r">${range}</div><div class="meta">${esc(b.location||'')}${b.team?' · '+esc(b.team):''}</div></div><div class="bl-stat ${stCls}">${esc(b.status||'Pending')}</div></div>`;
+    });
+  });
+  html+='</div>';
+  body.innerHTML=html;
+  body.querySelectorAll('.bl-row').forEach(r=>r.onclick=()=>openBlitz(r.dataset.name));
 }
 function openBlitz(name){
   const b=STATE.data.events.find(e=>e.name===name);if(!b)return;
   const statCls=(b.status||'pending').toLowerCase();
   const statColors={open:'var(--accent-soft);color:var(--accent);border:1px solid var(--accent-line)',pending:'rgba(163,157,146,.12);color:var(--muted);border:1px solid var(--stroke-strong)',locked:'rgba(236,236,236,0.04);color:var(--faint);border:1px solid var(--stroke)'};
   const dateDisp=b.endDate&&b.endDate!==b.date?`${fmtD(b.date)} – ${fmtD(b.endDate)}`:fmtD(b.date);
-  $('#blitzCard').innerHTML=`<button class="blitz-close" onclick="closeBlitz()">×</button><span class="bstat" style="background:${statColors[statCls]||statColors.pending}">${esc(b.status||'Pending')}</span><h3>${esc(b.name)}</h3>
-    ${row('Dates',dateDisp)}${b.location?row('Location',esc(b.location)):''}${b.team?row('Team',esc(b.team)):''}${b.manager?row('Manager',esc(b.manager)):''}${b.notes?row('Notes',esc(b.notes)):''}`;
+  $('#blitzCard').innerHTML=`<button class="blitz-close" onclick="closeBlitz()">×</button><span class="bstat" style="background:${statColors[statCls]||statColors.pending}">${esc(b.status||'Pending')}</span><h3>${esc(b.name)}</h3>${row('Dates',dateDisp)}${b.location?row('Location',esc(b.location)):''}${b.team?row('Team',esc(b.team)):''}${b.manager?row('Manager',esc(b.manager)):''}${b.notes?row('Notes',esc(b.notes)):''}`;
   $('#blitzModal').classList.add('open');
 }
 function row(l,v){return `<div class="blitz-row"><span class="bl">${l}</span><span class="bv">${v}</span></div>`;}
 function fmtD(s){if(!s)return'';const[y,m,d]=s.split('-');return MONTHS[+m-1].slice(0,3)+' '+(+d)+', '+y;}
 function closeBlitz(){$('#blitzModal').classList.remove('open');}
 $('#blitzModal').onclick=e=>{if(e.target.id==='blitzModal')closeBlitz();};
+// toggle wiring
+document.addEventListener('click',e=>{
+  if(e.target.classList&&e.target.classList.contains('ct-btn')){
+    document.querySelectorAll('.ct-btn').forEach(x=>x.classList.remove('on'));
+    e.target.classList.add('on');calMode=e.target.dataset.mode;renderCalendarView();
+  }
+});
 
 load();
 

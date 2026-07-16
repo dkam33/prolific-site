@@ -108,6 +108,7 @@ export default async function handler(req, res) {
         team: f.Team || '',
         manager: f.Manager || '',
         status: f.Status || 'Pending',
+        color: f.Color || 'Khaki',
         notes: f.Notes || '',
       }))
       .sort((a,b) => (a.date||'').localeCompare(b.date||''));
