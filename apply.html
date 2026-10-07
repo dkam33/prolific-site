@@ -363,6 +363,10 @@ header.page-hero{padding:64px 0 26px;position:relative}
 /* --- apply / booking embed --- */
 .booking{padding:0;overflow:hidden;min-height:680px}
 .booking-frame{width:100%;min-height:680px;border:0;display:block}
+.booking-card{padding:44px 36px;display:flex;flex-direction:column;align-items:flex-start;gap:16px}
+.booking-card h3{font-size:2.4rem;text-transform:uppercase;line-height:1}
+.booking-card p{color:var(--muted);max-width:420px}
+@media(max-width:520px){.booking-card{padding:30px 22px}}
 
 /* apply two-col */
 .apply-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:18px;align-items:start}
@@ -509,9 +513,11 @@ header.page-hero{padding:64px 0 26px;position:relative}
 
 <section id="book" style="padding-top:20px"><div class="wrap">
   <div class="apply-grid reveal">
-    <div class="booking glass ticked">
-      <div class="calendly-inline-widget" data-url="https://calendly.com/tyler-foundryfam/gameplan?hide_gdpr_banner=1&background_color=1a1a1a&text_color=ececec&primary_color=c4af9a" style="min-width:320px;height:700px;width:100%"></div>
-      <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+    <div class="booking-card glass ticked">
+      <span class="eyebrow"><span class="br">[</span> Google Calendar <span class="br">]</span></span>
+      <h3>Lock in your call</h3>
+      <p>Open the calendar, pick a slot, done. You'll get the invite in your inbox.</p>
+      <a class="btn primary" href="https://calendar.app.google/3fWWKhrDYuHmgcoP6" target="_blank" rel="noopener">Pick a time →</a>
     </div>
     <aside class="apply-side glass ticked">
       <h3>What happens next</h3>
@@ -520,7 +526,7 @@ header.page-hero{padding:64px 0 26px;position:relative}
         <li>Quick intro call to see if Prolific is the right fit for you.</li>
         <li>Onboarding, fiber training, and locking in your first blitz.</li>
       </ul>
-      <div class="fillin" style="margin-top:22px">Once your call is booked, Tyler from Prolific will reach out.</div>
+      <div class="fillin" style="margin-top:22px">Once you're booked, someone from Prolific will reach out.</div>
     </aside>
   </div>
 </div></section>
@@ -528,8 +534,8 @@ header.page-hero{padding:64px 0 26px;position:relative}
 <section style="padding-top:10px"><div class="wrap">
   <div class="rule"><span>Not sure where you fit?</span></div>
   <div class="feat-grid reveal">
-    <div class="feat glass ticked"><div class="fi">No experience?</div><h4>Start at JV</h4><p>Onboard, train, and lock in your first blitz. <a href="/rep" style="color:var(--accent)">See Ranks →</a></p></div>
-    <div class="feat glass ticked"><div class="fi">Already closing?</div><h4>Skip ahead</h4><p>Bring verifiable results and start at Varsity. Mention it on your call.</p></div>
+    <div class="feat glass ticked"><div class="fi">No experience?</div><h4>Start at Rookie</h4><p>Onboard, train, and lock in your first blitz. <a href="/rep" style="color:var(--accent)">See Ranks →</a></p></div>
+    <div class="feat glass ticked"><div class="fi">Already closing?</div><h4>Skip ahead</h4><p>Bring verifiable results and start at Pro. Mention it on your call.</p></div>
     <div class="feat glass ticked"><div class="fi">Running a team?</div><h4>Go dealer</h4><p>Onboard your team and build with Prolific. <a href="/dealer" style="color:var(--accent)">Learn more →</a></p></div>
   </div>
 </div></section>
