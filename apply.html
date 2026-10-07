@@ -363,6 +363,10 @@ header.page-hero{padding:64px 0 26px;position:relative}
 /* --- apply / booking embed --- */
 .booking{padding:0;overflow:hidden;min-height:680px}
 .booking-frame{width:100%;min-height:680px;border:0;display:block}
+.booking-card{padding:44px 36px;display:flex;flex-direction:column;align-items:flex-start;gap:16px}
+.booking-card h3{font-size:2.4rem;text-transform:uppercase;line-height:1}
+.booking-card p{color:var(--muted);max-width:420px}
+@media(max-width:520px){.booking-card{padding:30px 22px}}
 
 /* apply two-col */
 .apply-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:18px;align-items:start}
@@ -509,9 +513,11 @@ header.page-hero{padding:64px 0 26px;position:relative}
 
 <section id="book" style="padding-top:20px"><div class="wrap">
   <div class="apply-grid reveal">
-    <div class="booking glass ticked">
-      <!-- BOOKING EMBED: paste Dylan's calendar or form link into src -->
-      <iframe class="booking-frame" src="about:blank" title="Book a call with Prolific" loading="lazy" allow="fullscreen"></iframe>
+    <div class="booking-card glass ticked">
+      <span class="eyebrow"><span class="br">[</span> Google Calendar <span class="br">]</span></span>
+      <h3>Lock in your call</h3>
+      <p>Open the calendar, pick a slot, done. You'll get the invite in your inbox.</p>
+      <a class="btn primary" href="https://calendar.app.google/3fWWKhrDYuHmgcoP6" target="_blank" rel="noopener">Pick a time →</a>
     </div>
     <aside class="apply-side glass ticked">
       <h3>What happens next</h3>
