@@ -643,9 +643,9 @@ header.page-hero{padding:64px 0 26px;position:relative}
     </div>
     <div class="ladder reveal">
       <div class="tabbar" id="tierTabs">
-        <button type="button" class="tier-tab glass active" data-i="0"><span class="tn">01</span><span class="tname">Rookie</span><span class="tsub">$200 per install</span></button>
-        <button type="button" class="tier-tab glass" data-i="1"><span class="tn">02</span><span class="tname">Pro</span><span class="tsub">$250 per install</span></button>
-        <button type="button" class="tier-tab glass" data-i="2"><span class="tn">03</span><span class="tname">Elite</span><span class="tsub">$300 per install</span></button>
+        <button type="button" class="tier-tab glass active" data-i="0"><span class="tn">01</span><span class="tname">Rookie</span><span class="tsub">$200 • 1-49 installs</span></button>
+        <button type="button" class="tier-tab glass" data-i="1"><span class="tn">02</span><span class="tname">Pro</span><span class="tsub">$250 • 50-99 installs</span></button>
+        <button type="button" class="tier-tab glass" data-i="2"><span class="tn">03</span><span class="tname">Elite</span><span class="tsub">$300 • 100+ installs</span></button>
       </div>
       <div class="tier-panel glass ticked" id="detail"></div>
     </div>
@@ -879,7 +879,7 @@ tierBtns.forEach(b=>b.addEventListener('click',()=>{
 
 // ---------- Tier ladder ----------
 const tierData=[
-  {name:'Rookie',big:'$200',week:'Where everyone starts',
+  {name:'Rookie',big:'$200',week:'First 49 installs',
    pts:['Brand new rep','Onboard and train','Lock in first blitz','Focus on pitch work']},
   {name:'Pro',big:'$250',week:"You're on the leaderboards",
    pts:['Experienced rep','Consistently selling deals','Emulate top rep behaviors','Focus on mindset']},
