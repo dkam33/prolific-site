@@ -523,7 +523,7 @@ header.page-hero{padding:64px 0 26px;position:relative}
 @media(prefers-reduced-motion:reduce){.tri-edge,.tri-fill,.tri-bison path,.tri-node,.tri-lab{animation:none;opacity:1;stroke-dashoffset:0}.tri-bison path{opacity:.6}.tri-fill{opacity:1}}
 
 /* ===== CALCULATOR TIER TOGGLE (from homepage) ===== */
-.tier-toggle{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.tier-toggle{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
 .tier-btn{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.06em;
   text-transform:uppercase;color:var(--muted);background:var(--panel);
   border:1px solid var(--stroke-strong);border-radius:10px;padding:10px 4px;cursor:pointer;
@@ -534,7 +534,7 @@ header.page-hero{padding:64px 0 26px;position:relative}
 .per{color:var(--muted);font-size:.85rem}
 /* ===== TIER LADDER (from homepage advancement) ===== */
 .ladder{display:flex;flex-direction:column;gap:16px}
-.tabbar{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.tabbar{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .tier-tab{display:flex;flex-direction:column;gap:5px;text-align:left;cursor:pointer;
   padding:14px 16px;border:1px solid var(--stroke);transition:.2s}
 .tier-tab:hover{border-color:var(--stroke-strong)}
@@ -551,12 +551,12 @@ header.page-hero{padding:64px 0 26px;position:relative}
 .tier-panel .week{font-family:'JetBrains Mono',monospace;font-size:.66rem;color:var(--muted);
   letter-spacing:.14em;text-transform:uppercase;margin:6px 0 0}
 .climb{margin:20px 0 18px}
-.climb-bars{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.climb-bars{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .climb-seg{height:6px;border-radius:6px;background:var(--stroke)}
 .climb-seg.fill{background:linear-gradient(90deg,var(--accent),var(--blue))}
 .climb-cap{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.1em;
   color:var(--muted);text-transform:uppercase;margin-top:10px}
-@media(max-width:820px){.tabbar{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:820px){.tabbar{grid-template-columns:repeat(3,1fr)}}
 
 /* ===== PLATFORM (tools & map) ===== */
 .platform{display:grid;grid-template-columns:1.15fr 1fr;gap:16px;align-items:stretch}
@@ -698,14 +698,13 @@ header.page-hero{padding:64px 0 26px;position:relative}
       <span class="sec-idx">01</span>
       <span class="eyebrow"><span class="br">[</span> The Ranks <span class="br">]</span></span>
       <h2>Advance <span class="out">Through the Ranks</span></h2>
-      <p class="lead">Everyone starts on JV. What happens after that is up to you. Your commission grows as you grow.</p>
+      <p class="lead">Everyone starts as a Rookie. What happens after that is up to you. Your commission grows as you grow.</p>
     </div>
     <div class="ladder reveal">
       <div class="tabbar" id="tierTabs">
-        <button type="button" class="tier-tab glass active" data-i="0"><span class="tn">01</span><span class="tname">JV</span><span class="tsub">$150 • 1-49 deals</span></button>
-        <button type="button" class="tier-tab glass" data-i="1"><span class="tn">02</span><span class="tname">Varsity</span><span class="tsub">$200 • 50-99 deals</span></button>
-        <button type="button" class="tier-tab glass" data-i="2"><span class="tn">03</span><span class="tname">Allstar</span><span class="tsub">$250 • 100-149 deals</span></button>
-        <button type="button" class="tier-tab glass" data-i="3"><span class="tn">04</span><span class="tname">MVP</span><span class="tsub">$300 • 150+ deals + overrides</span></button>
+        <button type="button" class="tier-tab glass active" data-i="0"><span class="tn">01</span><span class="tname">Rookie</span><span class="tsub">$200 per install</span></button>
+        <button type="button" class="tier-tab glass" data-i="1"><span class="tn">02</span><span class="tname">Pro</span><span class="tsub">$250 per install</span></button>
+        <button type="button" class="tier-tab glass" data-i="2"><span class="tn">03</span><span class="tname">Elite</span><span class="tsub">$300 per install</span></button>
       </div>
       <div class="tier-panel glass ticked" id="detail"></div>
     </div>
@@ -722,9 +721,9 @@ header.page-hero{padding:64px 0 26px;position:relative}
     </div>
     <div class="stats reveal" style="margin-bottom:16px">
       <div class="stat"><div class="n">$250</div><div class="l">avg per install</div></div>
-      <div class="stat"><div class="n">4</div><div class="l">tiers to climb</div></div>
+      <div class="stat"><div class="n">3</div><div class="l">tiers to climb</div></div>
       <div class="stat"><div class="n">Weekly</div><div class="l">Friday pay</div></div>
-      <div class="stat"><div class="n">90 Day</div><div class="l">MVP Roadmap</div></div>
+      <div class="stat"><div class="n">90 Day</div><div class="l">Elite Roadmap</div></div>
     </div>
     <div class="calc reveal">
       <div class="calc-panel glass">
@@ -735,22 +734,21 @@ header.page-hero{padding:64px 0 26px;position:relative}
         <div class="field">
           <label>Your rank</label>
           <div class="tier-toggle" id="tierToggle">
-            <button type="button" class="tier-btn active" data-name="JV" data-rate="150">JV<span class="tr">$150</span></button>
-            <button type="button" class="tier-btn" data-name="Varsity" data-rate="200">Varsity<span class="tr">$200</span></button>
-            <button type="button" class="tier-btn" data-name="Allstar" data-rate="250">Allstar<span class="tr">$250</span></button>
-            <button type="button" class="tier-btn" data-name="MVP" data-rate="300">MVP<span class="tr">$300</span></button>
+            <button type="button" class="tier-btn active" data-name="Rookie" data-rate="200">Rookie<span class="tr">$200</span></button>
+            <button type="button" class="tier-btn" data-name="Pro" data-rate="250">Pro<span class="tr">$250</span></button>
+            <button type="button" class="tier-btn" data-name="Elite" data-rate="300">Elite<span class="tr">$300</span></button>
           </div>
         </div>
         <p class="calc-note">This calculator is intended to show you what's possible. Actual results may vary and are largely dependent on your attitude, work ethic, discipline, and ability to learn and grow.</p>
       </div>
       <div class="readout">
         <div class="cap">Estimated earnings</div>
-        <div class="big" id="total">$4,500</div>
-        <div class="per" id="mathLine">30 installs × $150/install</div>
+        <div class="big" id="total">$6,000</div>
+        <div class="per" id="mathLine">30 installs × $200/install</div>
         <div class="bar-track"><div class="bar-fill" id="bar"></div></div>
-        <div class="breakdown"><span>Per install</span><b id="bCut">$150</b></div>
+        <div class="breakdown"><span>Per install</span><b id="bCut">$200</b></div>
         <div class="breakdown"><span>Installs / month</span><b id="bInstalls">30</b></div>
-        <div class="breakdown"><span>Tier</span><b id="bTier">JV</b></div>
+        <div class="breakdown"><span>Tier</span><b id="bTier">Rookie</b></div>
         <a class="btn primary" href="#tiers" style="margin-top:20px;justify-content:center">Lock in your rank →</a>
       </div>
     </div>
@@ -891,7 +889,7 @@ header.page-hero{padding:64px 0 26px;position:relative}
         </div>
         <div class="tool-box glass ticked">
           <div class="tool-ix">02</div>
-          <h3>The League App</h3>
+          <h3>NOBL OS</h3>
           <p>Track deal progress, rank advancements, leaderboards, competitions, and incentives in one place.</p>
         </div>
         <div class="tool-box glass ticked">
@@ -1029,21 +1027,19 @@ tierBtns.forEach(b=>b.addEventListener('click',()=>{
 }));
 // ---------- Tier ladder ----------
 const tierData=[
-  {name:'JV',big:'$150',week:'First 49 deals',
-   pts:['Brand new rookie','Onboard and train','Lock in first blitz','Focus on pitch work']},
-  {name:'Varsity',big:'$200',week:"You're a consistent producer",
-   pts:['Minor experience','Ramp up work ethic','Consistent knocking schedule','Focus on tonality & body language']},
-  {name:'Allstar',big:'$250',week:"You're on the leaderboards",
+  {name:'Rookie',big:'$200',week:'Where everyone starts',
+   pts:['Brand new rep','Onboard and train','Lock in first blitz','Focus on pitch work']},
+  {name:'Pro',big:'$250',week:"You're on the leaderboards",
    pts:['Experienced rep','Consistently selling deals','Emulate top rep behaviors','Focus on mindset']},
-  {name:'MVP',big:'$300',week:'Your team, your leaderboard',
+  {name:'Elite',big:'$300',week:'Your team, your leaderboard',
    pts:['Veteran rep','Selling 5+ every day','Prolific work ethic and mentality','Focus on being #1 rep in office']}
 ];
 const detail=document.getElementById('detail');
 function renderDetail(i){
   const d=tierData[i], pos=i+1;
-  const segs=[0,1,2,3].map(s=>`<div class="climb-seg${s<pos?' fill':''}"></div>`).join('');
+  const segs=[0,1,2].map(s=>`<div class="climb-seg${s<pos?' fill':''}"></div>`).join('');
   detail.innerHTML=`<div class="dh"><div><h3>${d.name}</h3><div class="week">${d.week}</div></div><span class="rate">${d.big}</span></div>
-    <div class="climb"><div class="climb-bars">${segs}</div><div class="climb-cap">Rank ${pos} of 4 — Advancing the Ranks</div></div>
+    <div class="climb"><div class="climb-bars">${segs}</div><div class="climb-cap">Rank ${pos} of 3 — Advancing the Ranks</div></div>
     <ul class="checks">${d.pts.map(p=>`<li>${p}</li>`).join('')}</ul>`;
 }
 renderDetail(0);
