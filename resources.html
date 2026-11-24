@@ -225,7 +225,7 @@ footer{padding:60px 0 40px}
       <div class="pc-go">↗</div>
       <div><div class="path-icon"><svg viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="M4 9h16M9 5v14"/></svg></div>
         <div class="pc-ix" style="margin-top:20px">01 — LIBRARY</div><h2>Knowledge<br>Base</h2>
-        <p>Playbooks, ISP info, commission tools, onboarding docs, key contacts, and every link you need — organized and searchable.</p></div>
+        <p>Support, key contacts, and every link you need — organized and searchable.</p></div>
       <div class="pc-meta"><span>PDFs</span><span>Links</span><span>Tools</span><span>Contacts</span></div>
     </div>
     <div class="path-card glass ticked" onclick="show('training')">
@@ -299,6 +299,8 @@ async function load(){
     STATE.data=await r.json();
     // league items retired; NOBL links replace them
     STATE.data.resources=STATE.data.resources.filter(x=>!/league/i.test(x.title+' '+x.description+' '+x.category)).concat(NOBL_LINKS);
+    // outdated categories retired (ISP Information, Sales Tools, Pricing Sheets): keep only listed ones
+    STATE.data.resources=STATE.data.resources.filter(x=>CATS.includes(x.category));
     renderKB();renderTraining();
   }catch(e){
     $('#kbBody').innerHTML='<div class="empty">Couldn\'t load resources. Refresh to try again.</div>';
@@ -311,7 +313,7 @@ const NOBL_LINKS=[
   {title:'NOBL OS',type:'Link',category:'Important Links',description:'os.noblsales.com',url:'https://os.noblsales.com',contactDetail:'',order:-2,featured:false},
   {title:'NOBL App',type:'Link',category:'Important Links',description:'app.noblsales.com',url:'https://app.noblsales.com',contactDetail:'',order:-1,featured:false},
 ];
-const CATS=['All','Support','Important Links','ISP Information','Sales Tools','Pricing Sheets'];
+const CATS=['All','Support','Important Links'];
 function typeMeta(t){const k=(t||'').toLowerCase();
   if(k==='pdf')return['pdf','◆','↓'];if(k==='link')return['link','◆','↗'];
   if(k==='tool')return['tool','◆','→'];if(k==='contact')return['contact','◆','→'];return['link','◆','↗'];}
